@@ -20,7 +20,7 @@ export const units: UnitType[] = [
     bedrooms: '1 BD',
     bedroomsAr: 'غرفة واحدة',
     area: '93 sqm',
-    startingPrice: 'Starting 14M EGP',
+    startingPrice: 'Starting 15M EGP',
     badges: ['إطلاق جديد'],
     image: './assets/types/chalet-1bd.jpg',
   },
