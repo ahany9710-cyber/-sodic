@@ -2,59 +2,55 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { config } from '../config';
+import { units } from '../data/units';
 
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${config.formspreeFormId}`;
-
-const PROJECT_OPTIONS = [
-  { id: 'studios', name: 'Studios' },
-  { id: 'one-bedroom', name: 'One Bedroom' },
-  { id: 'two-bedrooms', name: 'Two Bedrooms' },
-  { id: 'executive', name: 'Executive Units' },
-  { id: 'penthouse', name: 'Penthouse' },
-];
 
 interface FormData {
   fullName: string;
   phoneNumber: string;
-  confirmPhoneNumber: string;
-  contactMethod: 'whatsapp' | 'call' | '';
-  interestedProject: string;
+  confirmPhone: string;
+  unitType: string;
 }
 
 interface FormErrors {
   fullName?: string;
   phoneNumber?: string;
-  confirmPhoneNumber?: string;
-  contactMethod?: string;
-  interestedProject?: string;
+  confirmPhone?: string;
 }
+
+const normalizeDigits = (value: string) => value.replace(/\D/g, '');
 
 const LeadForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     phoneNumber: '',
-    confirmPhoneNumber: '',
-    contactMethod: '',
-    interestedProject: '',
+    confirmPhone: '',
+    unitType: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateField = (name: keyof FormData, value: string): string | undefined => {
+  const validateField = (name: keyof FormData, value: string, all: FormData): string | undefined => {
     switch (name) {
       case 'fullName':
+        if (!value.trim()) return 'الاسم مطلوب';
         return undefined;
       case 'phoneNumber':
-        if (!value.trim()) return 'رقم التواصل مطلوب';
-        if (!/^[0-9+\s-]+$/.test(value)) return 'يرجى إدخال رقم هاتف صحيح مع كود الدولة';
-        if (value.replace(/\D/g, '').length < 10) return 'يجب أن يكون رقم الهاتف على الأقل 10 أرقام مع كود الدولة';
+        if (!value.trim()) return 'رقم الجوال مطلوب';
+        if (!/^[0-9+\s-]+$/.test(value)) return 'يرجى إدخال رقم صحيح مع كود الدولة';
+        if (normalizeDigits(value).length < 10) return 'يجب أن يكون الرقم على الأقل 10 أرقام مع كود الدولة';
         return undefined;
-      case 'confirmPhoneNumber':
+      case 'confirmPhone': {
+        if (!value.trim()) return undefined;
+        if (!/^[0-9+\s-]+$/.test(value)) return 'يرجى إدخال رقم صحيح';
+        if (normalizeDigits(value) !== normalizeDigits(all.phoneNumber)) {
+          return 'يجب أن يطابق رقم الجوال';
+        }
         return undefined;
-      case 'contactMethod':
-        return undefined;
-      case 'interestedProject':
+      }
+      case 'unitType':
         return undefined;
       default:
         return undefined;
@@ -63,37 +59,39 @@ const LeadForm = () => {
 
   const handleChange = (name: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      const error = validateField(name, value);
-      setErrors((prev) => ({ ...prev, [name]: error }));
+    if (errors[name as keyof FormErrors]) {
+      const next = { ...formData, [name]: value };
+      setErrors((prev) => ({
+        ...prev,
+        [name]: validateField(name, value, next),
+      }));
     }
   };
 
   const handleBlur = (name: keyof FormData) => {
-    const error = validateField(name, formData[name]);
+    const err = validateField(name, formData[name], formData);
     setErrors((prev) => {
-      const newErrors = { ...prev };
-      if (error) {
-        newErrors[name] = error;
-      } else {
-        delete newErrors[name];
-      }
-      return newErrors;
+      const next = { ...prev };
+      if (err) next[name as keyof FormErrors] = err;
+      else delete next[name as keyof FormErrors];
+      return next;
     });
   };
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    (Object.keys(formData) as Array<keyof FormData>).forEach((key) => {
-      const error = validateField(key, formData[key]);
-      if (error) newErrors[key] = error;
+    const keys: Array<keyof FormData> = ['fullName', 'phoneNumber', 'confirmPhone', 'unitType'];
+    keys.forEach((key) => {
+      const err = validateField(key, formData[key], formData);
+      if (err) newErrors[key as keyof FormErrors] = err;
     });
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const getThankYouPath = (): string => {
-    const base = (typeof import.meta.env.BASE_URL === 'string' ? import.meta.env.BASE_URL : '').replace(/\.$/, '') || '/';
+    const base =
+      (typeof import.meta.env.BASE_URL === 'string' ? import.meta.env.BASE_URL : '').replace(/\.$/, '') || '/';
     return base === '/' ? '/thank-you' : `${base.replace(/\/$/, '')}/thank-you`;
   };
 
@@ -101,18 +99,17 @@ const LeadForm = () => {
     e.preventDefault();
     if (!validateForm()) return;
     setIsSubmitting(true);
-    const errorMessage = 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى أو الاتصال بنا على الواتساب أو الهاتف.';
+    const errorMessage = 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.';
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('full_name', formData.fullName);
-      formDataToSend.append('phone', formData.phoneNumber);
-      formDataToSend.append('additional_phone', formData.confirmPhoneNumber);
-      formDataToSend.append('contact_method', formData.contactMethod);
-      formDataToSend.append('interested_project', formData.interestedProject);
+      const body = new FormData();
+      body.append('full_name', formData.fullName);
+      body.append('phone', formData.phoneNumber);
+      body.append('confirm_phone', formData.confirmPhone.trim() || '');
+      body.append('unit_type', formData.unitType ? units.find((u) => u.id === formData.unitType)?.nameAr ?? '' : '');
 
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
-        body: formDataToSend,
+        body,
         redirect: 'manual',
       });
       const success =
@@ -133,196 +130,166 @@ const LeadForm = () => {
     }
   };
 
-  const isFormValid = () => {
-    // Check if phone number is filled
-    if (formData.phoneNumber.trim() === '') return false;
-    
-    // Check if there are any actual error messages (not undefined)
-    const hasErrors = Object.values(errors).some(error => error !== undefined && error !== '');
-    return !hasErrors;
-  };
+  const canSubmit =
+    formData.fullName.trim() !== '' &&
+    formData.phoneNumber.trim() !== '' &&
+    !Object.values(errors).some((e) => e !== undefined && e !== '');
 
   return (
-    <section id="lead-form" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-      <div className="max-w-2xl mx-auto">
+    <section
+      id="lead-form"
+      className="w-full px-4 sm:px-6 lg:px-8 pt-section-md md:pt-section-lg pb-2 md:pb-4 bg-modon-bg"
+    >
+      <div className="container mx-auto max-w-lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-white rounded-2xl shadow-xl p-6 md:p-10"
+          transition={{ duration: 0.55 }}
+          className="rounded-2xl border border-modon-black/10 bg-modon-sand shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-7 md:p-10"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 text-center">
-            احصل على الأسعار وخطط الدفع والبروشور
-          </h2>
-          <p className="text-gray-600 text-center mb-8">
-            املأ النموذج أدناه وسنرسل لك جميع التفاصيل
-          </p>
+          <div className="text-center border-b border-modon-black/10 pb-6 mb-8">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-modon-black tracking-heading">
+              سجل اهتمامك الآن
+            </h2>
+            <p className="font-arabic text-gray-600 mt-2 text-base leading-relaxed">
+              املأ البيانات وسيتواصل معك فريقنا في أقرب وقت
+            </p>
+          </div>
 
-          <motion.form
-            action={FORMSPREE_ENDPOINT}
-            method="POST"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
-                <div>
-                  <label
-                    htmlFor="fullName"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    الاسم الكامل
-                  </label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="full_name"
-                    value={formData.fullName}
-                    onChange={(e) => handleChange('fullName', e.target.value)}
-                    onBlur={() => handleBlur('fullName')}
-                    className={`w-full px-4 py-3 rounded-xl border-2 transition-colors ${
-                      errors.fullName
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-300 focus:border-tatweer-orange'
-                    } focus:outline-none focus:ring-2 focus:ring-tatweer-orange focus:ring-offset-2`}
-                    placeholder="أدخل اسمك الكامل"
-                  />
-                  {errors.fullName && (
-                    <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
-                  )}
-                </div>
+          <motion.form onSubmit={handleSubmit} className="space-y-6 text-right">
+            <div>
+              <label htmlFor="fullName" className="block text-base font-semibold text-modon-black mb-2 font-arabic">
+                الاسم الكامل <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="full_name"
+                value={formData.fullName}
+                onChange={(e) => handleChange('fullName', e.target.value)}
+                onBlur={() => handleBlur('fullName')}
+                className={`w-full px-4 py-4 rounded-xl border-2 text-right text-lg bg-white/90 transition-colors ${
+                  errors.fullName ? 'border-red-500' : 'border-gray-200 focus:border-modon-black'
+                } focus:outline-none focus:ring-2 focus:ring-modon-black/20`}
+                placeholder="اكتب اسمك بالكامل"
+                autoComplete="name"
+              />
+              {errors.fullName ? <p className="mt-1.5 text-sm text-red-600 font-arabic">{errors.fullName}</p> : null}
+            </div>
 
-                <div>
-                  <label
-                    htmlFor="phoneNumber"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    رقم التواصل (واتساب) <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phone"
-                    value={formData.phoneNumber}
-                    onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                    onBlur={() => handleBlur('phoneNumber')}
-                    className={`w-full px-4 py-3 rounded-xl border-2 transition-colors ${
-                      errors.phoneNumber
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-300 focus:border-tatweer-orange'
-                    } focus:outline-none focus:ring-2 focus:ring-tatweer-orange focus:ring-offset-2`}
-                    placeholder="+20 123 456 7890 (مع كود الدولة)"
-                  />
-                  {errors.phoneNumber && (
-                    <p className="mt-1 text-sm text-red-500">{errors.phoneNumber}</p>
-                  )}
-                </div>
+            <div>
+              <label htmlFor="phoneNumber" className="block text-base font-semibold text-modon-black mb-2 font-arabic">
+                رقم الجوال <span className="text-red-600">*</span>
+                <span className="text-gray-600 font-normal text-sm ms-1">(مع كود الدولة)</span>
+              </label>
+              <input
+                type="tel"
+                id="phoneNumber"
+                name="phone"
+                value={formData.phoneNumber}
+                onChange={(e) => handleChange('phoneNumber', e.target.value)}
+                onBlur={() => handleBlur('phoneNumber')}
+                className={`w-full px-4 py-4 rounded-xl border-2 text-lg bg-white/90 transition-colors ${
+                  errors.phoneNumber ? 'border-red-500' : 'border-gray-200 focus:border-modon-black'
+                } focus:outline-none focus:ring-2 focus:ring-modon-black/20`}
+                placeholder="+20 …"
+                dir="ltr"
+                autoComplete="tel"
+              />
+              {errors.phoneNumber ? (
+                <p className="mt-1.5 text-sm text-red-600 font-arabic">{errors.phoneNumber}</p>
+              ) : null}
+            </div>
 
-                <div>
-                  <label
-                    htmlFor="confirmPhoneNumber"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    رقم إضافي للتواصل (اختياري)
-                  </label>
-                  <input
-                    type="tel"
-                    id="confirmPhoneNumber"
-                    name="additional_phone"
-                    value={formData.confirmPhoneNumber}
-                    onChange={(e) => handleChange('confirmPhoneNumber', e.target.value)}
-                    onBlur={() => handleBlur('confirmPhoneNumber')}
-                    className={`w-full px-4 py-3 rounded-xl border-2 transition-colors ${
-                      errors.confirmPhoneNumber
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-300 focus:border-tatweer-orange'
-                    } focus:outline-none focus:ring-2 focus:ring-tatweer-orange focus:ring-offset-2`}
-                    placeholder="أدخل رقم إضافي إن وجد"
-                  />
-                  {errors.confirmPhoneNumber && (
-                    <p className="mt-1 text-sm text-red-500">{errors.confirmPhoneNumber}</p>
-                  )}
-                </div>
+            <div>
+              <label htmlFor="confirmPhone" className="block text-base font-semibold text-modon-black mb-2 font-arabic">
+                أكد رقم التواصل
+                <span className="text-gray-500 font-normal text-sm ms-1">(اختياري)</span>
+              </label>
+              <input
+                type="tel"
+                id="confirmPhone"
+                name="confirm_phone"
+                value={formData.confirmPhone}
+                onChange={(e) => handleChange('confirmPhone', e.target.value)}
+                onBlur={() => handleBlur('confirmPhone')}
+                className={`w-full px-4 py-4 rounded-xl border-2 text-lg bg-white/90 transition-colors ${
+                  errors.confirmPhone ? 'border-red-500' : 'border-gray-200 focus:border-modon-black'
+                } focus:outline-none focus:ring-2 focus:ring-modon-black/20`}
+                placeholder="نفس رقم الجوال للتأكيد"
+                dir="ltr"
+                autoComplete="tel"
+              />
+              {errors.confirmPhone ? (
+                <p className="mt-1.5 text-sm text-red-600 font-arabic">{errors.confirmPhone}</p>
+              ) : null}
+            </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    طريقة الاتصال المفضلة
-                  </label>
-                  <div className="flex gap-4">
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="contact_method"
-                        value="whatsapp"
-                        checked={formData.contactMethod === 'whatsapp'}
-                        onChange={(e) => handleChange('contactMethod', e.target.value)}
-                        className="w-4 h-4 text-tatweer-orange focus:ring-tatweer-orange"
-                      />
-                      <span className="ml-2 text-gray-700">واتساب</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="contact_method"
-                        value="call"
-                        checked={formData.contactMethod === 'call'}
-                        onChange={(e) => handleChange('contactMethod', e.target.value)}
-                        className="w-4 h-4 text-tatweer-orange focus:ring-tatweer-orange"
-                      />
-                      <span className="ml-2 text-gray-700">مكالمة</span>
-                    </label>
-                  </div>
-                  {errors.contactMethod && (
-                    <p className="mt-1 text-sm text-red-500">{errors.contactMethod}</p>
-                  )}
-                </div>
+            <div>
+              <label htmlFor="unitType" className="block text-base font-semibold text-modon-black mb-2 font-arabic">
+                نوع الوحدة
+                <span className="text-gray-500 font-normal text-sm ms-1">(اختياري)</span>
+              </label>
+              <select
+                id="unitType"
+                name="unit_type"
+                value={formData.unitType}
+                onChange={(e) => handleChange('unitType', e.target.value)}
+                className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 bg-white/90 text-lg text-right font-arabic focus:border-modon-black focus:outline-none focus:ring-2 focus:ring-modon-black/20 appearance-none cursor-pointer"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231A1A1A'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'left 1rem center',
+                  backgroundSize: '1.25rem',
+                }}
+              >
+                <option value="">— اختر نوع الوحدة —</option>
+                {units.map((u) => (
+                  <option key={u.id} value={u.id}>
+                    {u.nameAr}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-                <div>
-                  <label
-                    htmlFor="interestedProject"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    الوحدة المهتم بها
-                  </label>
-                  <select
-                    id="interestedProject"
-                    name="interested_project"
-                    value={formData.interestedProject}
-                    onChange={(e) => handleChange('interestedProject', e.target.value)}
-                    onBlur={() => handleBlur('interestedProject')}
-                    className={`w-full px-4 py-3 rounded-xl border-2 transition-colors ${
-                      errors.interestedProject
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-300 focus:border-tatweer-orange'
-                    } focus:outline-none focus:ring-2 focus:ring-tatweer-orange focus:ring-offset-2`}
-                  >
-                    <option value="">اختر الوحدة المهتم بها</option>
-                    {PROJECT_OPTIONS.map((project) => (
-                      <option key={project.id} value={project.id}>
-                        {project.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.interestedProject && (
-                    <p className="mt-1 text-sm text-red-500">{errors.interestedProject}</p>
-                  )}
-                </div>
+            <p className="text-center font-arabic text-base md:text-lg font-bold text-orange-700 pt-1">
+              العدد محدود — سجل الآن
+            </p>
 
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: isFormValid() && !isSubmitting ? 1.02 : 1 }}
-                  whileTap={{ scale: isFormValid() && !isSubmitting ? 0.98 : 1 }}
-                  className={`w-full px-6 py-4 rounded-xl font-semibold text-white transition-all duration-200 shadow-lg ${
-                    isFormValid() && !isSubmitting
-                      ? 'bg-tatweer-orange hover:bg-orange-600 cursor-pointer'
-                      : 'bg-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  {isSubmitting ? 'جاري الإرسال...' : 'إرسال والحصول على البروشور'}
-                </motion.button>
+            <motion.button
+              type="submit"
+              disabled={isSubmitting || !canSubmit}
+              whileHover={{ scale: canSubmit && !isSubmitting ? 1.01 : 1 }}
+              whileTap={{ scale: canSubmit && !isSubmitting ? 0.99 : 1 }}
+              className={`w-full py-4 md:py-5 text-sm sm:text-base md:text-lg leading-snug rounded-xl font-bold font-arabic text-white transition-colors min-h-[52px] md:min-h-[56px] shadow-md ${
+                canSubmit && !isSubmitting
+                  ? 'bg-modon-black hover:bg-black cursor-pointer'
+                  : 'bg-gray-400 cursor-not-allowed'
+              }`}
+            >
+              {isSubmitting ? 'جاري الإرسال...' : 'احصل على البروشور وتواصل معنا'}
+            </motion.button>
           </motion.form>
+
+          <div className="mt-8 pt-6 border-t border-modon-black/10 space-y-4 text-center">
+            <p className="font-arabic text-base font-semibold text-modon-black">أو اتصل بنا مباشرة</p>
+            <a
+              href={`tel:${config.phoneNumber}`}
+              className="block font-arabic text-lg font-bold text-modon-black hover:underline"
+              dir="ltr"
+            >
+              {config.phoneDisplay || config.phoneNumber}
+            </a>
+            <a
+              href={`https://wa.me/${config.whatsappNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 font-arabic text-base font-bold text-white hover:bg-[#20BD5A] transition-colors"
+            >
+              تواصل عبر واتساب
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -330,4 +297,3 @@ const LeadForm = () => {
 };
 
 export default LeadForm;
-

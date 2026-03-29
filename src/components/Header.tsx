@@ -1,94 +1,210 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { config } from '../config';
 
+const LOGO = './assets/hero/modon-logo.png';
+
 const NAV_LINKS = [
-  { href: '#project-highlights', label: 'Project Highlights' },
-  { href: '#architecture-design', label: 'Architecture & Design' },
-  { href: '#project-zones', label: 'Project Zones' },
-  { href: '#location-map', label: 'Location Map' },
-  { href: '#lead-form', label: 'Make an Inquiry' },
+  { href: '#ras-el-hekma-vision', label: 'الرؤية' },
+  { href: '#wadi-yemm', label: 'وادي يم' },
+  { href: '#available-units', label: 'الوحدات' },
+  { href: '#payment-plan', label: 'خطة السداد' },
+  { href: '#construction-updates', label: 'التنفيذ' },
+  { href: '#lead-form', label: 'التسجيل' },
 ];
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const updateScrollState = () => {
       setScrolled(window.scrollY > 20);
+      const hero = document.getElementById('hero');
+      if (hero) {
+        const { bottom } = hero.getBoundingClientRect();
+        setPastHero(bottom <= 72);
+      } else {
+        setPastHero(window.scrollY > window.innerHeight * 0.85);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    updateScrollState();
+    window.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    return () => {
+      window.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDoc = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, [menuOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
       e.preventDefault();
-      const el = document.querySelector(href);
-      el?.scrollIntoView({ behavior: 'smooth' });
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      setMenuOpen(false);
     }
-  };
+  }, []);
+
+  const headerOnLightBg = scrolled || menuOpen || pastHero;
+
+  const menuIconClass = headerOnLightBg ? 'text-modon-black' : 'text-white';
+
+  /** White logo only on transparent bar over hero; black once bar is solid or hero passed */
+  const logoUseLightOnHero = !headerOnLightBg;
 
   return (
     <motion.header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/80 backdrop-blur-md shadow-sm'
-          : 'bg-white/0 backdrop-blur-none'
+      ref={headerRef}
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        headerOnLightBg ? 'bg-modon-bg/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.35 }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <div className="flex items-center gap-4 md:gap-6">
+        <div className="flex h-16 md:h-20 items-center justify-between gap-4">
+          <a
+            href="#hero"
+            className="flex items-center shrink-0 min-h-[44px] min-w-[44px]"
+            onClick={(e) => scrollToSection(e, '#hero')}
+          >
             <img
-              src="./logos/tatweer-logo.png"
-              alt="Tatweer Misr"
-              className="h-8 md:h-10 w-auto object-contain"
+              src={LOGO}
+              alt="Modon"
+              width={326}
+              height={62}
+              className={`h-11 sm:h-12 md:h-[3.25rem] w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] object-contain object-start transition-[filter] duration-300 ${
+                logoUseLightOnHero ? 'brightness-0 invert' : 'brightness-0'
+              }`}
             />
-            <img
-              src="./logos/il-monte-galala-logo.png"
-              alt="IL Monte Galala - Red Sea Marina Towers"
-              className="h-10 md:h-12 w-auto object-contain invert"
-            />
-          </div>
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          </a>
+
+          <nav className="hidden lg:flex flex-1 items-center justify-end gap-1 xl:gap-2 flex-wrap" aria-label="القائمة الرئيسية">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-tatweer-orange transition-colors"
+                className={`px-2 xl:px-3 py-2 text-sm font-medium transition-colors font-arabic ${
+                  headerOnLightBg ? 'text-gray-800 hover:text-modon-black' : 'text-white/95 hover:text-white'
+                }`}
               >
                 {link.label}
               </a>
             ))}
             <a
               href={`tel:${config.phoneNumber}`}
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-tatweer-orange transition-colors"
+              className={`px-2 xl:px-3 py-2 text-sm font-medium transition-colors font-arabic ${
+                headerOnLightBg ? 'text-gray-800 hover:text-modon-black' : 'text-white/95 hover:text-white'
+              }`}
             >
-              اتصل بنا
+              اتصل
             </a>
             <a
               href={`https://wa.me/${config.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-tatweer-orange transition-colors"
+              className={`px-2 xl:px-3 py-2 text-sm font-medium transition-colors font-arabic ${
+                headerOnLightBg ? 'text-gray-800 hover:text-modon-black' : 'text-white/95 hover:text-white'
+              }`}
             >
               واتساب
             </a>
             <a
               href="#lead-form"
               onClick={(e) => scrollToSection(e, '#lead-form')}
-              className="px-5 py-2 bg-tatweer-orange text-white rounded-xl hover:bg-orange-600 transition-all duration-200 hover:scale-105 font-medium shadow-md"
+              className="px-4 py-2 bg-modon-black text-white rounded text-sm font-semibold hover:bg-black transition-colors shadow-md font-arabic whitespace-nowrap"
             >
-              تحميل البروشور
+              سجل اهتمامك
             </a>
           </nav>
+
+          <button
+            type="button"
+            className={`lg:hidden flex flex-col justify-center gap-1.5 p-3 min-w-[48px] min-h-[48px] rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ${menuIconClass}`}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            <span
+              className={`block h-0.5 w-6 bg-current transition-transform ${menuOpen ? 'translate-y-2 rotate-45' : ''}`}
+            />
+            <span className={`block h-0.5 w-6 bg-current transition-opacity ${menuOpen ? 'opacity-0' : ''}`} />
+            <span
+              className={`block h-0.5 w-6 bg-current transition-transform ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`}
+            />
+          </button>
         </div>
       </div>
+
+      <AnimatePresence>
+        {menuOpen ? (
+          <motion.div
+            id="mobile-nav"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="lg:hidden overflow-hidden bg-modon-bg border-t border-gray-200 shadow-lg"
+          >
+            <nav className="container mx-auto px-4 py-4 flex flex-col" aria-label="القائمة للموبايل">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => scrollToSection(e, link.href)}
+                  className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href={`tel:${config.phoneNumber}`}
+                className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
+              >
+                اتصل بنا
+              </a>
+              <a
+                href={`https://wa.me/${config.whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
+              >
+                واتساب
+              </a>
+              <a
+                href="#lead-form"
+                onClick={(e) => scrollToSection(e, '#lead-form')}
+                className="mt-3 mx-2 py-4 text-center bg-modon-black text-white rounded text-lg font-bold font-arabic"
+              >
+                سجل اهتمامك الآن
+              </a>
+            </nav>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </motion.header>
   );
 };

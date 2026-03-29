@@ -22,3 +22,23 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment and secrets (never commit)
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Test coverage
+coverage
+
+# Optional package manager caches
+.pnpm-store
+.yarn/cache
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
