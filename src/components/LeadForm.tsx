@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { m } from 'framer-motion';
 import { config } from '../config';
 import { units } from '../data/units';
+import { useInView } from '../hooks/useInView';
 
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${config.formspreeFormId}`;
 
@@ -23,6 +23,7 @@ const normalizeDigits = (value: string) => value.replace(/\D/g, '');
 
 const LeadForm = () => {
   const navigate = useNavigate();
+  const { ref, inView } = useInView();
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     phoneNumber: '',
@@ -140,13 +141,9 @@ const LeadForm = () => {
       id="lead-form"
       className="w-full px-4 sm:px-6 lg:px-8 pt-section-md md:pt-section-lg pb-2 md:pb-4 bg-modon-bg"
     >
-      <div className="container mx-auto max-w-lg">
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-          className="rounded-2xl border border-modon-black/10 bg-modon-sand shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-7 md:p-10"
+      <div className="container mx-auto max-w-lg" ref={ref}>
+        <div
+          className={`rounded-2xl border border-modon-black/10 bg-modon-sand shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-7 md:p-10 ${inView ? 'animate-fade-in-up' : 'before-animate'}`}
         >
           <div className="text-center border-b border-modon-black/10 pb-6 mb-8">
             <h2 className="font-heading text-2xl md:text-3xl font-bold text-modon-black tracking-heading">
@@ -157,7 +154,7 @@ const LeadForm = () => {
             </p>
           </div>
 
-          <m.form onSubmit={handleSubmit} className="space-y-6 text-right">
+          <form onSubmit={handleSubmit} className="space-y-6 text-right">
             <div>
               <label htmlFor="fullName" className="block text-base font-semibold text-modon-black mb-2 font-arabic">
                 الاسم الكامل <span className="text-red-600">*</span>
@@ -257,20 +254,18 @@ const LeadForm = () => {
               العدد محدود — سجل الآن
             </p>
 
-            <m.button
+            <button
               type="submit"
               disabled={isSubmitting || !canSubmit}
-              whileHover={{ scale: canSubmit && !isSubmitting ? 1.01 : 1 }}
-              whileTap={{ scale: canSubmit && !isSubmitting ? 0.99 : 1 }}
-              className={`w-full py-4 md:py-5 text-sm sm:text-base md:text-lg leading-snug rounded-xl font-bold font-arabic text-white transition-colors min-h-[52px] md:min-h-[56px] shadow-md ${
+              className={`w-full py-4 md:py-5 text-sm sm:text-base md:text-lg leading-snug rounded-xl font-bold font-arabic text-white transition-colors min-h-[52px] md:min-h-[56px] shadow-md hover-scale-xs ${
                 canSubmit && !isSubmitting
                   ? 'bg-[#16a34a] hover:bg-[#15803d] cursor-pointer'
                   : 'bg-gray-400 cursor-not-allowed'
               }`}
             >
               {isSubmitting ? 'جاري الإرسال...' : '📥 احصل على البروشور وتواصل معنا'}
-            </m.button>
-          </m.form>
+            </button>
+          </form>
 
           <div className="mt-8 pt-6 border-t border-modon-black/10 space-y-4 text-center">
             <p className="font-arabic text-base font-semibold text-modon-black">أو اتصل بنا مباشرة</p>
@@ -290,7 +285,7 @@ const LeadForm = () => {
               تواصل عبر واتساب
             </a>
           </div>
-        </m.div>
+        </div>
       </div>
     </section>
   );

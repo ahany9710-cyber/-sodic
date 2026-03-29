@@ -1,39 +1,39 @@
-import { motion } from 'framer-motion';
+import { useInView } from '../hooks/useInView';
 import { config } from '../config';
 
 const LOGO = './assets/hero/modon-logo.png';
 
 const Footer = () => {
+  const { ref, inView } = useInView();
+
   const scrollToForm = () => {
     document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <footer className="bg-modon-black text-gray-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-section-sm md:py-section-md">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-section-sm md:py-section-md" ref={ref}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-          >
-            <img src={LOGO} alt="Modon Holding" className="h-10 w-auto object-contain brightness-0 invert mb-4" />
+          <div className={inView ? 'animate-fade-in-up' : 'before-animate'}>
+            <img
+              src={LOGO}
+              alt="Modon Holding"
+              className="h-10 w-auto object-contain brightness-0 invert mb-4"
+              width={200}
+              height={38}
+            />
             <p className="text-gray-400 leading-relaxed font-arabic text-right text-base">
               مدن القابضة — مشروع رأس الحكمة: وجهة متوسطية فاخرة على الساحل الشمالي، حيث يلتقي التصميم الراقي بطبيعة البحر الأبيض المتوسط.
             </p>
             <p className="mt-4 text-base text-gray-500 font-heading">
               Ras El Hekma, North Coast
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.05 }}
+          <div
+            className={inView ? 'animate-fade-in-up delay-50' : 'before-animate'}
           >
-            <h4 className="font-heading text-lg font-semibold text-white mb-4">اتصل بنا</h4>
+            <h3 className="font-heading text-lg font-semibold text-white mb-4">اتصل بنا</h3>
             <div className="space-y-3 text-right">
               <a
                 href={`tel:${config.phoneNumber}`}
@@ -63,25 +63,20 @@ const Footer = () => {
                 </svg>
               </a>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.1 }}
+          <div
+            className={inView ? 'animate-fade-in-up delay-100' : 'before-animate'}
           >
-            <h4 className="font-heading text-lg font-semibold text-white mb-4">روابط</h4>
+            <h3 className="font-heading text-lg font-semibold text-white mb-4">روابط</h3>
             <div className="space-y-4 text-right">
-              <motion.button
+              <button
                 type="button"
                 onClick={scrollToForm}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="block w-full py-4 px-4 bg-white text-modon-black rounded font-bold font-arabic text-base hover:bg-modon-sand transition-colors shadow-md"
+                className="block w-full py-4 px-4 bg-white text-modon-black rounded font-bold font-arabic text-base hover:bg-modon-sand transition-colors shadow-md hover-scale-sm"
               >
                 سجل اهتمامك
-              </motion.button>
+              </button>
               <a
                 href={`tel:${config.phoneNumber}`}
                 className="block text-base text-gray-300 hover:text-white transition-colors font-arabic"
@@ -89,20 +84,17 @@ const Footer = () => {
                 اتصل الآن
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-12 pt-8 border-t border-white/10 text-center text-base text-gray-500"
+        <div
+          className={`mt-12 pt-8 border-t border-white/10 text-center text-base text-gray-500 ${inView ? 'animate-fade-in delay-200' : 'before-animate'}`}
         >
           <p>&copy; {new Date().getFullYear()} Modon Holding. جميع الحقوق محفوظة.</p>
           <p className="mt-2 font-arabic text-gray-400">
             الموقع لأغراض إعلامية — قد تتغير الأسعار والتفاصيل دون إشعار مسبق.
           </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

@@ -1,23 +1,21 @@
-import { m } from 'framer-motion';
 import { units } from '../data/units';
+import { useInView } from '../hooks/useInView';
 
 const scrollToForm = () => {
   document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
 };
 
 const UnitCards = () => {
+  const { ref, inView } = useInView();
+
   return (
     <section
       id="available-units"
       className="w-full px-4 sm:px-6 lg:px-8 py-section-md md:py-section-lg bg-modon-bg"
     >
-      <div className="container mx-auto max-w-6xl">
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-          className="text-center mb-12 md:mb-16"
+      <div className="container mx-auto max-w-6xl" ref={ref}>
+        <div
+          className={`text-center mb-12 md:mb-16 ${inView ? 'animate-fade-in-up' : 'before-animate'}`}
         >
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-modon-black tracking-heading">
             الوحدات المتاحة
@@ -25,17 +23,14 @@ const UnitCards = () => {
           <p className="font-heading text-lg md:text-xl text-gray-600 mt-3 tracking-wide">
             Available Units
           </p>
-          </m.div>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10">
           {units.map((unit, index) => (
-            <m.article
+            <article
               key={unit.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: index * 0.06 }}
-              className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col w-full max-w-sm sm:max-w-none mx-auto sm:mx-0"
+              className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col w-full max-w-sm sm:max-w-none mx-auto sm:mx-0 ${inView ? 'animate-fade-in-up' : 'before-animate'}`}
+              style={inView ? { animationDelay: `${index * 60}ms` } : undefined}
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
                 <img
@@ -43,6 +38,8 @@ const UnitCards = () => {
                   alt={unit.nameAr}
                   className="w-full h-full object-cover"
                   loading="lazy"
+                  width={600}
+                  height={450}
                 />
                 {unit.badges && unit.badges.length > 0 ? (
                   <div className="absolute top-3 end-3 flex flex-wrap gap-1.5 justify-end max-w-[85%]">
@@ -79,7 +76,7 @@ const UnitCards = () => {
                   سجل اهتمامك
                 </button>
               </div>
-            </m.article>
+            </article>
           ))}
         </div>
       </div>

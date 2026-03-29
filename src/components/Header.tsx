@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
 import { config } from '../config';
 
 const LOGO = './assets/hero/modon-logo.png';
@@ -66,21 +65,15 @@ const Header = () => {
   }, []);
 
   const headerOnLightBg = scrolled || menuOpen || pastHero;
-
   const menuIconClass = headerOnLightBg ? 'text-modon-black' : 'text-white';
-
-  /** White logo only on transparent bar over hero; black once bar is solid or hero passed */
   const logoUseLightOnHero = !headerOnLightBg;
 
   return (
-    <m.header
+    <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 animate-slide-down ${
         headerOnLightBg ? 'bg-modon-bg/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
       }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.35 }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 md:h-20 items-center justify-between gap-4">
@@ -159,53 +152,45 @@ const Header = () => {
         </div>
       </div>
 
-      <AnimatePresence>
-        {menuOpen ? (
-          <m.div
-            id="mobile-nav"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="lg:hidden overflow-hidden bg-modon-bg border-t border-gray-200 shadow-lg"
+      <div
+        id="mobile-nav"
+        className={`lg:hidden bg-modon-bg border-t border-gray-200 shadow-lg menu-panel ${menuOpen ? 'menu-open' : ''}`}
+      >
+        <nav className="container mx-auto px-4 py-4 flex flex-col" aria-label="القائمة للموبايل">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => scrollToSection(e, link.href)}
+              className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href={`tel:${config.phoneNumber}`}
+            className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
           >
-            <nav className="container mx-auto px-4 py-4 flex flex-col" aria-label="القائمة للموبايل">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => scrollToSection(e, link.href)}
-                  className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href={`tel:${config.phoneNumber}`}
-                className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
-              >
-                اتصل بنا
-              </a>
-              <a
-                href={`https://wa.me/${config.whatsappNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
-              >
-                واتساب
-              </a>
-              <a
-                href="#lead-form"
-                onClick={(e) => scrollToSection(e, '#lead-form')}
-                className="mt-3 mx-2 py-4 text-center bg-modon-black text-white rounded text-lg font-bold font-arabic"
-              >
-                سجل اهتمامك الآن
-              </a>
-            </nav>
-          </m.div>
-        ) : null}
-      </AnimatePresence>
-    </m.header>
+            اتصل بنا
+          </a>
+          <a
+            href={`https://wa.me/${config.whatsappNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
+          >
+            واتساب
+          </a>
+          <a
+            href="#lead-form"
+            onClick={(e) => scrollToSection(e, '#lead-form')}
+            className="mt-3 mx-2 py-4 text-center bg-modon-black text-white rounded text-lg font-bold font-arabic"
+          >
+            سجل اهتمامك الآن
+          </a>
+        </nav>
+      </div>
+    </header>
   );
 };
 
