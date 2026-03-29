@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { config } from '../config';
 
 const LOGO = './assets/hero/modon-logo.png';
@@ -73,7 +73,7 @@ const Header = () => {
   const logoUseLightOnHero = !headerOnLightBg;
 
   return (
-    <motion.header
+    <m.header
       ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
         headerOnLightBg ? 'bg-modon-bg/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
@@ -161,7 +161,7 @@ const Header = () => {
 
       <AnimatePresence>
         {menuOpen ? (
-          <motion.div
+          <m.div
             id="mobile-nav"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -202,10 +202,10 @@ const Header = () => {
                 سجل اهتمامك الآن
               </a>
             </nav>
-          </motion.div>
+          </m.div>
         ) : null}
       </AnimatePresence>
-    </motion.header>
+    </m.header>
   );
 };
 

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { units } from '../data/units';
 
 const scrollToForm = () => {
@@ -12,7 +12,7 @@ const UnitCards = () => {
       className="w-full px-4 sm:px-6 lg:px-8 py-section-md md:py-section-lg bg-modon-bg"
     >
       <div className="container mx-auto max-w-6xl">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -25,11 +25,11 @@ const UnitCards = () => {
           <p className="font-heading text-lg md:text-xl text-gray-600 mt-3 tracking-wide">
             Available Units
           </p>
-        </motion.div>
+          </m.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10">
           {units.map((unit, index) => (
-            <motion.article
+            <m.article
               key={unit.id}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ const UnitCards = () => {
                   سجل اهتمامك
                 </button>
               </div>
-            </motion.article>
+            </m.article>
           ))}
         </div>
       </div>

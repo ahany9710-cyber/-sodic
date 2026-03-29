@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 interface NarrativeSectionProps {
   id?: string;
@@ -33,7 +33,7 @@ const NarrativeSection = ({
     >
       <div className="container mx-auto max-w-6xl">
         {title ? (
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -41,12 +41,12 @@ const NarrativeSection = ({
             className="font-heading text-2xl md:text-3xl font-bold text-modon-black mb-10 md:mb-14 text-center tracking-heading"
           >
             {title}
-          </motion.h2>
+          </m.h2>
         ) : null}
 
         {/* LTR grid so image left/right matches design regardless of page RTL */}
         <div dir="ltr" className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: imagePosition === 'left' ? -24 : 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-60px' }}
@@ -59,8 +59,8 @@ const NarrativeSection = ({
               className="w-full h-full object-cover aspect-[4/3] md:min-h-[280px]"
               loading="lazy"
             />
-          </motion.div>
-          <motion.div
+          </m.div>
+          <m.div
             dir="rtl"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ const NarrativeSection = ({
             className={`${textOrder} font-arabic text-xl md:text-2xl text-gray-800 leading-loose`}
           >
             <p className="text-right">{text}</p>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

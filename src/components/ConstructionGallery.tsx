@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const images = [
   { src: './assets/cons/cons-1.jpg', alt: 'متابعة أعمال التنفيذ — لقطة 1' },
@@ -13,7 +13,7 @@ const ConstructionGallery = () => {
       className="w-full px-4 sm:px-6 lg:px-8 py-section-md md:py-section-lg bg-modon-bg"
     >
       <div className="container mx-auto max-w-6xl">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -26,11 +26,11 @@ const ConstructionGallery = () => {
           <p className="font-arabic text-lg md:text-xl text-gray-600 mt-4 max-w-2xl mx-auto leading-relaxed">
             أحدث صور من موقع المشروع — رأس الحكمة
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {images.map((img, index) => (
-            <motion.div
+            <m.div
               key={img.src}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ const ConstructionGallery = () => {
                 className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 loading="lazy"
               />
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

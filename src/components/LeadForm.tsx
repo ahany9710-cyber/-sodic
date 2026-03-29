@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { config } from '../config';
 import { units } from '../data/units';
 
@@ -141,7 +141,7 @@ const LeadForm = () => {
       className="w-full px-4 sm:px-6 lg:px-8 pt-section-md md:pt-section-lg pb-2 md:pb-4 bg-modon-bg"
     >
       <div className="container mx-auto max-w-lg">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -157,7 +157,7 @@ const LeadForm = () => {
             </p>
           </div>
 
-          <motion.form onSubmit={handleSubmit} className="space-y-6 text-right">
+          <m.form onSubmit={handleSubmit} className="space-y-6 text-right">
             <div>
               <label htmlFor="fullName" className="block text-base font-semibold text-modon-black mb-2 font-arabic">
                 الاسم الكامل <span className="text-red-600">*</span>
@@ -257,20 +257,20 @@ const LeadForm = () => {
               العدد محدود — سجل الآن
             </p>
 
-            <motion.button
+            <m.button
               type="submit"
               disabled={isSubmitting || !canSubmit}
               whileHover={{ scale: canSubmit && !isSubmitting ? 1.01 : 1 }}
               whileTap={{ scale: canSubmit && !isSubmitting ? 0.99 : 1 }}
               className={`w-full py-4 md:py-5 text-sm sm:text-base md:text-lg leading-snug rounded-xl font-bold font-arabic text-white transition-colors min-h-[52px] md:min-h-[56px] shadow-md ${
                 canSubmit && !isSubmitting
-                  ? 'bg-modon-black hover:bg-black cursor-pointer'
+                  ? 'bg-[#16a34a] hover:bg-[#15803d] cursor-pointer'
                   : 'bg-gray-400 cursor-not-allowed'
               }`}
             >
-              {isSubmitting ? 'جاري الإرسال...' : 'احصل على البروشور وتواصل معنا'}
-            </motion.button>
-          </motion.form>
+              {isSubmitting ? 'جاري الإرسال...' : '📥 احصل على البروشور وتواصل معنا'}
+            </m.button>
+          </m.form>
 
           <div className="mt-8 pt-6 border-t border-modon-black/10 space-y-4 text-center">
             <p className="font-arabic text-base font-semibold text-modon-black">أو اتصل بنا مباشرة</p>
@@ -290,7 +290,7 @@ const LeadForm = () => {
               تواصل عبر واتساب
             </a>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

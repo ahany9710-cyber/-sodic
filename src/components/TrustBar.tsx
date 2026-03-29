@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 const STATS = [
   { value: '17', label: 'حي سكني', sub: '17 Residential Districts' },
-  { value: 'مدن', label: 'المطور', sub: 'Madin Holding' },
+  { value: 'مدن', label: 'المطور', sub: 'Modon Holding' },
   { value: 'الساحل الشمالي', label: 'الموقع', sub: 'North Coast' },
   { value: '2028', label: 'التسليم المتوقع', sub: 'Expected delivery' },
 ];
