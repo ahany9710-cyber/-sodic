@@ -17,7 +17,7 @@ export const config = {
   phoneDisplay: '+20 110 159 7571',
 
   // ——— Google Ads ———
-  gtag_id: 'AW-17872457649',
+  gtag_id: 'G-CQPNMR765S',
   conversion_id: '',
   conversion_label: '19hmCPvcm_kbELGfoMpC',
 
