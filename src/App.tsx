@@ -14,7 +14,7 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="min-h-screen bg-modon-bg">
+            <div className="min-h-screen bg-white">
               <Header />
               <Landing />
               <Footer />

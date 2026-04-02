@@ -1,70 +1,75 @@
-export interface UnitType {
+export interface Unit {
   id: string;
-  name: string;
-  nameAr: string;
-  bedrooms: string;
-  /** Prominent Arabic line for bedroom count */
-  bedroomsAr: string;
+  project: string;
+  type: string;
   area: string;
-  startingPrice: string;
-  /** Shown as pills on the card (e.g. New Launch, Most Spacious) */
-  badges?: string[];
+  price: number;
+  details: string;
   image: string;
 }
 
-export const units: UnitType[] = [
+export const units: Unit[] = [
   {
-    id: 'chalet-1bd',
-    name: 'Chalet 1 Bedroom',
-    nameAr: 'شاليه غرفة نوم واحدة',
-    bedrooms: '1 BD',
-    bedroomsAr: 'غرفة واحدة',
-    area: '93 sqm',
-    startingPrice: 'Starting 14M EGP',
-    badges: ['إطلاق جديد'],
-    image: './assets/types/chalet-1bd.jpg',
+    id: 'sodic-east-townhouse',
+    project: 'SODIC East',
+    type: 'Townhouse',
+    area: '234 sqm',
+    price: 30000000,
+    details: '5% Downpayment - 8 Years Installments',
+    image: './sections/units/townhouse.png',
   },
   {
-    id: 'chalet-2bd',
-    name: 'Chalet 2 Bedrooms',
-    nameAr: 'شاليه غرفتي نوم',
-    bedrooms: '2 BDs',
-    bedroomsAr: 'غرفتين',
-    area: '145 sqm',
-    startingPrice: 'Starting 20M EGP',
-    badges: ['إطلاق جديد', 'الأوسع'],
-    image: './assets/types/chalet-2bd.jpg',
+    id: 'sodic-east-apartment',
+    project: 'SODIC East',
+    type: 'Apartment',
+    area: '141 sqm',
+    price: 13000000,
+    details: 'Fully Finished - Delivery 4 Years',
+    image: './sections/units/apartment.png',
   },
   {
-    id: 'chalet-3bd',
-    name: 'Chalet 3 Bedrooms',
-    nameAr: 'شاليه 3 غرف نوم',
-    bedrooms: '3 BDs',
-    bedroomsAr: '3 غرف',
-    area: '199 sqm',
-    startingPrice: 'Starting 25M EGP',
-    badges: ['إطلاق جديد'],
-    image: './assets/types/chalet-3bd.jpg',
+    id: 'sodic-east-standalone',
+    project: 'SODIC East',
+    type: 'Standalone',
+    area: '392 sqm',
+    price: 68000000,
+    details: '—',
+    image: './sections/units/villa.png',
   },
   {
-    id: 'townhouse',
-    name: 'Townhouse',
-    nameAr: 'تاون هاوس',
-    bedrooms: '3 / 4 BDs',
-    bedroomsAr: '3–4 غرف',
-    area: '248–255 sqm',
-    startingPrice: 'Starting 37M EGP',
-    image: './assets/types/townhouse.jpg',
+    id: 'villette-serviced',
+    project: 'Villette',
+    type: 'Serviced Apt',
+    area: '—',
+    price: 36000000,
+    details: '2 Bedrooms (Serviced)',
+    image: './sections/units/apartment2.png',
   },
   {
-    id: 'villa',
-    name: 'Standalone Villa',
-    nameAr: 'فيلا مستقلة',
-    bedrooms: 'Villa',
-    bedroomsAr: 'فيلا',
-    area: '253–376 sqm',
-    startingPrice: 'Starting 72M EGP',
-    badges: ['إطلاق جديد'],
-    image: './assets/types/villa.jpg',
+    id: 'eastvale-apartment',
+    project: 'Eastvale',
+    type: 'Apartment',
+    area: '140 sqm',
+    price: 18000000,
+    details: 'Fully Finished',
+    image: './sections/units/apartment.png',
+  },
+  {
+    id: 'vye-karmell-apartment',
+    project: 'Vye & Karmell',
+    type: 'Apartment',
+    area: '—',
+    price: 15000000,
+    details: '2 Bedrooms',
+    image: './sections/units/apartment2.png',
+  },
+  {
+    id: 'ogami-apartment',
+    project: 'Ogami (North Coast)',
+    type: 'Chalet',
+    area: '120 sqm',
+    price: 17000000,
+    details: '2 Bedrooms',
+    image: './sections/units/ogami-north.png',
   },
 ];

@@ -1,41 +1,25 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { config } from '../config';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronDown, Menu, Search, X } from 'lucide-react';
 
-const LOGO = './assets/hero/modon-logo.png';
+const LOGO = './sections/hero/logo.svg';
 
 const NAV_LINKS = [
-  { href: '#ras-el-hekma-vision', label: 'الرؤية' },
-  { href: '#wadi-yemm', label: 'وادي يم' },
-  { href: '#available-units', label: 'الوحدات' },
-  { href: '#payment-plan', label: 'خطة السداد' },
-  { href: '#construction-updates', label: 'التنفيذ' },
-  { href: '#lead-form', label: 'التسجيل' },
+  { href: '#community-section', label: 'About Sodic' },
+  { href: '#interactive-filter', label: 'Developments' },
+  { href: '#property-finder', label: 'Life at Sodic' },
 ];
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [pastHero, setPastHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const updateScrollState = () => {
-      setScrolled(window.scrollY > 20);
-      const hero = document.getElementById('hero');
-      if (hero) {
-        const { bottom } = hero.getBoundingClientRect();
-        setPastHero(bottom <= 72);
-      } else {
-        setPastHero(window.scrollY > window.innerHeight * 0.85);
-      }
-    };
+    const updateScrollState = () => setScrolled(window.scrollY > 24);
     updateScrollState();
     window.addEventListener('scroll', updateScrollState, { passive: true });
-    window.addEventListener('resize', updateScrollState);
-    return () => {
-      window.removeEventListener('scroll', updateScrollState);
-      window.removeEventListener('resize', updateScrollState);
-    };
+    return () => window.removeEventListener('scroll', updateScrollState);
   }, []);
 
   useEffect(() => {
@@ -49,147 +33,115 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', onDoc);
   }, [menuOpen]);
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [menuOpen]);
-
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-      setMenuOpen(false);
-    }
+    if (!href.startsWith('#')) return;
+    e.preventDefault();
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    setMenuOpen(false);
   }, []);
 
-  const headerOnLightBg = scrolled || menuOpen || pastHero;
-  const menuIconClass = headerOnLightBg ? 'text-modon-black' : 'text-white';
-  const logoUseLightOnHero = !headerOnLightBg;
+  const lightMode = scrolled || menuOpen;
 
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 animate-slide-down ${
-        headerOnLightBg ? 'bg-modon-bg/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        lightMode ? 'bg-white/95 backdrop-blur-md border-b border-gray-100' : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 md:h-20 items-center justify-between gap-4">
-          <a
-            href="#hero"
-            className="flex items-center shrink-0 min-h-[44px] min-w-[44px]"
-            onClick={(e) => scrollToSection(e, '#hero')}
-          >
+      <div className="mx-auto max-w-[1600px] px-6 md:px-8 lg:px-10">
+        <div className="flex h-16 items-center justify-between gap-6 md:h-20">
+          <a href="#hero" onClick={(e) => scrollToSection(e, '#hero')} className="inline-flex items-center">
             <img
               src={LOGO}
-              alt="Modon"
-              width={326}
-              height={62}
-              className={`h-11 sm:h-12 md:h-[3.25rem] w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] object-contain object-start transition-[filter] duration-300 ${
-                logoUseLightOnHero ? 'brightness-0 invert' : 'brightness-0'
-              }`}
+              alt="SODIC"
+              className={`h-5 w-auto transition-[filter] duration-300 ${lightMode ? 'brightness-0' : 'brightness-0 invert'}`}
             />
           </a>
 
-          <nav className="hidden lg:flex flex-1 items-center justify-end gap-1 xl:gap-2 flex-wrap" aria-label="القائمة الرئيسية">
+          <nav className="hidden lg:flex items-center gap-6" aria-label="Main navigation">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className={`px-2 xl:px-3 py-2 text-sm font-medium transition-colors font-arabic ${
-                  headerOnLightBg ? 'text-gray-800 hover:text-modon-black' : 'text-white/95 hover:text-white'
+                className={`inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                  lightMode ? 'text-zinc-700 hover:text-black' : 'text-white/90 hover:text-white'
                 }`}
               >
                 {link.label}
+                <ChevronDown size={13} />
               </a>
             ))}
             <a
-              href={`tel:${config.phoneNumber}`}
-              className={`px-2 xl:px-3 py-2 text-sm font-medium transition-colors font-arabic ${
-                headerOnLightBg ? 'text-gray-800 hover:text-modon-black' : 'text-white/95 hover:text-white'
-              }`}
-            >
-              اتصل
-            </a>
-            <a
-              href={`https://wa.me/${config.whatsappNumber}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`px-2 xl:px-3 py-2 text-sm font-medium transition-colors font-arabic ${
-                headerOnLightBg ? 'text-gray-800 hover:text-modon-black' : 'text-white/95 hover:text-white'
-              }`}
-            >
-              واتساب
-            </a>
-            <a
               href="#lead-form"
               onClick={(e) => scrollToSection(e, '#lead-form')}
-              className="px-4 py-2 bg-modon-black text-white rounded text-sm font-semibold hover:bg-black transition-colors shadow-md font-arabic whitespace-nowrap"
+              className={`px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] rounded-none border transition-colors ${
+                lightMode
+                  ? 'border-zinc-300 bg-white text-black hover:bg-zinc-100'
+                  : 'border-white/80 bg-white text-black hover:bg-zinc-100'
+              }`}
             >
-              سجل اهتمامك
+              Register Your Interest
             </a>
+            <button
+              type="button"
+              className={`grid h-8 w-8 place-items-center border rounded-none transition-colors ${
+                lightMode ? 'border-zinc-300 text-black' : 'border-white/70 text-white'
+              }`}
+              aria-label="Search"
+            >
+              <Search size={14} />
+            </button>
           </nav>
 
           <button
             type="button"
-            className={`lg:hidden flex flex-col justify-center gap-1.5 p-3 min-w-[48px] min-h-[48px] rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ${menuIconClass}`}
+            className={`lg:hidden grid h-10 w-10 place-items-center border rounded-none ${
+              lightMode ? 'border-zinc-300 text-black' : 'border-white/60 text-white'
+            }`}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
-            aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMenuOpen((v) => !v)}
           >
-            <span
-              className={`block h-0.5 w-6 bg-current transition-transform ${menuOpen ? 'translate-y-2 rotate-45' : ''}`}
-            />
-            <span className={`block h-0.5 w-6 bg-current transition-opacity ${menuOpen ? 'opacity-0' : ''}`} />
-            <span
-              className={`block h-0.5 w-6 bg-current transition-transform ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`}
-            />
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
-      <div
-        id="mobile-nav"
-        className={`lg:hidden bg-modon-bg border-t border-gray-200 shadow-lg menu-panel ${menuOpen ? 'menu-open' : ''}`}
-      >
-        <nav className="container mx-auto px-4 py-4 flex flex-col" aria-label="القائمة للموبايل">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => scrollToSection(e, link.href)}
-              className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href={`tel:${config.phoneNumber}`}
-            className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
+      <AnimatePresence>
+        {menuOpen ? (
+          <motion.div
+            id="mobile-nav"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="lg:hidden border-t border-gray-100 bg-white"
           >
-            اتصل بنا
-          </a>
-          <a
-            href={`https://wa.me/${config.whatsappNumber}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="py-4 px-2 text-lg font-medium text-gray-900 border-b border-gray-100 font-arabic active:bg-gray-50"
-          >
-            واتساب
-          </a>
-          <a
-            href="#lead-form"
-            onClick={(e) => scrollToSection(e, '#lead-form')}
-            className="mt-3 mx-2 py-4 text-center bg-modon-black text-white rounded text-lg font-bold font-arabic"
-          >
-            سجل اهتمامك الآن
-          </a>
-        </nav>
-      </div>
+            <nav className="px-6 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => scrollToSection(e, link.href)}
+                  className="py-3 text-sm font-semibold uppercase tracking-[0.1em] text-black border-b border-gray-100"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href="#lead-form"
+                onClick={(e) => scrollToSection(e, '#lead-form')}
+                className="mt-3 inline-flex justify-center border border-black bg-black px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white"
+              >
+                Register Your Interest
+              </a>
+            </nav>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 };

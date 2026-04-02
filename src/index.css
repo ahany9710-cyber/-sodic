@@ -7,13 +7,9 @@
     scroll-behavior: smooth;
   }
 
-  html[dir="rtl"] {
-    direction: rtl;
-  }
-
   body {
-    @apply bg-modon-bg text-gray-900 antialiased;
-    font-family: 'Inter', 'Cairo', system-ui, -apple-system, sans-serif;
+    @apply bg-white text-gray-900 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   * {
@@ -22,8 +18,16 @@
 }
 
 @layer components {
-  .section-sand {
-    @apply bg-modon-sand;
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 border border-white/80 bg-transparent px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white rounded-none transition-colors duration-200 hover:bg-white/10;
+  }
+
+  .btn-solid {
+    @apply inline-flex items-center justify-center bg-black px-8 py-4 text-base font-bold uppercase tracking-wide text-white rounded-none transition-colors duration-200 hover:bg-gray-900;
+  }
+
+  .card-glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-sm;
   }
 }
 
@@ -182,16 +186,3 @@
 .delay-800 { animation-delay: 800ms; }
 .delay-1000 { animation-delay: 1000ms; }
 .delay-1200 { animation-delay: 1200ms; }
-
-/* ── Mobile menu transition (replaces AnimatePresence) ── */
-
-.menu-panel {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease, opacity 0.25s ease;
-}
-.menu-panel.menu-open {
-  max-height: 600px;
-  opacity: 1;
-}

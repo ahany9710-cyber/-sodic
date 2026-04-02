@@ -1,77 +1,47 @@
+import { Phone } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { config } from '../config';
 
-const FloatingActionBar = () => {
-  const scrollToForm = () => {
-    document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+function WhatsAppIcon({ size = 18 }: { size?: number }) {
   return (
-    <>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden
+      className="shrink-0"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.881 9.884M8.207 4.628c-.252 0-.505.045-.747.15-.741.317-1.256 1.062-1.32 1.95-.064.888.334 1.69 1.008 2.248.134.11.347.347.347.521 0 .173-.097.346-.173.52-.075.173-.272.52-.371.693-.099.173-.198.347-.297.52-.099.173-.248.433-.099.693.149.26.694 1.265 1.474 2.109.98 1.074 1.905 1.627 2.173 1.774.073.041.156.059.241.059.13 0 .259-.051.355-.149.09-.092.166-.199.225-.313.212-.393.482-.909.675-1.205.193-.295.258-.347.433-.347.173 0 .297.099.446.173.149.074 1.05.496 1.229.595.18.099.297.149.446.248.149.099.248.198.371.297.124.099.198.248.297.396.099.149.149.297.248.446.099.149.052.297-.025.446-.075.149-.694 1.538-.954 2.105-.262.57-.527.496-.748.496-.223 0-.447.026-.671-.026-.223-.05-1.421-.379-1.422-.379-.223-.05-.371-.074-.519-.223-.149-.149-.322-.446-.322-.446-.149-.198-.248-.371-.149-.519.099-.149.149-.248.297-.396.149-.149.198-.297.347-.446.149-.149.099-.248.049-.347-.05-.099-.223-.595-.322-.793-.099-.198-.198-.248-.347-.396-.149-.149-.297-.074-.446-.025-.149.049-.971.481-1.118.555-.149.074-.248.124-.347.223-.099.099-.198.198-.297.347-.099.15-.347.446-.446.595-.099.149-.198.248-.347.248h-.099c-.099 0-.198-.026-.297-.099-.099-.074-.594-.293-.594-.293z" />
+    </svg>
+  );
+}
+
+const FloatingActionBar = () => {
+  return (
+    <motion.div
+      initial={{ x: 80, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.45, ease: 'easeOut', delay: 0.2 }}
+      className="fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3"
+    >
+      <a
+        href={`tel:${config.phoneNumber}`}
+        className="h-12 w-12 bg-black text-white rounded-full flex items-center justify-center shadow-xl transition-transform duration-200 hover:scale-105"
+        aria-label="Call us"
+      >
+        <Phone size={18} />
+      </a>
       <a
         href={`https://wa.me/${config.whatsappNumber}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="hidden md:flex fixed bottom-8 end-8 z-50 h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl ring-4 ring-white/90 hover:bg-[#20BD5A] focus:outline-none focus:ring-4 focus:ring-green-300 animate-scale-in delay-500 hover-scale"
-        aria-label="تواصل عبر واتساب"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition-all duration-200 hover:scale-105 hover:bg-[#20bd5a]"
+        aria-label="Contact via WhatsApp"
       >
-        <span className="flex items-center justify-center animate-bounce-y">
-          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-          </svg>
-        </span>
+        <WhatsAppIcon size={22} />
       </a>
-
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden animate-slide-up delay-300">
-        <div className="bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-2xl">
-          <div className="container mx-auto px-4 py-3">
-            <div className="grid grid-cols-3 gap-2">
-              <a
-                href={`tel:${config.phoneNumber}`}
-                className="flex flex-col items-center justify-center px-3 py-3 bg-modon-black text-white rounded hover:bg-black transition-all duration-200 shadow-lg hover-scale"
-              >
-                <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-                <span className="text-xs font-semibold">اتصل</span>
-              </a>
-
-              <a
-                href={`https://wa.me/${config.whatsappNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center px-3 py-3 bg-green-500 text-white rounded hover:bg-green-600 transition-all duration-200 shadow-lg hover-scale"
-              >
-                <svg className="w-5 h-5 mb-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                </svg>
-                <span className="text-xs font-semibold">واتساب</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={scrollToForm}
-                className="flex flex-col items-center justify-center px-3 py-3 border-2 border-modon-black bg-white text-modon-black rounded hover:bg-modon-black hover:text-white transition-all duration-200 shadow-lg hover-scale"
-              >
-                <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                  />
-                </svg>
-                <span className="text-xs font-semibold leading-tight text-center">سجل اهتمامك</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    </motion.div>
   );
 };
 

@@ -7,19 +7,18 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'Cairo', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['Inter', 'Cairo', 'sans-serif'],
-        arabic: ['Cairo', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['Montserrat', 'Inter', 'sans-serif'],
       },
       letterSpacing: {
         'heading': '0.02em',
       },
       colors: {
-        modon: {
-          sand: '#D2CAB7',
-          sandLight: '#E8E2D6',
-          bg: '#F9F9F9',
-          black: '#1A1A1A',
+        sodic: {
+          black: '#000000',
+          white: '#FFFFFF',
+          gray: '#F5F5F5',
+          border: '#E5E5E5',
         },
       },
       spacing: {
@@ -28,7 +27,8 @@ module.exports = {
         'section-lg': '7rem',
       },
       borderRadius: {
-        button: '0.25rem',
+        button: '0',
+        sm: '0.125rem',
       },
     },
   },
