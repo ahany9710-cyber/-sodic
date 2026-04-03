@@ -17,7 +17,7 @@ export const config = {
   phoneDisplay: '+20 111 091 1460',
 
   // ——— Google Ads ———
-  gtag_id: 'G-CQPNMR765S',
+  gtag_id: 'GT-K553HXRZ',
   conversion_id: '',
   conversion_label: '19hmCPvcm_kbELGfoMpC',
 
