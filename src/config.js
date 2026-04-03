@@ -8,13 +8,13 @@ export const config = {
   formspreeFormId: 'mqegddew',
 
   // WhatsApp number (without + or spaces for wa.me)
-  whatsappNumber: '201000805205',
+  whatsappNumber: '201110911460',
 
   // Phone for tel: links (with country code)
-  phoneNumber: '+201000805205',
+  phoneNumber: '+201110911460',
 
   // Display format for phone (optional)
-  phoneDisplay: '+20 100 080 5205',
+  phoneDisplay: '+20 111 091 1460',
 
   // ——— Google Ads ———
   gtag_id: 'G-CQPNMR765S',
