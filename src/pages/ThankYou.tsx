@@ -1,9 +1,15 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { trackConversion } from '../utils/gtag';
 
 const ThankYou = () => {
+  useEffect(() => {
+    trackConversion();
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <Header />

@@ -18,8 +18,8 @@ export const config = {
 
   // ——— Google Ads ———
   gtag_id: 'GT-K553HXRZ',
-  conversion_id: '',
-  conversion_label: '19hmCPvcm_kbELGfoMpC',
+  conversion_id: 'AW-18053013642',
+  conversion_label: 'hdAtCNPzoJUcEIrBrKBD',
 
   /** Legacy: optional external media URLs (hero/map). Leave empty when using /public/assets only. */
   heroVideoUrl: '',

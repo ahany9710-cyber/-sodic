@@ -39,15 +39,24 @@ export function initGtag(): void {
 }
 
 /**
- * Fires a Google Ads conversion event.
- * Call this on the Thank You page when both googleTagId and conversionLabel are set.
+ * Fires a Google Ads conversion event (submit lead form).
+ * Call on the thank-you page only — not in global head, or every visit would count as a conversion.
  */
 export function trackConversion(): void {
-  const cfg = config as { gtag_id?: string; googleTagId?: string; conversion_label?: string; conversionLabel?: string };
-  const tagId = (cfg.gtag_id || cfg.googleTagId || '').trim();
+  const cfg = config as {
+    conversion_id?: string;
+    conversionId?: string;
+    conversion_label?: string;
+    conversionLabel?: string;
+  };
+  const convId = (cfg.conversion_id || cfg.conversionId || '').trim();
   const label = (cfg.conversion_label || cfg.conversionLabel || '').trim();
-  if (!tagId || !label || typeof window.gtag !== 'function') {
+  if (!convId || !label || typeof window.gtag !== 'function') {
     return;
   }
-  window.gtag('event', 'conversion', { send_to: `${tagId}/${label}` });
+  window.gtag('event', 'conversion', {
+    send_to: `${convId}/${label}`,
+    value: 1.0,
+    currency: 'EGP',
+  });
 }
