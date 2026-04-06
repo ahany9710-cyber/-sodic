@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
-import { Plus } from 'lucide-react';
+import { MessageCircle, Plus } from 'lucide-react';
+import { trackMarketingContact } from '../utils/trackMarketing';
+import { getWhatsAppLink } from '../utils/whatsapp';
 
 const HERO_POSTER = './assets/hero/bg.webp';
 const HERO_VIDEO = './sections/hero/video.mp4';
@@ -7,6 +9,10 @@ const HERO_VIDEO = './sections/hero/video.mp4';
 const Hero = () => {
   const scrollToDevelopments = () => {
     document.getElementById('interactive-filter')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToLeadForm = () => {
+    document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -40,17 +46,38 @@ const Hero = () => {
             </h1>
           </motion.div>
 
-          <motion.button
-            type="button"
-            onClick={scrollToDevelopments}
+          <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.12 }}
-            className="mt-10 inline-flex items-center gap-2 border border-white/80 px-6 py-3 text-xs font-semibold tracking-[0.2em] text-white uppercase transition-colors hover:bg-white/10"
+            className="mt-10 flex flex-wrap gap-3"
           >
-            <Plus size={14} />
-            Our Developments
-          </motion.button>
+            <motion.button
+              type="button"
+              onClick={scrollToDevelopments}
+              className="inline-flex items-center gap-2 border border-white/80 px-6 py-3 text-xs font-semibold tracking-[0.2em] text-white uppercase transition-colors hover:bg-white/10"
+            >
+              <Plus size={14} />
+              Our Developments
+            </motion.button>
+            <motion.button
+              type="button"
+              onClick={scrollToLeadForm}
+              className="inline-flex items-center gap-2 border border-white bg-white px-6 py-3 text-xs font-semibold tracking-[0.2em] text-black uppercase transition-colors hover:bg-white/90"
+            >
+              Register Your Interest
+            </motion.button>
+            <motion.a
+              href={getWhatsAppLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackMarketingContact('whatsapp')}
+              className="inline-flex items-center gap-2 border border-[#25D366] bg-[#25D366]/95 px-6 py-3 text-xs font-semibold tracking-[0.2em] text-white uppercase transition-colors hover:bg-[#20bd5a]"
+            >
+              <MessageCircle size={14} />
+              WhatsApp
+            </motion.a>
+          </motion.div>
         </div>
       </div>
     </section>

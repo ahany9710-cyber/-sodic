@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { MessageCircle, Phone } from 'lucide-react';
 import { config } from '../config';
 import { LEAD_FORM_PROJECT_OPTIONS } from '../data/leadFormProjects';
+import { trackMarketingContact } from '../utils/trackMarketing';
+import { getWhatsAppLink } from '../utils/whatsapp';
 
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${config.formspreeFormId}`;
 
@@ -163,15 +165,17 @@ const LeadForm = () => {
           <div className="mt-3 flex flex-wrap gap-3">
             <a
               href={`tel:${config.phoneNumber}`}
+              onClick={() => trackMarketingContact('phone')}
               className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black"
             >
               <Phone size={14} />
               {config.phoneDisplay || config.phoneNumber}
             </a>
             <a
-              href={`https://wa.me/${config.whatsappNumber}`}
+              href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackMarketingContact('whatsapp')}
               className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black"
             >
               <MessageCircle size={14} />

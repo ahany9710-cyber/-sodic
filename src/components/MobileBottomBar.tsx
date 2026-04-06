@@ -1,10 +1,9 @@
-import { Phone } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { FileText, Phone } from 'lucide-react';
 import { config } from '../config';
 import { trackMarketingContact } from '../utils/trackMarketing';
 import { getWhatsAppLink } from '../utils/whatsapp';
 
-function WhatsAppIcon({ size = 18 }: { size?: number }) {
+function WhatsAppIcon({ size = 20 }: { size?: number }) {
   return (
     <svg
       width={size}
@@ -19,34 +18,50 @@ function WhatsAppIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-const FloatingActionBar = () => {
+const MobileBottomBar = () => {
+  const scrollToLeadForm = () => {
+    document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <motion.div
-      initial={{ x: 80, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.45, ease: 'easeOut', delay: 0.2 }}
-      className="fixed right-4 top-1/2 z-50 hidden -translate-y-1/2 flex-col gap-3 md:flex"
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 flex border-t border-zinc-200 bg-white/95 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden"
+      aria-label="Quick contact"
     >
       <a
         href={`tel:${config.phoneNumber}`}
         onClick={() => trackMarketingContact('phone')}
-        className="h-12 w-12 bg-black text-white rounded-full flex items-center justify-center shadow-xl transition-transform duration-200 hover:scale-105"
-        aria-label="Call us"
+        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-800"
       >
-        <Phone size={18} />
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white">
+          <Phone size={18} />
+        </span>
+        Call
       </a>
       <a
         href={getWhatsAppLink()}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackMarketingContact('whatsapp')}
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition-all duration-200 hover:scale-105 hover:bg-[#20bd5a]"
-        aria-label="Contact via WhatsApp"
+        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-800"
       >
-        <WhatsAppIcon size={22} />
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white">
+          <WhatsAppIcon size={20} />
+        </span>
+        WhatsApp
       </a>
-    </motion.div>
+      <button
+        type="button"
+        onClick={scrollToLeadForm}
+        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-800"
+      >
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-black bg-white text-black">
+          <FileText size={18} />
+        </span>
+        Register
+      </button>
+    </nav>
   );
 };
 
-export default FloatingActionBar;
+export default MobileBottomBar;

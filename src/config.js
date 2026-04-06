@@ -10,6 +10,9 @@ export const config = {
   // WhatsApp number (without + or spaces for wa.me)
   whatsappNumber: '201110911460',
 
+  // Pre-filled message for wa.me links (Hero, FAB, footer, etc.)
+  whatsappDefaultMessage: 'Hello, I would like to know more about SODIC properties.',
+
   // Phone for tel: links (with country code)
   phoneNumber: '+201110911460',
 

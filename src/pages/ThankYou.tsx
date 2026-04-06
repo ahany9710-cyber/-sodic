@@ -4,10 +4,12 @@ import { Check } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { trackConversion } from '../utils/gtag';
+import { trackLeadSuccessEvents } from '../utils/trackMarketing';
 
 const ThankYou = () => {
   useEffect(() => {
     trackConversion();
+    trackLeadSuccessEvents();
   }, []);
 
   return (

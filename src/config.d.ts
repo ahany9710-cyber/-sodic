@@ -1,6 +1,8 @@
 export const config: {
   formspreeFormId: string;
   whatsappNumber: string;
+  /** Pre-filled WhatsApp message for wa.me ?text= */
+  whatsappDefaultMessage: string;
   phoneNumber: string;
   phoneDisplay: string;
   /** Google Ads Global Tag ID (e.g. AW-XXXXXXXXX) - loaded on all pages */

@@ -1,5 +1,7 @@
 import { MessageCircle, Phone } from 'lucide-react';
 import { config } from '../config';
+import { trackMarketingContact } from '../utils/trackMarketing';
+import { getWhatsAppLink } from '../utils/whatsapp';
 
 const Footer = () => {
   return (
@@ -17,15 +19,20 @@ const Footer = () => {
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">Contact</h3>
             <div className="mt-4 space-y-3">
-              <a href={`tel:${config.phoneNumber}`} className="inline-flex items-center gap-2 text-sm hover:text-white">
+              <a
+                href={`tel:${config.phoneNumber}`}
+                onClick={() => trackMarketingContact('phone')}
+                className="inline-flex items-center gap-2 text-sm hover:text-white"
+              >
                 <Phone size={15} />
                 {config.phoneDisplay || config.phoneNumber}
               </a>
               <div>
                 <a
-                  href={`https://wa.me/${config.whatsappNumber}`}
+                  href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackMarketingContact('whatsapp')}
                   className="inline-flex items-center gap-2 text-sm hover:text-white"
                 >
                   <MessageCircle size={15} />

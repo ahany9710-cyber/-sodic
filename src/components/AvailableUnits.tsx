@@ -1,8 +1,9 @@
 import { MessageCircle, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { config } from '../config';
 import { units } from '../data/units';
 import { formatPrice } from '../utils/formatPrice';
+import { trackMarketingContact } from '../utils/trackMarketing';
+import { getWhatsAppLink } from '../utils/whatsapp';
 
 const AvailableUnits = () => {
   const scrollToLeadForm = () => {
@@ -43,9 +44,10 @@ const AvailableUnits = () => {
                   <td className="px-4 py-3 text-gray-600">{unit.details}</td>
                   <td className="px-4 py-3 text-right">
                     <a
-                      href={`https://wa.me/${config.whatsappNumber}`}
+                      href={getWhatsAppLink()}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackMarketingContact('whatsapp')}
                       className={waHover}
                     >
                       <MessageCircle size={14} />
@@ -70,9 +72,10 @@ const AvailableUnits = () => {
                 <p className="text-sm text-gray-600">{unit.details}</p>
               </div>
               <a
-                href={`https://wa.me/${config.whatsappNumber}`}
+                href={getWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackMarketingContact('whatsapp')}
                 className={`mt-4 inline-flex w-full items-center justify-center gap-2 border border-black px-3 py-3 text-xs font-semibold uppercase tracking-wide text-black transition-colors hover:bg-[#25D366] hover:text-white hover:border-[#25D366]`}
               >
                 <MessageCircle size={14} />
