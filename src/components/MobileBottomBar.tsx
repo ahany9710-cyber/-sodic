@@ -18,10 +18,18 @@ function WhatsAppIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-const MobileBottomBar = () => {
+interface MobileBottomBarProps {
+  whatsappMessage?: string;
+  labels?: { call: string; whatsapp: string; register: string };
+}
+
+const MobileBottomBar = ({ whatsappMessage, labels }: MobileBottomBarProps) => {
   const scrollToLeadForm = () => {
     document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const waHref = whatsappMessage ? getWhatsAppLink({ text: whatsappMessage }) : getWhatsAppLink();
+  const L = labels ?? { call: 'Call', whatsapp: 'WhatsApp', register: 'Register' };
 
   return (
     <nav
@@ -31,34 +39,34 @@ const MobileBottomBar = () => {
       <a
         href={`tel:${config.phoneNumber}`}
         onClick={() => trackMarketingContact('phone')}
-        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-800"
+        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold tracking-wide text-zinc-800"
       >
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white">
           <Phone size={18} />
         </span>
-        Call
+        {L.call}
       </a>
       <a
-        href={getWhatsAppLink()}
+        href={waHref}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackMarketingContact('whatsapp')}
-        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-800"
+        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold tracking-wide text-zinc-800"
       >
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white">
           <WhatsAppIcon size={20} />
         </span>
-        WhatsApp
+        {L.whatsapp}
       </a>
       <button
         type="button"
         onClick={scrollToLeadForm}
-        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-800"
+        className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold tracking-wide text-zinc-800"
       >
         <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-black bg-white text-black">
           <FileText size={18} />
         </span>
-        Register
+        {L.register}
       </button>
     </nav>
   );

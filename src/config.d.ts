@@ -3,6 +3,10 @@ export const config: {
   whatsappNumber: string;
   /** Pre-filled WhatsApp message for wa.me ?text= */
   whatsappDefaultMessage: string;
+  /** Arabic WhatsApp pre-fill for /ar landing */
+  whatsappDefaultMessageAr: string;
+  /** Arabic WhatsApp text for promo banner CTA */
+  whatsappPromoMessageAr: string;
   phoneNumber: string;
   phoneDisplay: string;
   /** Google Ads Global Tag ID (e.g. AW-XXXXXXXXX) - loaded on all pages */

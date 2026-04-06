@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, Search, X } from 'lucide-react';
 
@@ -84,6 +85,14 @@ const Header = () => {
             >
               Register Your Interest
             </a>
+            <Link
+              to="/ar"
+              className={`text-[11px] font-semibold transition-colors ${
+                lightMode ? 'text-zinc-700 hover:text-black' : 'text-white/90 hover:text-white'
+              }`}
+            >
+              العربية
+            </Link>
             <button
               type="button"
               className={`grid h-8 w-8 place-items-center border rounded-none transition-colors ${
@@ -138,6 +147,12 @@ const Header = () => {
               >
                 Register Your Interest
               </a>
+              <Link
+                to="/ar"
+                className="mt-2 inline-flex justify-center py-3 text-xs font-semibold text-black"
+              >
+                العربية
+              </Link>
             </nav>
           </motion.div>
         ) : null}

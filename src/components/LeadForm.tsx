@@ -21,8 +21,15 @@ interface FormErrors {
 
 const normalizeDigits = (value: string) => value.replace(/\D/g, '');
 
-const LeadForm = () => {
+export type LeadFormLocale = 'en' | 'ar';
+
+interface LeadFormProps {
+  locale?: LeadFormLocale;
+}
+
+const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
   const navigate = useNavigate();
+  const isAr = locale === 'ar';
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     phoneNumber: '',
@@ -33,9 +40,15 @@ const LeadForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validatePhone = (value: string): string | undefined => {
-    if (!value.trim()) return 'Phone number is required';
-    if (!/^[0-9+\s-]+$/.test(value)) return 'Please enter a valid phone number';
-    if (normalizeDigits(value).length < 10) return 'Phone number must be at least 10 digits';
+    if (!value.trim()) {
+      return isAr ? 'رقم الهاتف مطلوب' : 'Phone number is required';
+    }
+    if (!/^[0-9+\s-]+$/.test(value)) {
+      return isAr ? 'يرجى إدخال رقم هاتف صحيح' : 'Please enter a valid phone number';
+    }
+    if (normalizeDigits(value).length < 10) {
+      return isAr ? 'رقم الهاتف يجب أن يكون 10 أرقام على الأقل' : 'Phone number must be at least 10 digits';
+    }
     return undefined;
   };
 
@@ -55,7 +68,11 @@ const LeadForm = () => {
   const getThankYouPath = (): string => {
     const base =
       (typeof import.meta.env.BASE_URL === 'string' ? import.meta.env.BASE_URL : '').replace(/\.$/, '') || '/';
-    return base === '/' ? '/thank-you' : `${base.replace(/\/$/, '')}/thank-you`;
+    const path = base === '/' ? '/thank-you' : `${base.replace(/\/$/, '')}/thank-you`;
+    if (isAr) {
+      return `${path}?lang=ar`;
+    }
+    return path;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,6 +84,7 @@ const LeadForm = () => {
     body.append('phone', formData.phoneNumber.trim());
     if (formData.confirmPhone.trim()) body.append('confirm_phone', formData.confirmPhone.trim());
     if (formData.project) body.append('project', formData.project);
+    if (isAr) body.append('locale', 'ar');
 
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -79,23 +97,53 @@ const LeadForm = () => {
         return;
       }
       setIsSubmitting(false);
-      alert('Something went wrong while sending your request. Please try again.');
+      alert(
+        isAr
+          ? 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.'
+          : 'Something went wrong while sending your request. Please try again.',
+      );
     } catch {
       setIsSubmitting(false);
-      alert('Something went wrong while sending your request. Please try again.');
+      alert(
+        isAr
+          ? 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.'
+          : 'Something went wrong while sending your request. Please try again.',
+      );
     }
   };
+
+  const waHref = getWhatsAppLink({ text: isAr ? config.whatsappDefaultMessageAr : undefined });
+
+  const title = isAr ? 'تواصل معنا' : 'Contact Us';
+  const subtitle = isAr
+    ? 'اترك بياناتك وسيتواصل معك فريق المبيعات في أقرب وقت.'
+    : 'Leave your details and our sales team will contact you shortly.';
+  const labelName = isAr ? 'الاسم الكامل' : 'Full Name';
+  const optional = isAr ? '(اختياري)' : '(optional)';
+  const labelPhone = isAr ? 'رقم الهاتف' : 'Phone Number';
+  const labelConfirm = isAr ? 'تأكيد الرقم / رقم آخر' : 'Confirm Phone / Other Number';
+  const labelProject = isAr ? 'المشروع' : 'Project';
+  const selectPlaceholder = isAr ? 'اختر المشروع' : 'Select a project';
+  const submitLabel = isAr ? 'أرسل الطلب' : 'Contact Us';
+  const submittingLabel = isAr ? 'جاري الإرسال...' : 'Submitting...';
+  const directLabel = isAr ? 'أو تواصل مباشرة:' : 'Or contact us directly:';
+  const waLabel = isAr ? 'واتساب' : 'WhatsApp';
 
   return (
     <section id="lead-form" className="bg-white px-6 py-12 md:px-16 md:py-16">
       <div className="mx-auto max-w-xl">
-        <h2 className="font-heading text-4xl font-bold text-black md:text-5xl">Contact Us</h2>
-        <p className="mt-3 text-gray-600">Leave your details and our sales team will contact you shortly.</p>
+        <h2
+          className={`text-4xl font-bold text-black md:text-5xl ${isAr ? 'font-arabic' : 'font-heading'}`}
+        >
+          {title}
+        </h2>
+        <p className="mt-3 text-gray-600">{subtitle}</p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <div>
             <label htmlFor="fullName" className="mb-2 block text-sm font-semibold text-black">
-              Full Name <span className="font-normal text-gray-500">(optional)</span>
+              {labelName}{' '}
+              <span className="font-normal text-gray-500">{optional}</span>
             </label>
             <input
               id="fullName"
@@ -107,7 +155,7 @@ const LeadForm = () => {
 
           <div>
             <label htmlFor="phoneNumber" className="mb-2 block text-sm font-semibold text-black">
-              Phone Number <span className="text-red-600">*</span>
+              {labelPhone} <span className="text-red-600">*</span>
             </label>
             <input
               id="phoneNumber"
@@ -122,7 +170,8 @@ const LeadForm = () => {
 
           <div>
             <label htmlFor="confirmPhone" className="mb-2 block text-sm font-semibold text-black">
-              Confirm Phone / Other Number <span className="font-normal text-gray-500">(optional)</span>
+              {labelConfirm}{' '}
+              <span className="font-normal text-gray-500">{optional}</span>
             </label>
             <input
               id="confirmPhone"
@@ -134,7 +183,8 @@ const LeadForm = () => {
 
           <div>
             <label htmlFor="project" className="mb-2 block text-sm font-semibold text-black">
-              Project <span className="font-normal text-gray-500">(optional)</span>
+              {labelProject}{' '}
+              <span className="font-normal text-gray-500">{optional}</span>
             </label>
             <select
               id="project"
@@ -142,7 +192,7 @@ const LeadForm = () => {
               onChange={(e) => handleChange('project', e.target.value)}
               className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
             >
-              <option value="">Select a project</option>
+              <option value="">{selectPlaceholder}</option>
               {LEAD_FORM_PROJECT_OPTIONS.map((name) => (
                 <option key={name} value={name}>
                   {name}
@@ -154,32 +204,32 @@ const LeadForm = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-solid w-full disabled:cursor-not-allowed disabled:bg-zinc-400"
+            className={`inline-flex w-full items-center justify-center rounded-none bg-black px-8 py-4 text-base font-bold tracking-wide text-white transition-colors duration-200 hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-zinc-400 ${isAr ? '' : 'uppercase'}`}
           >
-            {isSubmitting ? 'Submitting...' : 'Contact Us'}
+            {isSubmitting ? submittingLabel : submitLabel}
           </button>
         </form>
 
         <div className="mt-8 border-t border-gray-100 pt-6">
-          <p className="text-sm font-semibold text-black">Or contact us directly:</p>
+          <p className="text-sm font-semibold text-black">{directLabel}</p>
           <div className="mt-3 flex flex-wrap gap-3">
             <a
               href={`tel:${config.phoneNumber}`}
               onClick={() => trackMarketingContact('phone')}
-              className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black"
+              className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold tracking-wide text-black"
             >
               <Phone size={14} />
               {config.phoneDisplay || config.phoneNumber}
             </a>
             <a
-              href={getWhatsAppLink()}
+              href={waHref}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackMarketingContact('whatsapp')}
-              className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black"
+              className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold tracking-wide text-black"
             >
               <MessageCircle size={14} />
-              WhatsApp
+              {waLabel}
             </a>
           </div>
         </div>

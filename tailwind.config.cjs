@@ -9,6 +9,7 @@ module.exports = {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         heading: ['Montserrat', 'Inter', 'sans-serif'],
+        arabic: ['Cairo', 'Tahoma', 'Segoe UI', 'sans-serif'],
       },
       letterSpacing: {
         'heading': '0.02em',

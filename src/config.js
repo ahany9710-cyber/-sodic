@@ -13,6 +13,13 @@ export const config = {
   // Pre-filled message for wa.me links (Hero, FAB, footer, etc.)
   whatsappDefaultMessage: 'Hello, I would like to know more about SODIC properties.',
 
+  // Arabic landing (/ar) — WhatsApp pre-filled text
+  whatsappDefaultMessageAr: 'مرحباً، أود معرفة المزيد عن مشاريع سوديك.',
+
+  // Promo strip on /ar — WhatsApp message mentioning immediate delivery & 5% offer
+  whatsappPromoMessageAr:
+    'مرحباً، أود الاستفسار عن عرض الإستلام الفوري بمقدّم 5٪ على الوحدات المتاحة.',
+
   // Phone for tel: links (with country code)
   phoneNumber: '+201110911460',
 
