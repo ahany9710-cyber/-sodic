@@ -124,7 +124,7 @@ const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
   const labelConfirm = isAr ? 'تأكيد الرقم / رقم آخر' : 'Confirm Phone / Other Number';
   const labelProject = isAr ? 'المشروع' : 'Project';
   const selectPlaceholder = isAr ? 'اختر المشروع' : 'Select a project';
-  const submitLabel = isAr ? 'أرسل الطلب' : 'Contact Us';
+  const submitLabel = isAr ? 'حمل' : 'Contact Us';
   const submittingLabel = isAr ? 'جاري الإرسال...' : 'Submitting...';
   const directLabel = isAr ? 'أو تواصل مباشرة:' : 'Or contact us directly:';
   const waLabel = isAr ? 'واتساب' : 'WhatsApp';
@@ -204,6 +204,7 @@ const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
           <button
             type="submit"
             disabled={isSubmitting}
+            aria-label={isAr ? 'حمّل بروشور المشروعات بعد إرسال البيانات' : undefined}
             className={`inline-flex w-full items-center justify-center rounded-none bg-black px-8 py-4 text-base font-bold tracking-wide text-white transition-colors duration-200 hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-zinc-400 ${isAr ? '' : 'uppercase'}`}
           >
             {isSubmitting ? submittingLabel : submitLabel}
@@ -215,11 +216,12 @@ const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
           <div className="mt-3 flex flex-wrap gap-3">
             <a
               href={`tel:${config.phoneNumber}`}
+              title={config.phoneDisplay || config.phoneNumber}
               onClick={() => trackMarketingContact('phone')}
               className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold tracking-wide text-black"
             >
               <Phone size={14} />
-              {config.phoneDisplay || config.phoneNumber}
+              {isAr ? 'اتصل بنا' : config.phoneDisplay || config.phoneNumber}
             </a>
             <a
               href={waHref}

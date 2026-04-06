@@ -38,7 +38,7 @@ function App() {
               <FloatingActionBar rtl whatsappMessage={config.whatsappDefaultMessageAr} />
               <MobileBottomBar
                 whatsappMessage={config.whatsappDefaultMessageAr}
-                labels={{ call: 'اتصال', whatsapp: 'واتساب', register: 'تسجيل' }}
+                labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
               />
             </div>
           }

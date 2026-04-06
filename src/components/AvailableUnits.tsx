@@ -15,15 +15,35 @@ interface AvailableUnitsProps {
 function HotOfferBadge({ locale }: { locale: AvailableUnitsLocale }) {
   const isAr = locale === 'ar';
   return (
-    <span className="inline-flex max-w-full shrink-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 border border-red-600 bg-red-50 px-2 py-1 text-[10px] font-bold leading-tight text-red-700">
-      <span className="uppercase tracking-wide">Hot offer</span>
-      <span className="text-red-400" aria-hidden>
-        ·
-      </span>
-      <span className={isAr ? 'font-semibold' : 'font-semibold uppercase tracking-wide'}>
-        {isAr ? 'إستلام فوري' : 'Immediate delivery'}
-      </span>
-    </span>
+    <motion.span
+      className="inline-block"
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <motion.span
+        className="inline-flex max-w-full shrink-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 border border-red-600 bg-red-50 px-2 py-1 text-[10px] font-bold leading-tight text-red-700"
+        animate={{
+          boxShadow: [
+            '0 0 0 0 rgba(220,38,38,0)',
+            '0 0 0 1px rgba(220,38,38,0.25)',
+            '0 0 12px 0 rgba(220,38,38,0.2)',
+            '0 0 0 0 rgba(220,38,38,0)',
+          ],
+          scale: [1, 1.028, 1],
+        }}
+        transition={{ duration: 2.1, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <span className="uppercase tracking-wide">Hot offer</span>
+        <span className="text-red-400" aria-hidden>
+          ·
+        </span>
+        <span className={isAr ? 'font-semibold' : 'font-semibold uppercase tracking-wide'}>
+          {isAr ? 'إستلام فوري' : 'Immediate delivery'}
+        </span>
+      </motion.span>
+    </motion.span>
   );
 }
 

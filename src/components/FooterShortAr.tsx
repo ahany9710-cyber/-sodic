@@ -21,11 +21,12 @@ const FooterShortAr = () => {
             <p className="text-sm font-semibold uppercase tracking-wide text-white">تواصل</p>
             <a
               href={`tel:${config.phoneNumber}`}
+              title={config.phoneDisplay || config.phoneNumber}
               onClick={() => trackMarketingContact('phone')}
               className="flex items-center gap-2 text-sm hover:text-white"
             >
               <Phone size={15} />
-              {config.phoneDisplay || config.phoneNumber}
+              اتصل بنا
             </a>
             <a
               href={waHref}

@@ -58,13 +58,18 @@ const PromoOfferStripAr = () => {
               word === 'فوري' ? (
                 <motion.span key={word} variants={wordFadeUp} className="inline-block">
                   <motion.span
-                    className="inline-block font-extrabold text-white"
+                    className="relative inline-block px-0.5 text-[1.35rem] font-extrabold leading-none text-white md:text-[1.75rem]"
                     animate={{
-                      scale: [1, 1.07, 1],
+                      scale: [1, 1.14, 1],
                       textShadow: [
-                        '0 0 0 rgba(255,255,255,0)',
-                        '0 0 18px rgba(255,255,255,0.95), 0 0 32px rgba(255,255,255,0.45)',
-                        '0 0 0 rgba(255,255,255,0)',
+                        '0 0 4px rgba(255,255,255,0.35), 0 0 12px rgba(255,255,255,0.2)',
+                        '0 0 22px rgba(255,255,255,1), 0 0 42px rgba(255,255,255,0.65), 0 0 64px rgba(255,255,255,0.35)',
+                        '0 0 4px rgba(255,255,255,0.35), 0 0 12px rgba(255,255,255,0.2)',
+                      ],
+                      filter: [
+                        'brightness(1.05)',
+                        'brightness(1.35)',
+                        'brightness(1.05)',
                       ],
                     }}
                     transition={{ ...headlineGlowLoop, delay: 0.35 }}
@@ -118,15 +123,16 @@ const PromoOfferStripAr = () => {
             onClick={scrollToLeadForm}
             className="inline-flex min-h-11 items-center justify-center border border-white bg-white px-5 py-2.5 text-xs font-semibold text-black transition-colors hover:bg-white/90"
           >
-            سجّل معانا
+            حمّل بروشور المشروعات
           </button>
           <a
             href={`tel:${config.phoneNumber}`}
+            title={config.phoneDisplay || config.phoneNumber}
             onClick={() => trackMarketingContact('phone')}
             className="inline-flex min-h-11 items-center justify-center gap-2 border border-white/40 px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:border-white hover:bg-white/5"
           >
             <Phone size={16} strokeWidth={2} />
-            اتصل
+            اتصل بنا
           </a>
           <a
             href={waHref}
