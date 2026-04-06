@@ -26,10 +26,9 @@ export const config = {
   // Display format for phone (optional)
   phoneDisplay: '+20 111 091 1460',
 
-  // ——— Google Ads ———
-  gtag_id: 'GT-K553HXRZ',
-  conversion_id: 'AW-18053013642',
-  conversion_label: 'hdAtCNPzoJUcEIrBrKBD',
+  // ——— Google tag (matches index.html gtag config) ———
+  gtag_id: 'AW-18066287198',
+  // Optional: add conversion_id + conversion_label from Google Ads for thank-you page trackConversion()
 
   /** Legacy: optional external media URLs (hero/map). Leave empty when using /public/assets only. */
   heroVideoUrl: '',

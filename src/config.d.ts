@@ -9,12 +9,12 @@ export const config: {
   whatsappPromoMessageAr: string;
   phoneNumber: string;
   phoneDisplay: string;
-  /** Google Ads Global Tag ID (e.g. AW-XXXXXXXXX) - loaded on all pages */
+  /** Google tag ID (loaded in index.html; keep in sync) */
   gtag_id: string;
-  /** Optional conversion ID from Google Ads (for reference) */
-  conversion_id: string;
-  /** Conversion label - used on thank-you page only */
-  conversion_label: string;
+  /** Google Ads conversion id for ThankYou page (optional) */
+  conversion_id?: string;
+  /** Google Ads conversion label for ThankYou page (optional) */
+  conversion_label?: string;
   /** Optional legacy external URLs */
   heroVideoUrl: string;
   heroPosterUrl: string;
