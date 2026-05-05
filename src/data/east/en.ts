@@ -307,7 +307,7 @@ export const eastEn: EastCopy = {
       'Sales offices · Sheikh Zayed km 38 Desert Road · New Cairo 90 South Street.',
     formTitle: 'Your details',
     formSubtitle: 'We’ll reply with the right track: immediate 5% move-in or Oak — your choice.',
-    submit: 'Reserve your spot on the masterplan before everyone else',
+    submit: 'Immediate delivery with 5% down',
     leadFormLocale: 'en',
   },
   faq: {
@@ -359,7 +359,7 @@ export const eastEn: EastCopy = {
     fastReply: 'Fast reply',
     waCta: 'WhatsApp',
     waBadge: 'Live chat',
-    formCta: 'Reserve your spot on the masterplan before everyone else',
+    formCta: 'Immediate delivery with 5% down',
     formBadge: 'Form below',
     trust: 'Information is used strictly for sales follow-up under SODIC privacy practices.',
   },
