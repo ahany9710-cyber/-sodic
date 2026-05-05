@@ -21,7 +21,10 @@ const LandingShortAr = () => {
         <HeroShortAr />
         <PromoOfferStripAr />
         <AvailableUnits locale="ar" />
-        <LeadForm locale="ar" />
+        <LeadForm
+          locale="ar"
+          submitLabelOverride="احجز مكانك على الماستر بلان قبل الجميع"
+        />
       </main>
     </div>
   );

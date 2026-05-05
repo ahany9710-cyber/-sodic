@@ -327,7 +327,7 @@ export const ogamiEn: OgamiCopy = {
       'Sales offices · Sheikh Zayed: km 38 Desert Road · New Cairo: 90 South Street.',
     formTitle: 'Your details',
     formSubtitle: 'We will respond within 24 hours.',
-    submit: 'Submit interest',
+    submit: 'Reserve your spot on the masterplan before everyone else',
     leadFormLocale: 'en',
   },
   faq: {
