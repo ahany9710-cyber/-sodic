@@ -13,6 +13,7 @@ import LandingShortAr from './pages/LandingShortAr';
 const ThankYou = lazy(() => import('./pages/ThankYou'));
 const OgamiLanding = lazy(() => import('./pages/OgamiLanding'));
 const EastLanding = lazy(() => import('./pages/EastLanding'));
+const EastvaleLanding = lazy(() => import('./pages/EastvaleLanding'));
 
 function App() {
   const arWa = config.whatsappDefaultMessageAr;
@@ -112,6 +113,42 @@ function App() {
               <MobileBottomBar
                 whatsappMessage={config.whatsappEastMessageEn}
                 leadFormSectionId="east-lead-form"
+                labels={{ call: 'Call us', whatsapp: 'WhatsApp', register: 'Register' }}
+              />
+            </div>
+          }
+        />
+        <Route
+          path="/ar/eastvale"
+          element={
+            <div className="min-h-screen bg-white pb-24 font-arabic md:pb-0" dir="rtl" lang="ar">
+              <HeaderShortAr />
+              <Suspense fallback={null}>
+                <EastvaleLanding locale="ar" />
+              </Suspense>
+              <FooterShortAr />
+              <FloatingActionBar rtl whatsappMessage={config.whatsappEastvaleMessageAr} />
+              <MobileBottomBar
+                whatsappMessage={config.whatsappEastvaleMessageAr}
+                leadFormSectionId="eastvale-lead-form"
+                labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
+              />
+            </div>
+          }
+        />
+        <Route
+          path="/eastvale"
+          element={
+            <div className="min-h-screen bg-white pb-24 md:pb-0" dir="ltr" lang="en">
+              <Header />
+              <Suspense fallback={null}>
+                <EastvaleLanding locale="en" />
+              </Suspense>
+              <Footer />
+              <FloatingActionBar whatsappMessage={config.whatsappEastvaleMessageEn} />
+              <MobileBottomBar
+                whatsappMessage={config.whatsappEastvaleMessageEn}
+                leadFormSectionId="eastvale-lead-form"
                 labels={{ call: 'Call us', whatsapp: 'WhatsApp', register: 'Register' }}
               />
             </div>

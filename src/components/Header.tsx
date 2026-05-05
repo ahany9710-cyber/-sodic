@@ -14,9 +14,20 @@ const NAV_LINKS = [
 const Header = () => {
   const { pathname } = useLocation();
   const arabicHref =
-    pathname === '/ogami' ? '/ar/ogami' : pathname === '/east' ? '/ar/east' : '/ar';
+    pathname === '/eastvale'
+      ? '/ar/eastvale'
+      : pathname === '/east'
+        ? '/ar/east'
+        : pathname === '/ogami'
+          ? '/ar/ogami'
+          : '/ar';
 
-  const leadFormHash = pathname === '/east' ? '#east-lead-form' : '#lead-form';
+  const leadFormHash =
+    pathname === '/eastvale'
+      ? '#eastvale-lead-form'
+      : pathname === '/east'
+        ? '#east-lead-form'
+        : '#lead-form';
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

@@ -38,6 +38,13 @@ export const config = {
   whatsappEastMessageEn:
     'Hello, I would like details on immediate move-in with 5% down at SODIC East, or Oak availability and pricing.',
 
+  // /ar/eastvale + /eastvale — Eastvale (Mada City)
+  whatsappEastvaleMessageAr:
+    'مرحباً، أود الاستفسار عن Eastvale / سوديك المستقبل في مدينة مستقبل الجمال — الأسعار والتوفر وخطط السداد.',
+
+  whatsappEastvaleMessageEn:
+    'Hello, I am interested in Eastvale at Mada City — pricing, availability, and payment plans.',
+
   // Phone for tel: links (with country code)
   phoneNumber: '+201000805205',
 

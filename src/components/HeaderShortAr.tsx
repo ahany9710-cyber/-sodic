@@ -6,13 +6,19 @@ const LOGO = '/sections/hero/logo.svg';
 
 const HeaderShortAr = () => {
   const { pathname } = useLocation();
-  const englishHref = pathname.startsWith('/ar/east')
-    ? '/east'
-    : pathname.startsWith('/ar/ogami')
-      ? '/ogami'
-      : '/';
+  const englishHref = pathname.startsWith('/ar/eastvale')
+    ? '/eastvale'
+    : pathname.startsWith('/ar/east')
+      ? '/east'
+      : pathname.startsWith('/ar/ogami')
+        ? '/ogami'
+        : '/';
 
-  const leadFormHash = pathname.startsWith('/ar/east') ? '#east-lead-form' : '#lead-form';
+  const leadFormHash = pathname.startsWith('/ar/eastvale')
+    ? '#eastvale-lead-form'
+    : pathname.startsWith('/ar/east')
+      ? '#east-lead-form'
+      : '#lead-form';
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

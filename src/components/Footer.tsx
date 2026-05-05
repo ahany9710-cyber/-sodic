@@ -6,7 +6,8 @@ import { getWhatsAppLink } from '../utils/whatsapp';
 
 const Footer = () => {
   const { pathname } = useLocation();
-  const leadFormHash = pathname === '/east' ? '#east-lead-form' : '#lead-form';
+  const leadFormHash =
+    pathname === '/eastvale' ? '#eastvale-lead-form' : pathname === '/east' ? '#east-lead-form' : '#lead-form';
   return (
     <footer className="bg-black px-6 py-16 text-gray-300 md:px-16">
       <div className="mx-auto max-w-[1600px]">

@@ -4,7 +4,7 @@ const FOCUS_DELAY_MS = 350;
  * After closing a booking popup, scroll to the page lead-form block and focus the first field.
  * Uses the shared LeadForm `#fullName` input when present.
  */
-export function scrollToLeadFormAfterModal(sectionId: 'lead-form' | 'east-lead-form'): void {
+export function scrollToLeadFormAfterModal(sectionId: string): void {
   window.setTimeout(() => {
     const section = document.getElementById(sectionId);
     section?.scrollIntoView({ behavior: 'smooth', block: 'start' });

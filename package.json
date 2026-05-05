@@ -12,7 +12,8 @@
     "check:deploy": "npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "extract:ogami": "node scripts/extract-ogami-pdf.mjs"
+    "extract:ogami": "node scripts/extract-ogami-pdf.mjs",
+    "extract:eastvale": "node scripts/extract-eastvale-pdf.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@napi-rs/canvas": "^1.0.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -32,6 +34,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "pdfjs-dist": "^5.7.284",
     "postcss": "^8.5.6",
     "tailwindcss": "3.3.0",
     "typescript": "~5.9.3",

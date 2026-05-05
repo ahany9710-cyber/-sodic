@@ -15,6 +15,10 @@ export const config: {
   whatsappEastMessageAr: string;
   /** English WhatsApp pre-fill for /east */
   whatsappEastMessageEn: string;
+  /** Arabic WhatsApp pre-fill for /ar/eastvale */
+  whatsappEastvaleMessageAr: string;
+  /** English WhatsApp pre-fill for /eastvale */
+  whatsappEastvaleMessageEn: string;
   phoneNumber: string;
   phoneDisplay: string;
   /** Egyptian mobile grouping for visible labels */
