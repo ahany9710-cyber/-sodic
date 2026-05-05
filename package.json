@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "check:deploy": "npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "extract:ogami": "node scripts/extract-ogami-pdf.mjs"
