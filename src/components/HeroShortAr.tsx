@@ -4,8 +4,7 @@ import { config } from '../config';
 import { trackMarketingContact } from '../utils/trackMarketing';
 import { getWhatsAppLink } from '../utils/whatsapp';
 
-const HERO_POSTER = './assets/hero/bg.webp';
-const HERO_VIDEO = './sections/hero/video.mp4';
+const HERO_IMAGE = '/sections/east/sodic-cms/hero-birdseye.webp';
 
 const HeroShortAr = () => {
   const scrollToLeadForm = () => {
@@ -15,17 +14,17 @@ const HeroShortAr = () => {
   const waHref = getWhatsAppLink({ text: config.whatsappDefaultMessageAr });
 
   return (
-    <section id="hero" className="relative min-h-[85vh] overflow-hidden md:min-h-screen">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster={HERO_POSTER}
+    <section id="hero" className="relative min-h-[85vh] overflow-hidden bg-black md:min-h-screen">
+      <img
+        src={HERO_IMAGE}
+        alt=""
+        width={1920}
+        height={1080}
+        sizes="100vw"
+        decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover"
-      >
-        <source src={HERO_VIDEO} type="video/mp4" />
-      </video>
+      />
       <div className="absolute inset-0 bg-black/35" aria-hidden />
 
       <div className="relative z-10 flex min-h-[85vh] items-end pb-24 pt-28 md:min-h-screen md:pb-32">

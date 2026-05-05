@@ -7,13 +7,17 @@ import MobileBottomBar from './components/MobileBottomBar';
 import HeaderShortAr from './components/HeaderShortAr';
 import FooterShortAr from './components/FooterShortAr';
 import { config } from './config';
-import Landing from './pages/Landing';
-import LandingShortAr from './pages/LandingShortAr';
 
+const Landing = lazy(() => import('./pages/Landing'));
+const LandingShortAr = lazy(() => import('./pages/LandingShortAr'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
 const OgamiLanding = lazy(() => import('./pages/OgamiLanding'));
 const EastLanding = lazy(() => import('./pages/EastLanding'));
 const EastvaleLanding = lazy(() => import('./pages/EastvaleLanding'));
+
+function PageFallback() {
+  return <div className="min-h-[40vh] bg-white" aria-hidden />;
+}
 
 function App() {
   const arWa = config.whatsappDefaultMessageAr;
@@ -26,7 +30,9 @@ function App() {
           element={
             <div className="min-h-screen bg-white pb-24 md:pb-0">
               <Header />
-              <Landing />
+              <Suspense fallback={<PageFallback />}>
+                <Landing />
+              </Suspense>
               <Footer />
               <FloatingActionBar />
               <MobileBottomBar labels={{ call: 'Call us', whatsapp: 'WhatsApp', register: 'Register' }} />
@@ -38,7 +44,9 @@ function App() {
           element={
             <div className="min-h-screen bg-white pb-24 font-arabic md:pb-0" dir="rtl" lang="ar">
               <HeaderShortAr />
-              <LandingShortAr />
+              <Suspense fallback={<PageFallback />}>
+                <LandingShortAr />
+              </Suspense>
               <FooterShortAr />
               <FloatingActionBar rtl whatsappMessage={arWa} />
               <MobileBottomBar

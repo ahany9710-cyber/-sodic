@@ -6,7 +6,6 @@ import { getWhatsAppLink } from '../../utils/whatsapp';
 import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 
 const HERO_IMAGE = '/sections/ogami/hero.jpg';
-const HERO_FALLBACK_VIDEO = '/sections/hero/video.mp4';
 
 const OgamiHero = () => {
   const { copy, whatsappOgami, fontClass, locale } = useOgamiPage();
@@ -36,22 +35,13 @@ const OgamiHero = () => {
       <img
         src={HERO_IMAGE}
         alt={h.imgAlt}
+        width={1920}
+        height={1080}
+        sizes="100vw"
+        decoding="async"
         className="absolute inset-0 h-full w-full object-cover"
         fetchPriority="high"
       />
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster={HERO_IMAGE}
-        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
-        onCanPlay={(event) => {
-          event.currentTarget.classList.remove('opacity-0');
-        }}
-      >
-        <source src={HERO_FALLBACK_VIDEO} type="video/mp4" />
-      </video>
 
       <div
         className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/90"

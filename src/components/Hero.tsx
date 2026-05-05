@@ -3,8 +3,8 @@ import { MessageCircle, Plus } from 'lucide-react';
 import { trackMarketingContact } from '../utils/trackMarketing';
 import { getWhatsAppLink } from '../utils/whatsapp';
 
-const HERO_POSTER = './assets/hero/bg.webp';
-const HERO_VIDEO = './sections/hero/video.mp4';
+/** Static hero (video removed — large payload + not committed; improves LCP / TBT). */
+const HERO_IMAGE = '/sections/east/sodic-cms/hero-birdseye.webp';
 
 const Hero = () => {
   const scrollToDevelopments = () => {
@@ -16,17 +16,17 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen overflow-hidden">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster={HERO_POSTER}
+    <section id="hero" className="relative min-h-screen overflow-hidden bg-black">
+      <img
+        src={HERO_IMAGE}
+        alt=""
+        width={1920}
+        height={1080}
+        sizes="100vw"
+        decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover"
-      >
-        <source src={HERO_VIDEO} type="video/mp4" />
-      </video>
+      />
       <div className="absolute inset-0 bg-black/25" aria-hidden />
 
       <div className="relative z-10 flex min-h-screen items-end pb-28 pt-28 md:pb-32">
