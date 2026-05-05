@@ -14,6 +14,9 @@ const ThankYou = lazy(() => import('./pages/ThankYou'));
 const OgamiLanding = lazy(() => import('./pages/OgamiLanding'));
 
 function App() {
+  const arWa = config.whatsappDefaultMessageAr;
+  const dial = config.phoneDisplayLocal;
+
   return (
     <BrowserRouter>
       <Routes>
@@ -25,7 +28,7 @@ function App() {
               <Landing />
               <Footer />
               <FloatingActionBar />
-              <MobileBottomBar />
+              <MobileBottomBar phoneDialLabel={dial} />
             </div>
           }
         />
@@ -36,9 +39,10 @@ function App() {
               <HeaderShortAr />
               <LandingShortAr />
               <FooterShortAr />
-              <FloatingActionBar rtl whatsappMessage={config.whatsappDefaultMessageAr} />
+              <FloatingActionBar rtl whatsappMessage={arWa} />
               <MobileBottomBar
-                whatsappMessage={config.whatsappDefaultMessageAr}
+                whatsappMessage={arWa}
+                phoneDialLabel={dial}
                 labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
               />
             </div>
@@ -53,9 +57,10 @@ function App() {
                 <OgamiLanding />
               </Suspense>
               <FooterShortAr />
-              <FloatingActionBar rtl whatsappMessage={config.whatsappOgamiMessageAr} />
+              <FloatingActionBar rtl whatsappMessage={arWa} />
               <MobileBottomBar
-                whatsappMessage={config.whatsappOgamiMessageAr}
+                whatsappMessage={arWa}
+                phoneDialLabel={dial}
                 labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
               />
             </div>

@@ -11,6 +11,8 @@ export const config: {
   whatsappOgamiMessageAr: string;
   phoneNumber: string;
   phoneDisplay: string;
+  /** Egyptian mobile grouping for visible labels */
+  phoneDisplayLocal: string;
   /** Google tag ID (loaded in index.html; keep in sync) */
   gtag_id: string;
   /** Google Ads conversion id for ThankYou page (optional) */

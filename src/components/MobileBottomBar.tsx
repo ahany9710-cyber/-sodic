@@ -21,9 +21,11 @@ function WhatsAppIcon({ size = 20 }: { size?: number }) {
 interface MobileBottomBarProps {
   whatsappMessage?: string;
   labels?: { call: string; whatsapp: string; register: string };
+  /** Shown under the call label (e.g. `config.phoneDisplayLocal`) */
+  phoneDialLabel?: string;
 }
 
-const MobileBottomBar = ({ whatsappMessage, labels }: MobileBottomBarProps) => {
+const MobileBottomBar = ({ whatsappMessage, labels, phoneDialLabel }: MobileBottomBarProps) => {
   const scrollToLeadForm = () => {
     document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -38,13 +40,21 @@ const MobileBottomBar = ({ whatsappMessage, labels }: MobileBottomBarProps) => {
     >
       <a
         href={`tel:${config.phoneNumber}`}
+        title={`${config.phoneDisplay || config.phoneNumber} · ${phoneDialLabel ?? config.phoneDisplayLocal}`}
         onClick={() => trackMarketingContact('phone')}
         className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold tracking-wide text-zinc-800"
       >
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white">
           <Phone size={18} />
         </span>
-        {L.call}
+        <span className="flex flex-col items-center gap-0.5 leading-tight">
+          <span>{L.call}</span>
+          {phoneDialLabel ? (
+            <span className="max-w-[5.5rem] truncate text-[9px] font-medium tabular-nums text-zinc-500" dir="ltr">
+              {phoneDialLabel}
+            </span>
+          ) : null}
+        </span>
       </a>
       <a
         href={waHref}

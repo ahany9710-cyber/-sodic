@@ -21,11 +21,17 @@ const Footer = () => {
             <div className="mt-4 space-y-3">
               <a
                 href={`tel:${config.phoneNumber}`}
+                title={`${config.phoneDisplay || config.phoneNumber} · ${config.phoneDisplayLocal}`}
                 onClick={() => trackMarketingContact('phone')}
-                className="inline-flex items-center gap-2 text-sm hover:text-white"
+                className="inline-flex flex-col gap-1 text-sm hover:text-white sm:flex-row sm:items-center sm:gap-2"
               >
-                <Phone size={15} />
-                {config.phoneDisplay || config.phoneNumber}
+                <span className="inline-flex items-center gap-2">
+                  <Phone size={15} />
+                  <span>{config.phoneDisplay || config.phoneNumber}</span>
+                </span>
+                <span dir="ltr" className="pl-[22px] text-xs text-gray-400 tabular-nums sm:pl-0">
+                  {config.phoneDisplayLocal}
+                </span>
               </a>
               <div>
                 <a

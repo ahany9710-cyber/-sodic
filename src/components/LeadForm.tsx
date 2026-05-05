@@ -254,12 +254,17 @@ const LeadForm = ({
           <div className="mt-3 flex flex-wrap gap-3">
             <a
               href={`tel:${config.phoneNumber}`}
-              title={config.phoneDisplay || config.phoneNumber}
+              title={`${config.phoneDisplay || config.phoneNumber} · ${config.phoneDisplayLocal}`}
               onClick={() => trackMarketingContact('phone')}
-              className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold tracking-wide text-black"
+              className="inline-flex flex-col gap-1 border border-black px-4 py-2 text-xs font-semibold tracking-wide text-black"
             >
-              <Phone size={14} />
-              {isAr ? 'اتصل بنا' : config.phoneDisplay || config.phoneNumber}
+              <span className="inline-flex items-center gap-2">
+                <Phone size={14} />
+                {isAr ? 'اتصل بنا' : config.phoneDisplay || config.phoneNumber}
+              </span>
+              <span dir="ltr" className="text-[11px] font-medium tabular-nums text-zinc-600">
+                {config.phoneDisplayLocal}
+              </span>
             </a>
             <a
               href={waHref}
