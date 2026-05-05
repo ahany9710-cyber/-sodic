@@ -376,8 +376,8 @@ export const ogamiEn: OgamiCopy = {
     fastReply: 'Fastest reply',
     waCta: 'Message on WhatsApp',
     waBadge: 'Instant chat',
-    formCta: 'Complete the registration form',
-    formBadge: 'Within 24h',
+    formCta: 'Reserve your spot on the masterplan before everyone else',
+    formBadge: 'Form below',
     trust:
       'Your information is confidential and never resold — 30+ years of SODIC delivery keeps us accountable.',
   },

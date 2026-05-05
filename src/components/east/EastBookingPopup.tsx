@@ -4,6 +4,7 @@ import { MessageCircle, Phone, Send, Sparkles, X } from 'lucide-react';
 import { config } from '../../config';
 import { useEastPage } from '../../contexts/EastLocaleContext';
 import { trackMarketingContact } from '../../utils/trackMarketing';
+import { scrollToLeadFormAfterModal } from '../../utils/scrollToLeadFormAfterModal';
 import { getWhatsAppLink } from '../../utils/whatsapp';
 
 const TIME_DELAY_MS = 15_000;
@@ -82,14 +83,7 @@ const EastBookingPopup = () => {
   const handleForm = () => {
     trackPopup('cta_form');
     setOpen(false);
-    setTimeout(() => {
-      const el = document.getElementById('east-lead-form');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        const firstInput = el.querySelector<HTMLInputElement>('input, select, textarea');
-        firstInput?.focus({ preventScroll: true });
-      }
-    }, 250);
+    scrollToLeadFormAfterModal('east-lead-form');
   };
 
   const waHref = getWhatsAppLink({ text: b.waPrefill });
