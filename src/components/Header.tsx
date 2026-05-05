@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, Search, X } from 'lucide-react';
 
@@ -12,6 +12,9 @@ const NAV_LINKS = [
 ];
 
 const Header = () => {
+  const { pathname } = useLocation();
+  const arabicHref = pathname === '/ogami' ? '/ar/ogami' : '/ar';
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -86,7 +89,7 @@ const Header = () => {
               Register Your Interest
             </a>
             <Link
-              to="/ar"
+              to={arabicHref}
               className={`text-[11px] font-semibold transition-colors ${
                 lightMode ? 'text-zinc-700 hover:text-black' : 'text-white/90 hover:text-white'
               }`}
@@ -148,7 +151,7 @@ const Header = () => {
                 Register Your Interest
               </a>
               <Link
-                to="/ar"
+                to={arabicHref}
                 className="mt-2 inline-flex justify-center py-3 text-xs font-semibold text-black"
               >
                 العربية
