@@ -21,17 +21,21 @@ function WhatsAppIcon({ size = 20 }: { size?: number }) {
 interface MobileBottomBarProps {
   whatsappMessage?: string;
   labels?: { call: string; whatsapp: string; register: string };
-  /** Shown under the call label (e.g. `config.phoneDisplayLocal`) */
-  phoneDialLabel?: string;
+  /** DOM id of the lead form section (default lead-form) */
+  leadFormSectionId?: string;
 }
 
-const MobileBottomBar = ({ whatsappMessage, labels, phoneDialLabel }: MobileBottomBarProps) => {
+const MobileBottomBar = ({
+  whatsappMessage,
+  labels,
+  leadFormSectionId = 'lead-form',
+}: MobileBottomBarProps) => {
   const scrollToLeadForm = () => {
-    document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(leadFormSectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const waHref = whatsappMessage ? getWhatsAppLink({ text: whatsappMessage }) : getWhatsAppLink();
-  const L = labels ?? { call: 'Call', whatsapp: 'WhatsApp', register: 'Register' };
+  const L = labels ?? { call: 'Call us', whatsapp: 'WhatsApp', register: 'Register' };
 
   return (
     <nav
@@ -40,7 +44,7 @@ const MobileBottomBar = ({ whatsappMessage, labels, phoneDialLabel }: MobileBott
     >
       <a
         href={`tel:${config.phoneNumber}`}
-        title={`${config.phoneDisplay || config.phoneNumber} · ${phoneDialLabel ?? config.phoneDisplayLocal}`}
+        title={L.call}
         onClick={() => trackMarketingContact('phone')}
         className="flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold tracking-wide text-zinc-800"
       >
@@ -49,11 +53,6 @@ const MobileBottomBar = ({ whatsappMessage, labels, phoneDialLabel }: MobileBott
         </span>
         <span className="flex flex-col items-center gap-0.5 leading-tight">
           <span>{L.call}</span>
-          {phoneDialLabel ? (
-            <span className="max-w-[5.5rem] truncate text-[9px] font-medium tabular-nums text-zinc-500" dir="ltr">
-              {phoneDialLabel}
-            </span>
-          ) : null}
         </span>
       </a>
       <a

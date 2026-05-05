@@ -11,6 +11,10 @@ export const config: {
   whatsappOgamiMessageAr: string;
   /** English WhatsApp pre-fill for /ogami */
   whatsappOgamiMessageEn: string;
+  /** Arabic WhatsApp pre-fill for /ar/east */
+  whatsappEastMessageAr: string;
+  /** English WhatsApp pre-fill for /east */
+  whatsappEastMessageEn: string;
   phoneNumber: string;
   phoneDisplay: string;
   /** Egyptian mobile grouping for visible labels */

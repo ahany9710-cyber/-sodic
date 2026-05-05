@@ -6,7 +6,13 @@ const LOGO = '/sections/hero/logo.svg';
 
 const HeaderShortAr = () => {
   const { pathname } = useLocation();
-  const englishHref = pathname.startsWith('/ar/ogami') ? '/ogami' : '/';
+  const englishHref = pathname.startsWith('/ar/east')
+    ? '/east'
+    : pathname.startsWith('/ar/ogami')
+      ? '/ogami'
+      : '/';
+
+  const leadFormHash = pathname.startsWith('/ar/east') ? '#east-lead-form' : '#lead-form';
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,8 +77,8 @@ const HeaderShortAr = () => {
           <div className="flex items-center justify-end gap-2">
             <nav className="hidden lg:flex" aria-label="التنقل">
               <a
-                href="#lead-form"
-                onClick={(e) => scrollToSection(e, '#lead-form')}
+                href={leadFormHash}
+                onClick={(e) => scrollToSection(e, leadFormHash)}
                 className={`rounded-none border px-4 py-2 text-xs font-semibold transition-colors ${
                   lightMode
                     ? 'border-zinc-300 bg-white text-black hover:bg-zinc-100'
@@ -102,8 +108,8 @@ const HeaderShortAr = () => {
         <div id="mobile-nav-ar" className="border-t border-gray-100 bg-white lg:hidden" dir="rtl">
           <nav className="flex flex-col gap-1 px-6 py-4" aria-label="التنقل للموبايل">
             <a
-              href="#lead-form"
-              onClick={(e) => scrollToSection(e, '#lead-form')}
+              href={leadFormHash}
+              onClick={(e) => scrollToSection(e, leadFormHash)}
               className="border-b border-gray-100 py-3 text-center text-sm font-semibold text-black"
             >
               سجّل اهتمامك

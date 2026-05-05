@@ -1,9 +1,12 @@
 import { MessageCircle, Phone } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { config } from '../config';
 import { trackMarketingContact } from '../utils/trackMarketing';
 import { getWhatsAppLink } from '../utils/whatsapp';
 
 const Footer = () => {
+  const { pathname } = useLocation();
+  const leadFormHash = pathname === '/east' ? '#east-lead-form' : '#lead-form';
   return (
     <footer className="bg-black px-6 py-16 text-gray-300 md:px-16">
       <div className="mx-auto max-w-[1600px]">
@@ -21,16 +24,13 @@ const Footer = () => {
             <div className="mt-4 space-y-3">
               <a
                 href={`tel:${config.phoneNumber}`}
-                title={`${config.phoneDisplay || config.phoneNumber} · ${config.phoneDisplayLocal}`}
+                title="Call us"
                 onClick={() => trackMarketingContact('phone')}
                 className="inline-flex flex-col gap-1 text-sm hover:text-white sm:flex-row sm:items-center sm:gap-2"
               >
                 <span className="inline-flex items-center gap-2">
                   <Phone size={15} />
-                  <span>{config.phoneDisplay || config.phoneNumber}</span>
-                </span>
-                <span dir="ltr" className="pl-[22px] text-xs text-gray-400 tabular-nums sm:pl-0">
-                  {config.phoneDisplayLocal}
+                  <span>Call us</span>
                 </span>
               </a>
               <div>
@@ -57,7 +57,7 @@ const Footer = () => {
               <a href="#available-units" className="hover:text-white">
                 Available Units
               </a>
-              <a href="#lead-form" className="hover:text-white">
+              <a href={leadFormHash} className="hover:text-white">
                 Contact Form
               </a>
             </div>

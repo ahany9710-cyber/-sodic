@@ -38,7 +38,7 @@ const FloatingActionBar = ({ whatsappMessage, rtl = false }: FloatingActionBarPr
     >
       <a
         href={`tel:${config.phoneNumber}`}
-        title={`${config.phoneDisplay ?? ''} (${config.phoneDisplayLocal})`}
+        title={rtl ? 'اتصل بنا' : 'Call us'}
         onClick={() => trackMarketingContact('phone')}
         className="h-12 w-12 bg-black text-white rounded-full flex items-center justify-center shadow-xl transition-transform duration-200 hover:scale-105"
         aria-label={rtl ? 'اتصل بنا' : 'Call us'}

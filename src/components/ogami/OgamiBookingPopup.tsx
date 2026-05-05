@@ -16,7 +16,7 @@ const trackPopup = (action: 'open' | 'close' | 'cta_phone' | 'cta_whatsapp' | 'c
 };
 
 const OgamiBookingPopup = () => {
-  const { copy, fontClass } = useOgamiPage();
+  const { copy, fontClass, locale } = useOgamiPage();
   const b = copy.booking;
   const [open, setOpen] = useState(false);
 
@@ -162,7 +162,7 @@ const OgamiBookingPopup = () => {
             <div className="grid gap-3 px-6 py-6 md:px-8 md:py-7">
               <a
                 href={`tel:${config.phoneNumber}`}
-                title={`${config.phoneDisplay || config.phoneNumber} · ${config.phoneDisplayLocal}`}
+                title={locale === 'ar' ? 'اتصل بنا' : 'Call us'}
                 onClick={() => {
                   trackMarketingContact('phone');
                   trackPopup('cta_phone');
@@ -175,9 +175,6 @@ const OgamiBookingPopup = () => {
                   {b.callCta}
                 </span>
                 <span className="flex shrink-0 flex-col items-end gap-0.5 text-end">
-                  <span dir="ltr" className="text-[11px] font-semibold tabular-nums text-white/80">
-                    {config.phoneDisplayLocal}
-                  </span>
                   <span className="text-[11px] font-semibold tracking-wide text-white/70 group-hover:text-white">
                     {b.fastReply}
                   </span>

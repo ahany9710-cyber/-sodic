@@ -242,7 +242,11 @@ const LeadForm = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            aria-label={isAr ? 'حمّل بروشور المشروعات بعد إرسال البيانات' : undefined}
+            aria-label={
+              isAr
+                ? submitLabelOverride || 'حمّل بروشور المشروعات بعد إرسال البيانات'
+                : submitLabelOverride || undefined
+            }
             className={`inline-flex w-full items-center justify-center rounded-none bg-black px-8 py-4 text-base font-bold tracking-wide text-white transition-colors duration-200 hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-zinc-400 ${isAr ? '' : 'uppercase'}`}
           >
             {isSubmitting ? submittingLabel : submitLabel}
@@ -254,17 +258,12 @@ const LeadForm = ({
           <div className="mt-3 flex flex-wrap gap-3">
             <a
               href={`tel:${config.phoneNumber}`}
-              title={`${config.phoneDisplay || config.phoneNumber} · ${config.phoneDisplayLocal}`}
+              title={isAr ? 'اتصل بنا' : 'Call us'}
               onClick={() => trackMarketingContact('phone')}
-              className="inline-flex flex-col gap-1 border border-black px-4 py-2 text-xs font-semibold tracking-wide text-black"
+              className="inline-flex items-center gap-2 border border-black px-4 py-2 text-xs font-semibold tracking-wide text-black"
             >
-              <span className="inline-flex items-center gap-2">
-                <Phone size={14} />
-                {isAr ? 'اتصل بنا' : config.phoneDisplay || config.phoneNumber}
-              </span>
-              <span dir="ltr" className="text-[11px] font-medium tabular-nums text-zinc-600">
-                {config.phoneDisplayLocal}
-              </span>
+              <Phone size={14} />
+              {isAr ? 'اتصل بنا' : 'Call us'}
             </a>
             <a
               href={waHref}

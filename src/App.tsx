@@ -12,10 +12,10 @@ import LandingShortAr from './pages/LandingShortAr';
 
 const ThankYou = lazy(() => import('./pages/ThankYou'));
 const OgamiLanding = lazy(() => import('./pages/OgamiLanding'));
+const EastLanding = lazy(() => import('./pages/EastLanding'));
 
 function App() {
   const arWa = config.whatsappDefaultMessageAr;
-  const dial = config.phoneDisplayLocal;
 
   return (
     <BrowserRouter>
@@ -28,7 +28,7 @@ function App() {
               <Landing />
               <Footer />
               <FloatingActionBar />
-              <MobileBottomBar phoneDialLabel={dial} />
+              <MobileBottomBar labels={{ call: 'Call us', whatsapp: 'WhatsApp', register: 'Register' }} />
             </div>
           }
         />
@@ -42,7 +42,6 @@ function App() {
               <FloatingActionBar rtl whatsappMessage={arWa} />
               <MobileBottomBar
                 whatsappMessage={arWa}
-                phoneDialLabel={dial}
                 labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
               />
             </div>
@@ -60,7 +59,6 @@ function App() {
               <FloatingActionBar rtl whatsappMessage={config.whatsappOgamiMessageAr} />
               <MobileBottomBar
                 whatsappMessage={config.whatsappOgamiMessageAr}
-                phoneDialLabel={dial}
                 labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
               />
             </div>
@@ -76,7 +74,46 @@ function App() {
               </Suspense>
               <Footer />
               <FloatingActionBar whatsappMessage={config.whatsappOgamiMessageEn} />
-              <MobileBottomBar phoneDialLabel={dial} whatsappMessage={config.whatsappOgamiMessageEn} />
+              <MobileBottomBar
+                whatsappMessage={config.whatsappOgamiMessageEn}
+                labels={{ call: 'Call us', whatsapp: 'WhatsApp', register: 'Register' }}
+              />
+            </div>
+          }
+        />
+        <Route
+          path="/ar/east"
+          element={
+            <div className="min-h-screen bg-white pb-24 font-arabic md:pb-0" dir="rtl" lang="ar">
+              <HeaderShortAr />
+              <Suspense fallback={null}>
+                <EastLanding locale="ar" />
+              </Suspense>
+              <FooterShortAr />
+              <FloatingActionBar rtl whatsappMessage={config.whatsappEastMessageAr} />
+              <MobileBottomBar
+                whatsappMessage={config.whatsappEastMessageAr}
+                leadFormSectionId="east-lead-form"
+                labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
+              />
+            </div>
+          }
+        />
+        <Route
+          path="/east"
+          element={
+            <div className="min-h-screen bg-white pb-24 md:pb-0" dir="ltr" lang="en">
+              <Header />
+              <Suspense fallback={null}>
+                <EastLanding locale="en" />
+              </Suspense>
+              <Footer />
+              <FloatingActionBar whatsappMessage={config.whatsappEastMessageEn} />
+              <MobileBottomBar
+                whatsappMessage={config.whatsappEastMessageEn}
+                leadFormSectionId="east-lead-form"
+                labels={{ call: 'Call us', whatsapp: 'WhatsApp', register: 'Register' }}
+              />
             </div>
           }
         />

@@ -128,17 +128,12 @@ const OgamiUrgencyStrip = () => {
           </button>
           <a
             href={`tel:${config.phoneNumber}`}
-            title={`${config.phoneDisplay || config.phoneNumber} · ${config.phoneDisplayLocal}`}
+            title={u.call}
             onClick={() => trackMarketingContact('phone')}
-            className="inline-flex min-h-11 flex-col items-center justify-center gap-0 border border-white/40 px-4 py-2 text-[11px] font-semibold text-white transition-colors hover:border-white hover:bg-white/5 md:flex-row md:gap-2 md:text-xs"
+            className="inline-flex min-h-11 items-center justify-center gap-2 border border-white/40 px-4 py-2 text-[11px] font-semibold text-white transition-colors hover:border-white hover:bg-white/5 md:flex-row md:gap-2 md:text-xs"
           >
-            <span className="inline-flex items-center gap-2">
-              <Phone size={16} strokeWidth={2} />
-              {u.call}
-            </span>
-            <span dir="ltr" className="tabular-nums text-white/80">
-              {config.phoneDisplayLocal}
-            </span>
+            <Phone size={16} strokeWidth={2} />
+            {u.call}
           </a>
           <a
             href={waHref}

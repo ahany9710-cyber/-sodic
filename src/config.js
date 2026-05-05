@@ -31,6 +31,13 @@ export const config = {
   whatsappOgamiMessageEn:
     'Hello, I am interested in Ogami / Botanica Town on the North Coast by SODIC. Please share pricing and payment plans.',
 
+  // /ar/east + /east — SODIC East (ready 5% + Oak)
+  whatsappEastMessageAr:
+    'مرحباً، أود الاستفسار عن عرض الاستلام الفوري بمقدّم ٥٪ في سوديك إيست، أو عن Oak والتوفر والأسعار.',
+
+  whatsappEastMessageEn:
+    'Hello, I would like details on immediate move-in with 5% down at SODIC East, or Oak availability and pricing.',
+
   // Phone for tel: links (with country code)
   phoneNumber: '+201000805205',
 

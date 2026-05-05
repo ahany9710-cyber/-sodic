@@ -13,7 +13,10 @@ const NAV_LINKS = [
 
 const Header = () => {
   const { pathname } = useLocation();
-  const arabicHref = pathname === '/ogami' ? '/ar/ogami' : '/ar';
+  const arabicHref =
+    pathname === '/ogami' ? '/ar/ogami' : pathname === '/east' ? '/ar/east' : '/ar';
+
+  const leadFormHash = pathname === '/east' ? '#east-lead-form' : '#lead-form';
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -78,8 +81,8 @@ const Header = () => {
               </a>
             ))}
             <a
-              href="#lead-form"
-              onClick={(e) => scrollToSection(e, '#lead-form')}
+              href={leadFormHash}
+              onClick={(e) => scrollToSection(e, leadFormHash)}
               className={`px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] rounded-none border transition-colors ${
                 lightMode
                   ? 'border-zinc-300 bg-white text-black hover:bg-zinc-100'
@@ -144,8 +147,8 @@ const Header = () => {
                 </a>
               ))}
               <a
-                href="#lead-form"
-                onClick={(e) => scrollToSection(e, '#lead-form')}
+                href={leadFormHash}
+                onClick={(e) => scrollToSection(e, leadFormHash)}
                 className="mt-3 inline-flex justify-center border border-black bg-black px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white"
               >
                 Register Your Interest
