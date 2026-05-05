@@ -11,6 +11,7 @@ import Landing from './pages/Landing';
 import LandingShortAr from './pages/LandingShortAr';
 
 const ThankYou = lazy(() => import('./pages/ThankYou'));
+const OgamiLanding = lazy(() => import('./pages/OgamiLanding'));
 
 function App() {
   return (
@@ -38,6 +39,23 @@ function App() {
               <FloatingActionBar rtl whatsappMessage={config.whatsappDefaultMessageAr} />
               <MobileBottomBar
                 whatsappMessage={config.whatsappDefaultMessageAr}
+                labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
+              />
+            </div>
+          }
+        />
+        <Route
+          path="/ar/ogami"
+          element={
+            <div className="min-h-screen bg-white pb-24 font-arabic md:pb-0" dir="rtl" lang="ar">
+              <HeaderShortAr />
+              <Suspense fallback={null}>
+                <OgamiLanding />
+              </Suspense>
+              <FooterShortAr />
+              <FloatingActionBar rtl whatsappMessage={config.whatsappOgamiMessageAr} />
+              <MobileBottomBar
+                whatsappMessage={config.whatsappOgamiMessageAr}
                 labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
               />
             </div>

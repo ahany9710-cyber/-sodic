@@ -8,7 +8,7 @@ export const config = {
   formspreeFormId: 'mqegddew',
 
   // WhatsApp number (without + or spaces for wa.me)
-  whatsappNumber: '201110911460',
+  whatsappNumber: '201000805205',
 
   // Pre-filled message for wa.me links (Hero, FAB, footer, etc.)
   whatsappDefaultMessage: 'Hello, I would like to know more about SODIC properties.',
@@ -20,11 +20,15 @@ export const config = {
   whatsappPromoMessageAr:
     'مرحباً، أود الاستفسار عن عرض الإستلام الفوري بمقدّم 5٪ على الوحدات المتاحة.',
 
+  // /ar/ogami — Ogami / Botanica Town WhatsApp pre-fill
+  whatsappOgamiMessageAr:
+    'مرحباً، مهتم بمشروع أوجامي / بوتانيكا تاون في الساحل الشمالي.',
+
   // Phone for tel: links (with country code)
-  phoneNumber: '+201110911460',
+  phoneNumber: '+201000805205',
 
   // Display format for phone (optional)
-  phoneDisplay: '+20 111 091 1460',
+  phoneDisplay: '+20 100 080 5205',
 
   // ——— Google tag (matches index.html gtag config) ———
   gtag_id: 'AW-18066287198',

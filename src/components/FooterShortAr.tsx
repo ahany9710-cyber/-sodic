@@ -12,7 +12,7 @@ const FooterShortAr = () => {
       <div className="mx-auto max-w-[1600px]">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
-            <img src="./sections/hero/logo.svg" alt="سوديك" className="h-6 w-auto brightness-0 invert" />
+            <img src="/sections/hero/logo.svg" alt="سوديك" className="h-6 w-auto brightness-0 invert" />
             <p className="mt-4 max-w-md text-sm leading-relaxed text-gray-400">
               مشاريع عقارية متكاملة في مواقع استراتيجية. تواصل معنا للاستفسار أو حجز موعد.
             </p>

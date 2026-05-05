@@ -25,16 +25,42 @@ export type LeadFormLocale = 'en' | 'ar';
 
 interface LeadFormProps {
   locale?: LeadFormLocale;
+  /** Optional pre-filled project (e.g. "Ogami") */
+  presetProject?: string;
+  /** When true, hide the project picker and submit presetProject as a hidden field */
+  lockProject?: boolean;
+  /** Optional override for the section heading */
+  title?: string;
+  /** Optional override for the supporting text under the heading */
+  subtitle?: string;
+  /** WhatsApp message override for the under-form direct contact link */
+  whatsappMessage?: string;
+  /** Optional override for primary CTA button label */
+  submitLabelOverride?: string;
+  /** Optional CSS overrides for the wrapping section (e.g. background) */
+  sectionClassName?: string;
+  /** Override the wrapping section's DOM id (defaults to "lead-form") */
+  sectionId?: string;
 }
 
-const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
+const LeadForm = ({
+  locale = 'en',
+  presetProject,
+  lockProject = false,
+  title: titleOverride,
+  subtitle: subtitleOverride,
+  whatsappMessage,
+  submitLabelOverride,
+  sectionClassName,
+  sectionId = 'lead-form',
+}: LeadFormProps) => {
   const navigate = useNavigate();
   const isAr = locale === 'ar';
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     phoneNumber: '',
     confirmPhone: '',
-    project: '',
+    project: presetProject ?? '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,7 +109,8 @@ const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
     if (formData.fullName.trim()) body.append('full_name', formData.fullName.trim());
     body.append('phone', formData.phoneNumber.trim());
     if (formData.confirmPhone.trim()) body.append('confirm_phone', formData.confirmPhone.trim());
-    if (formData.project) body.append('project', formData.project);
+    const projectValue = lockProject && presetProject ? presetProject : formData.project;
+    if (projectValue) body.append('project', projectValue);
     if (isAr) body.append('locale', 'ar');
 
     try {
@@ -112,25 +139,32 @@ const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
     }
   };
 
-  const waHref = getWhatsAppLink({ text: isAr ? config.whatsappDefaultMessageAr : undefined });
+  const waHref = getWhatsAppLink({
+    text: whatsappMessage ?? (isAr ? config.whatsappDefaultMessageAr : undefined),
+  });
 
-  const title = isAr ? 'تواصل معنا' : 'Contact Us';
-  const subtitle = isAr
+  const defaultTitle = isAr ? 'تواصل معنا' : 'Contact Us';
+  const defaultSubtitle = isAr
     ? 'اترك بياناتك وسيتواصل معك فريق المبيعات في أقرب وقت.'
     : 'Leave your details and our sales team will contact you shortly.';
+  const title = titleOverride ?? defaultTitle;
+  const subtitle = subtitleOverride ?? defaultSubtitle;
   const labelName = isAr ? 'الاسم الكامل' : 'Full Name';
   const optional = isAr ? '(اختياري)' : '(optional)';
   const labelPhone = isAr ? 'رقم الهاتف' : 'Phone Number';
   const labelConfirm = isAr ? 'تأكيد الرقم / رقم آخر' : 'Confirm Phone / Other Number';
   const labelProject = isAr ? 'المشروع' : 'Project';
   const selectPlaceholder = isAr ? 'اختر المشروع' : 'Select a project';
-  const submitLabel = isAr ? 'حمل' : 'Contact Us';
+  const submitLabel = submitLabelOverride ?? (isAr ? 'حمل' : 'Contact Us');
   const submittingLabel = isAr ? 'جاري الإرسال...' : 'Submitting...';
   const directLabel = isAr ? 'أو تواصل مباشرة:' : 'Or contact us directly:';
   const waLabel = isAr ? 'واتساب' : 'WhatsApp';
 
   return (
-    <section id="lead-form" className="bg-white px-6 py-12 md:px-16 md:py-16">
+    <section
+      id={sectionId}
+      className={sectionClassName ?? 'bg-white px-6 py-12 md:px-16 md:py-16'}
+    >
       <div className="mx-auto max-w-xl">
         <h2
           className={`text-4xl font-bold text-black md:text-5xl ${isAr ? 'font-arabic' : 'font-heading'}`}
@@ -181,25 +215,29 @@ const LeadForm = ({ locale = 'en' }: LeadFormProps) => {
             />
           </div>
 
-          <div>
-            <label htmlFor="project" className="mb-2 block text-sm font-semibold text-black">
-              {labelProject}{' '}
-              <span className="font-normal text-gray-500">{optional}</span>
-            </label>
-            <select
-              id="project"
-              value={formData.project}
-              onChange={(e) => handleChange('project', e.target.value)}
-              className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
-            >
-              <option value="">{selectPlaceholder}</option>
-              {LEAD_FORM_PROJECT_OPTIONS.map((name) => (
-                <option key={name} value={name}>
-                  {name}
-                </option>
-              ))}
-            </select>
-          </div>
+          {lockProject ? (
+            <input type="hidden" name="project" value={presetProject ?? ''} />
+          ) : (
+            <div>
+              <label htmlFor="project" className="mb-2 block text-sm font-semibold text-black">
+                {labelProject}{' '}
+                <span className="font-normal text-gray-500">{optional}</span>
+              </label>
+              <select
+                id="project"
+                value={formData.project}
+                onChange={(e) => handleChange('project', e.target.value)}
+                className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
+              >
+                <option value="">{selectPlaceholder}</option>
+                {LEAD_FORM_PROJECT_OPTIONS.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <button
             type="submit"

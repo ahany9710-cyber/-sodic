@@ -7,6 +7,8 @@ export const config: {
   whatsappDefaultMessageAr: string;
   /** Arabic WhatsApp text for promo banner CTA */
   whatsappPromoMessageAr: string;
+  /** Arabic WhatsApp pre-fill for /ar/ogami landing */
+  whatsappOgamiMessageAr: string;
   phoneNumber: string;
   phoneDisplay: string;
   /** Google tag ID (loaded in index.html; keep in sync) */

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
-const LOGO = './sections/hero/logo.svg';
+const LOGO = '/sections/hero/logo.svg';
 
 const HeaderShortAr = () => {
   const [scrolled, setScrolled] = useState(false);
