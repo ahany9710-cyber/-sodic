@@ -1,6 +1,8 @@
 // Renders every page of the Ogami PDFs (Sales Kit + Factsheet) to PNGs at
 // 2x DPI using pdfjs-dist + @napi-rs/canvas (auto-wired by pdfjs in Node).
 // Saves results into public/sections/ogami/raw/.
+// Install deps locally only (not needed for production / Vercel):
+//   npm i -D pdfjs-dist @napi-rs/canvas
 // Run with `npm run extract:ogami` once, then keep / rename useful pages.
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
