@@ -11,19 +11,19 @@ import OgamiGallery from '../components/ogami/OgamiGallery';
 import OgamiLeadForm from '../components/ogami/OgamiLeadForm';
 import OgamiFAQ from '../components/ogami/OgamiFAQ';
 import OgamiBookingPopup from '../components/ogami/OgamiBookingPopup';
+import { OgamiLocaleProvider, useOgamiPage } from '../contexts/OgamiLocaleContext';
+import type { OgamiLocale } from '../data/ogamiCopy';
 
-const TITLE = 'أوجامي · بوتانيكا تاون | شاليهات الساحل الشمالي بمقدّم 5٪ - سوديك';
-const DESCRIPTION =
-  'أوجامي / بوتانيكا تاون من سوديك على بحر رأس الحكمة. شاليهات بإطلالة على المياه، تشطيب كامل، شراكة Nobu العالمية. مقدّم 5٪ وتقسيط حتى 8 سنوات.';
+function OgamiMetaAndAnalytics() {
+  const { copy } = useOgamiPage();
 
-const OgamiLanding = () => {
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = TITLE;
+    document.title = copy.meta.title;
 
     const metaDesc = document.querySelector('meta[name="description"]');
     const prevDesc = metaDesc?.getAttribute('content') ?? null;
-    metaDesc?.setAttribute('content', DESCRIPTION);
+    metaDesc?.setAttribute('content', copy.meta.description);
 
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'ViewContent', {
@@ -44,10 +44,15 @@ const OgamiLanding = () => {
       document.title = prevTitle;
       if (prevDesc !== null) metaDesc?.setAttribute('content', prevDesc);
     };
-  }, []);
+  }, [copy.meta.description, copy.meta.title]);
 
+  return null;
+}
+
+function OgamiLandingBody() {
   return (
     <main>
+      <OgamiMetaAndAnalytics />
       <OgamiHero />
       <OgamiUrgencyStrip />
       <OgamiKeyStats />
@@ -61,6 +66,14 @@ const OgamiLanding = () => {
       <OgamiFAQ />
       <OgamiBookingPopup />
     </main>
+  );
+}
+
+const OgamiLanding = ({ locale = 'ar' }: { locale?: OgamiLocale }) => {
+  return (
+    <OgamiLocaleProvider locale={locale}>
+      <OgamiLandingBody />
+    </OgamiLocaleProvider>
   );
 };
 

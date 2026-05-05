@@ -1,61 +1,31 @@
 import { motion } from 'framer-motion';
-import { Award, Building2, MapPin, Sparkles, Trees, Waves } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 import { useCountUp } from '../../hooks/useCountUp';
 import { useInView } from '../../hooks/useInView';
+import { ogamiStatIcon } from './ogamiIconMap';
 
-interface Stat {
+interface StatResolved {
   icon: LucideIcon;
   value?: number;
   prefix?: string;
   suffix?: string;
   decimals?: number;
   label: string;
-  /** Use when there's no number (e.g. textual badge) */
   valueText?: string;
 }
 
-const stats: Stat[] = [
-  {
-    icon: MapPin,
-    value: 3,
-    suffix: ' دقائق',
-    label: 'تفصلك عن رأس الحكمة',
-  },
-  {
-    icon: Waves,
-    value: 120000,
-    prefix: '+',
-    suffix: ' م²',
-    label: 'لاجونز سباحة عذبة',
-  },
-  {
-    icon: Trees,
-    value: 19,
-    suffix: ' فدان',
-    label: 'بوتانيكا تاون مشي بدون عربيات',
-  },
-  {
-    icon: Building2,
-    value: 60,
-    suffix: '٪',
-    label: 'وحدات بإطلالة على المياه',
-  },
-  {
-    icon: Award,
-    valueText: 'Nobu',
-    label: 'فندق ومطعم وريزيدنسز عالمي داخل أوجامي',
-  },
-  {
-    icon: Sparkles,
-    valueText: '٪100',
-    label: 'تشطيب كامل + تكييف وغرفة شغّالة',
-  },
-];
-
-const formatArabic = (n: number) => new Intl.NumberFormat('ar-EG').format(n);
-
-const StatCard = ({ stat, index }: { stat: Stat; index: number }) => {
+const StatCard = ({
+  stat,
+  index,
+  numberLocale,
+  fontClass,
+}: {
+  stat: StatResolved;
+  index: number;
+  numberLocale: string;
+  fontClass: string;
+}) => {
   const { ref, inView } = useInView('-40px');
   const value = useCountUp({
     to: stat.value ?? 0,
@@ -66,7 +36,7 @@ const StatCard = ({ stat, index }: { stat: Stat; index: number }) => {
   const Icon = stat.icon;
   const display =
     stat.value !== undefined
-      ? `${stat.prefix ?? ''}${formatArabic(value)}${stat.suffix ?? ''}`
+      ? `${stat.prefix ?? ''}${new Intl.NumberFormat(numberLocale).format(value)}${stat.suffix ?? ''}`
       : (stat.valueText ?? '');
   return (
     <motion.div
@@ -83,15 +53,24 @@ const StatCard = ({ stat, index }: { stat: Stat; index: number }) => {
       >
         <Icon size={20} strokeWidth={1.5} />
       </span>
-      <p className="font-arabic text-2xl font-extrabold text-white sm:text-3xl md:text-4xl">
-        {display}
-      </p>
-      <p className="font-arabic text-sm leading-relaxed text-white/65 md:text-base">{stat.label}</p>
+      <p className={`${fontClass} text-2xl font-extrabold text-white sm:text-3xl md:text-4xl`}>{display}</p>
+      <p className={`${fontClass} text-sm leading-relaxed text-white/65 md:text-base`}>{stat.label}</p>
     </motion.div>
   );
 };
 
 const OgamiKeyStats = () => {
+  const { copy, fontClass } = useOgamiPage();
+  const s = copy.stats;
+  const stats: StatResolved[] = s.items.map((it) => ({
+    icon: ogamiStatIcon[it.icon as keyof typeof ogamiStatIcon],
+    value: it.value,
+    prefix: it.prefix,
+    suffix: it.suffix,
+    label: it.label,
+    valueText: it.valueText,
+  }));
+
   return (
     <section
       id="ogami-stats"
@@ -109,20 +88,22 @@ const OgamiKeyStats = () => {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="mb-10 max-w-2xl md:mb-14"
         >
-          <p className="text-[11px] font-semibold tracking-wider text-white/50">
-            ليه أوجامي؟
-          </p>
-          <h2 className="font-arabic mt-3 text-3xl font-bold leading-tight text-white md:text-5xl">
-            كل اللي يخلّيك تنبهر بالساحل في مشروع واحد
+          <p className="text-[11px] font-semibold tracking-wider text-white/50">{s.eyebrow}</p>
+          <h2 className={`${fontClass} mt-3 text-3xl font-bold leading-tight text-white md:text-5xl`}>
+            {s.title}
           </h2>
-          <p className="font-arabic mt-4 text-sm text-white/65 md:text-base">
-            من سوديك — مطوّر برصيد +30 سنة وأكثر من 30,000 ساكن.
-          </p>
+          <p className={`${fontClass} mt-4 text-sm text-white/65 md:text-base`}>{s.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
           {stats.map((stat, index) => (
-            <StatCard key={stat.label} stat={stat} index={index} />
+            <StatCard
+              key={stat.label}
+              stat={stat}
+              index={index}
+              numberLocale={copy.meta.numberLocale}
+              fontClass={fontClass}
+            />
           ))}
         </div>
       </div>

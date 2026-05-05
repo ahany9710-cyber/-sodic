@@ -3,6 +3,7 @@ import { MessageCircle, Phone } from 'lucide-react';
 import { config } from '../../config';
 import { trackMarketingContact } from '../../utils/trackMarketing';
 import { getWhatsAppLink } from '../../utils/whatsapp';
+import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 
 const headlineGlowLoop = {
   duration: 1.45,
@@ -23,16 +24,19 @@ const headlineContainer = {
 };
 
 const OgamiUrgencyStrip = () => {
+  const { copy, whatsappOgami, fontClass } = useOgamiPage();
+  const u = copy.urgency;
+
   const scrollToLeadForm = () => {
     document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const waHref = getWhatsAppLink({ text: config.whatsappOgamiMessageAr });
+  const waHref = getWhatsAppLink({ text: whatsappOgami });
 
   return (
     <section
-      className="relative border-y border-white/10 bg-black font-arabic text-white"
-      aria-label="عرض إطلاق أوجامي"
+      className={`relative border-y border-white/10 bg-black text-white ${fontClass}`}
+      aria-label={u.aria}
     >
       <div className="mx-auto flex max-w-[1600px] flex-col gap-5 px-6 py-5 md:flex-row md:items-center md:justify-between md:gap-8 md:px-16 md:py-6">
         <motion.div
@@ -42,58 +46,70 @@ const OgamiUrgencyStrip = () => {
           transition={{ duration: 0.45, ease: 'easeOut' }}
           className="max-w-2xl"
         >
-          <p className="text-[11px] font-semibold tracking-wide text-white/60">
-            عرض الإطلاق · بوتانيكا تاون
-          </p>
+          <p className="text-[11px] font-semibold tracking-wide text-white/60">{u.eyebrow}</p>
           <motion.h2
             className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-lg font-bold leading-snug text-white md:text-2xl"
-            dir="rtl"
+            dir={u.dir}
             variants={headlineContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.35 }}
           >
-            <motion.span variants={wordFadeUp}>احجز اليوم بمقدّم</motion.span>
-            <motion.span variants={wordFadeUp} className="relative inline-flex items-center">
-              <motion.span
-                className="inline-block rounded-sm bg-white px-2 py-0.5 text-base font-extrabold tabular-nums text-black shadow-[0_0_20px_rgba(255,255,255,0.35)] md:text-xl"
-                animate={{
-                  scale: [1, 1.08, 1],
-                  boxShadow: [
-                    '0 0 0 0 rgba(255,255,255,0)',
-                    '0 0 24px 2px rgba(255,255,255,0.45)',
-                    '0 0 0 0 rgba(255,255,255,0)',
-                  ],
-                }}
-                transition={headlineGlowLoop}
-              >
-                5٪
-              </motion.span>
-            </motion.span>
-            <motion.span variants={wordFadeUp}>فقط</motion.span>
-            <motion.span variants={wordFadeUp} className="text-white/40">
-              ·
-            </motion.span>
-            <motion.span variants={wordFadeUp}>تقسيط حتى</motion.span>
-            <motion.span variants={wordFadeUp} className="inline-block">
-              <motion.span
-                className="relative inline-block px-1 text-[1.15rem] font-extrabold leading-none text-white md:text-[1.5rem]"
-                animate={{
-                  textShadow: [
-                    '0 0 4px rgba(255,255,255,0.35), 0 0 12px rgba(255,255,255,0.2)',
-                    '0 0 22px rgba(255,255,255,1), 0 0 42px rgba(255,255,255,0.65)',
-                    '0 0 4px rgba(255,255,255,0.35), 0 0 12px rgba(255,255,255,0.2)',
-                  ],
-                }}
-                transition={{ ...headlineGlowLoop, delay: 0.35 }}
-              >
-                8 سنوات
-              </motion.span>
-            </motion.span>
+            {u.headline.map((seg, i) => {
+              if (seg.k === 'plain') {
+                return (
+                  <motion.span key={i} variants={wordFadeUp}>
+                    {seg.t}
+                  </motion.span>
+                );
+              }
+              if (seg.k === 'dot') {
+                return (
+                  <motion.span key={i} variants={wordFadeUp} className="text-white/40">
+                    {seg.t}
+                  </motion.span>
+                );
+              }
+              if (seg.k === 'badge') {
+                return (
+                  <motion.span key={i} variants={wordFadeUp} className="relative inline-flex items-center">
+                    <motion.span
+                      className="inline-block rounded-sm bg-white px-2 py-0.5 text-base font-extrabold tabular-nums text-black shadow-[0_0_20px_rgba(255,255,255,0.35)] md:text-xl"
+                      animate={{
+                        scale: [1, 1.08, 1],
+                        boxShadow: [
+                          '0 0 0 0 rgba(255,255,255,0)',
+                          '0 0 24px 2px rgba(255,255,255,0.45)',
+                          '0 0 0 0 rgba(255,255,255,0)',
+                        ],
+                      }}
+                      transition={headlineGlowLoop}
+                    >
+                      {seg.t}
+                    </motion.span>
+                  </motion.span>
+                );
+              }
+              return (
+                <motion.span key={i} variants={wordFadeUp} className="inline-block">
+                  <motion.span
+                    className="relative inline-block px-1 text-[1.15rem] font-extrabold leading-none text-white md:text-[1.5rem]"
+                    animate={{
+                      textShadow: [
+                        '0 0 4px rgba(255,255,255,0.35), 0 0 12px rgba(255,255,255,0.2)',
+                        '0 0 22px rgba(255,255,255,1), 0 0 42px rgba(255,255,255,0.65)',
+                        '0 0 4px rgba(255,255,255,0.35), 0 0 12px rgba(255,255,255,0.2)',
+                      ],
+                    }}
+                    transition={{ ...headlineGlowLoop, delay: 0.35 }}
+                  >
+                    {seg.t}
+                  </motion.span>
+                </motion.span>
+              );
+            })}
           </motion.h2>
-          <p className="mt-2 text-sm leading-relaxed text-white/75">
-            ٣ خطط سداد مرنة · تشطيب كامل + تكييف · تسليم وحدات Botanica Town على مراحل.
-          </p>
+          <p className="mt-2 text-sm leading-relaxed text-white/75">{u.sub}</p>
         </motion.div>
 
         <motion.div
@@ -108,7 +124,7 @@ const OgamiUrgencyStrip = () => {
             onClick={scrollToLeadForm}
             className="inline-flex min-h-11 items-center justify-center border border-white bg-white px-5 py-2.5 text-xs font-semibold text-black transition-colors hover:bg-white/90"
           >
-            سجّل اهتمامك
+            {u.ctaRegister}
           </button>
           <a
             href={`tel:${config.phoneNumber}`}
@@ -118,7 +134,7 @@ const OgamiUrgencyStrip = () => {
           >
             <span className="inline-flex items-center gap-2">
               <Phone size={16} strokeWidth={2} />
-              اتصل بنا
+              {u.call}
             </span>
             <span dir="ltr" className="tabular-nums text-white/80">
               {config.phoneDisplayLocal}
@@ -132,7 +148,7 @@ const OgamiUrgencyStrip = () => {
             className="inline-flex min-h-11 items-center justify-center gap-2 border border-[#25D366] bg-[#25D366] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#20bd5a]"
           >
             <MessageCircle size={16} />
-            واتساب
+            {u.whatsapp}
           </a>
         </motion.div>
       </div>

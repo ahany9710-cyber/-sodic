@@ -2,15 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MessageCircle, Phone, Send, Sparkles, X } from 'lucide-react';
 import { config } from '../../config';
+import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 import { trackMarketingContact } from '../../utils/trackMarketing';
 import { getWhatsAppLink } from '../../utils/whatsapp';
 
-const SESSION_KEY = 'ogami_booking_popup_seen';
 const TIME_DELAY_MS = 15_000;
 const SCROLL_TRIGGER_RATIO = 0.4;
-
-const popupWaMessage =
-  'مرحباً، عايز أحجز مكاني على ماستربلان أوجامي / بوتانيكا تاون قبل البيع الرسمي. ممكن التفاصيل والأسعار؟';
 
 const trackPopup = (action: 'open' | 'close' | 'cta_phone' | 'cta_whatsapp' | 'cta_form', trigger?: string) => {
   if (typeof window.gtag === 'function') {
@@ -19,19 +16,24 @@ const trackPopup = (action: 'open' | 'close' | 'cta_phone' | 'cta_whatsapp' | 'c
 };
 
 const OgamiBookingPopup = () => {
+  const { copy, fontClass } = useOgamiPage();
+  const b = copy.booking;
   const [open, setOpen] = useState(false);
 
-  const openPopup = useCallback((trigger: string) => {
-    if (typeof window === 'undefined') return;
-    if (sessionStorage.getItem(SESSION_KEY) === '1') return;
-    sessionStorage.setItem(SESSION_KEY, '1');
-    setOpen(true);
-    trackPopup('open', trigger);
-  }, []);
+  const openPopup = useCallback(
+    (trigger: string) => {
+      if (typeof window === 'undefined') return;
+      if (sessionStorage.getItem(b.sessionKey) === '1') return;
+      sessionStorage.setItem(b.sessionKey, '1');
+      setOpen(true);
+      trackPopup('open', trigger);
+    },
+    [b.sessionKey],
+  );
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (sessionStorage.getItem(SESSION_KEY) === '1') return;
+    if (sessionStorage.getItem(b.sessionKey) === '1') return;
 
     const timer = window.setTimeout(() => openPopup('time'), TIME_DELAY_MS);
 
@@ -56,7 +58,7 @@ const OgamiBookingPopup = () => {
       window.removeEventListener('scroll', onScroll);
       document.documentElement.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [openPopup]);
+  }, [openPopup, b.sessionKey]);
 
   useEffect(() => {
     if (!open) return;
@@ -90,23 +92,24 @@ const OgamiBookingPopup = () => {
     }, 250);
   };
 
-  const waHref = getWhatsAppLink({ text: popupWaMessage });
+  const waHref = getWhatsAppLink({ text: b.waPrefill });
+  const closeCorner = b.dir === 'rtl' ? 'left-3' : 'right-3';
 
   return (
     <AnimatePresence>
       {open ? (
         <motion.div
           key="ogami-popup"
-          className="font-arabic fixed inset-0 z-[100] flex items-center justify-center px-4 py-8"
+          className={`${fontClass} fixed inset-0 z-[100] flex items-center justify-center px-4 py-8`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          dir="rtl"
+          dir={b.dir}
         >
           <button
             type="button"
-            aria-label="إغلاق النافذة"
+            aria-label={b.closeOverlayAria}
             onClick={close}
             className="absolute inset-0 cursor-default bg-black/70 backdrop-blur-sm"
           />
@@ -125,8 +128,8 @@ const OgamiBookingPopup = () => {
               <button
                 type="button"
                 onClick={close}
-                aria-label="إغلاق"
-                className="absolute left-3 top-3 grid h-9 w-9 place-items-center text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                aria-label={b.closeBtnAria}
+                className={`absolute top-3 grid h-9 w-9 place-items-center text-white/70 transition-colors hover:bg-white/10 hover:text-white ${closeCorner}`}
               >
                 <X size={18} strokeWidth={2} />
               </button>
@@ -136,31 +139,23 @@ const OgamiBookingPopup = () => {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-400" />
                 </span>
-                <p className="text-[11px] font-semibold tracking-wider text-white/70">
-                  بوتانيكا تاون · فرصة الإطلاق الأولي
-                </p>
+                <p className="text-[11px] font-semibold tracking-wider text-white/70">{b.topLine}</p>
               </div>
 
-              <h3
-                id="ogami-popup-title"
-                className="mt-3 text-2xl font-bold leading-tight md:text-3xl"
-              >
-                احجز مكانك على الماستربلان قبل الجميع
+              <h3 id="ogami-popup-title" className="mt-3 text-2xl font-bold leading-tight md:text-3xl">
+                {b.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/75 md:text-base">
-                عدد الوحدات محدود والترتيب أولوية. اختار طريقة التواصل المفضلة وفريق المبيعات
-                هيوصلك بكل التفاصيل والأسعار وخطط السداد.
-              </p>
+              <p className="mt-2 text-sm leading-relaxed text-white/75 md:text-base">{b.lead}</p>
 
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-white/70 md:text-xs">
                 <span className="inline-flex items-center gap-1.5">
                   <Sparkles size={12} strokeWidth={2} className="text-amber-400" />
-                  مقدّم 5٪ فقط
+                  {b.perk1}
                 </span>
                 <span className="text-white/30">·</span>
-                <span>تقسيط حتى 8 سنوات</span>
+                <span>{b.perk2}</span>
                 <span className="text-white/30">·</span>
-                <span>تشطيب كامل + تكييف</span>
+                <span>{b.perk3}</span>
               </div>
             </div>
 
@@ -177,14 +172,14 @@ const OgamiBookingPopup = () => {
               >
                 <span className="inline-flex items-center gap-2.5">
                   <Phone size={18} strokeWidth={2} />
-                  اتصل بفريق المبيعات الآن
+                  {b.callCta}
                 </span>
                 <span className="flex shrink-0 flex-col items-end gap-0.5 text-end">
                   <span dir="ltr" className="text-[11px] font-semibold tabular-nums text-white/80">
                     {config.phoneDisplayLocal}
                   </span>
                   <span className="text-[11px] font-semibold tracking-wide text-white/70 group-hover:text-white">
-                    أسرع رد
+                    {b.fastReply}
                   </span>
                 </span>
               </a>
@@ -202,10 +197,10 @@ const OgamiBookingPopup = () => {
               >
                 <span className="inline-flex items-center gap-2.5">
                   <MessageCircle size={18} />
-                  ابعت رسالة على واتساب
+                  {b.waCta}
                 </span>
                 <span className="text-[11px] font-semibold tracking-wide text-white/80 group-hover:text-white">
-                  رد فوري
+                  {b.waBadge}
                 </span>
               </a>
 
@@ -216,19 +211,14 @@ const OgamiBookingPopup = () => {
               >
                 <span className="inline-flex items-center gap-2.5">
                   <Send size={18} />
-                  سجّل اهتمامك في الفورم
+                  {b.formCta}
                 </span>
-                <span className="text-[11px] font-semibold tracking-wide text-zinc-500">
-                  خلال 24 ساعة
-                </span>
+                <span className="text-[11px] font-semibold tracking-wide text-zinc-500">{b.formBadge}</span>
               </button>
             </div>
 
             <div className="border-t border-zinc-100 bg-stone-50 px-6 py-4 text-xs leading-relaxed text-zinc-600 md:px-8 md:text-sm">
-              <p>
-                بياناتك بتتعامل بسرّية تامة ومش بيتم مشاركتها مع أي طرف تالت — سوديك ٣٠+ سنة من
-                المصداقية والتسليم في الميعاد.
-              </p>
+              <p>{b.trust}</p>
             </div>
           </motion.div>
         </motion.div>

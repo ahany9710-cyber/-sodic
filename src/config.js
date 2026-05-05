@@ -24,8 +24,12 @@ export const config = {
   whatsappPromoMessageAr:
     'مرحباً، أود الاستفسار عن عرض الإستلام الفوري بمقدّم 5٪ على الوحدات المتاحة.',
 
-  // /ar/ogami — same prefilled body as arabic funnel (explicit key for readability)
+  // /ar/ogami + /ogami — WhatsApp pre-fill (Arabic)
   whatsappOgamiMessageAr: WHATSAPP_AR_OGAMI,
+
+  // /ogami — English Ogami landing
+  whatsappOgamiMessageEn:
+    'Hello, I am interested in Ogami / Botanica Town on the North Coast by SODIC. Please share pricing and payment plans.',
 
   // Phone for tel: links (with country code)
   phoneNumber: '+201000805205',

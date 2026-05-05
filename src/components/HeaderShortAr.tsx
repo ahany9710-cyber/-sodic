@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const LOGO = '/sections/hero/logo.svg';
 
 const HeaderShortAr = () => {
+  const { pathname } = useLocation();
+  const englishHref = pathname.startsWith('/ar/ogami') ? '/ogami' : '/';
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -48,7 +51,7 @@ const HeaderShortAr = () => {
         <div className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-2 md:h-20">
           <div className="flex justify-start">
             <Link
-              to="/"
+              to={englishHref}
               className={`text-xs font-semibold transition-colors ${
                 lightMode ? 'text-zinc-600 hover:text-black' : 'text-white/90 hover:text-white'
               }`}
@@ -106,7 +109,7 @@ const HeaderShortAr = () => {
               سجّل اهتمامك
             </a>
             <Link
-              to="/"
+              to={englishHref}
               className="py-3 text-center text-sm font-semibold text-zinc-700"
               onClick={() => setMenuOpen(false)}
             >

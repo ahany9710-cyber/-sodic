@@ -54,15 +54,29 @@ function App() {
             <div className="min-h-screen bg-white pb-24 font-arabic md:pb-0" dir="rtl" lang="ar">
               <HeaderShortAr />
               <Suspense fallback={null}>
-                <OgamiLanding />
+                <OgamiLanding locale="ar" />
               </Suspense>
               <FooterShortAr />
-              <FloatingActionBar rtl whatsappMessage={arWa} />
+              <FloatingActionBar rtl whatsappMessage={config.whatsappOgamiMessageAr} />
               <MobileBottomBar
-                whatsappMessage={arWa}
+                whatsappMessage={config.whatsappOgamiMessageAr}
                 phoneDialLabel={dial}
                 labels={{ call: 'اتصل بنا', whatsapp: 'واتساب', register: 'تسجيل' }}
               />
+            </div>
+          }
+        />
+        <Route
+          path="/ogami"
+          element={
+            <div className="min-h-screen bg-white pb-24 md:pb-0" dir="ltr" lang="en">
+              <Header />
+              <Suspense fallback={null}>
+                <OgamiLanding locale="en" />
+              </Suspense>
+              <Footer />
+              <FloatingActionBar whatsappMessage={config.whatsappOgamiMessageEn} />
+              <MobileBottomBar phoneDialLabel={dial} whatsappMessage={config.whatsappOgamiMessageEn} />
             </div>
           }
         />

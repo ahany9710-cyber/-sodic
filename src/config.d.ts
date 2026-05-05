@@ -7,8 +7,10 @@ export const config: {
   whatsappDefaultMessageAr: string;
   /** Arabic WhatsApp text for promo banner CTA */
   whatsappPromoMessageAr: string;
-  /** Arabic WhatsApp pre-fill for /ar/ogami landing */
+  /** Arabic WhatsApp pre-fill for /ar/ogami */
   whatsappOgamiMessageAr: string;
+  /** English WhatsApp pre-fill for /ogami */
+  whatsappOgamiMessageEn: string;
   phoneNumber: string;
   phoneDisplay: string;
   /** Egyptian mobile grouping for visible labels */
