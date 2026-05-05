@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { sitePagesAr } from '../data/siteNavLinks';
 
 const LOGO = '/sections/hero/logo.svg';
 
@@ -20,9 +21,14 @@ const HeaderShortAr = () => {
       ? '#east-lead-form'
       : '#lead-form';
 
+  const isArProjectLanding =
+    pathname === '/ar/eastvale' || pathname === '/ar/east' || pathname === '/ar/ogami';
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+
+  const lightMode = scrolled || menuOpen || isArProjectLanding;
 
   useEffect(() => {
     const updateScrollState = () => setScrolled(window.scrollY > 24);
@@ -49,8 +55,6 @@ const HeaderShortAr = () => {
     setMenuOpen(false);
   }, []);
 
-  const lightMode = scrolled || menuOpen;
-
   return (
     <header
       ref={headerRef}
@@ -61,26 +65,7 @@ const HeaderShortAr = () => {
     >
       <div className="mx-auto max-w-[1600px] px-6 md:px-8 lg:px-10">
         <div className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-2 md:h-20">
-          <div className="flex justify-start">
-            <Link
-              to={englishHref}
-              className={`text-xs font-semibold transition-colors ${
-                lightMode ? 'text-zinc-600 hover:text-black' : 'text-white/90 hover:text-white'
-              }`}
-            >
-              English
-            </Link>
-          </div>
-
-          <a href="#hero" onClick={(e) => scrollToSection(e, '#hero')} className="inline-flex items-center justify-self-center">
-            <img
-              src={LOGO}
-              alt="سوديك"
-              className={`h-5 w-auto transition-[filter] duration-300 ${lightMode ? 'brightness-0' : 'brightness-0 invert'}`}
-            />
-          </a>
-
-          <div className="flex items-center justify-end gap-2">
+          <div className="flex items-center justify-start gap-2">
             <nav className="hidden lg:flex" aria-label="التنقل">
               <a
                 href={leadFormHash}
@@ -96,27 +81,67 @@ const HeaderShortAr = () => {
             </nav>
             <button
               type="button"
-              className={`grid h-10 w-10 place-items-center rounded-none border lg:hidden ${
-                lightMode ? 'border-zinc-300 text-black' : 'border-white/60 text-white'
-              }`}
+              className={`grid h-11 w-11 shrink-0 place-items-center rounded-none border-2 ${
+                isArProjectLanding ? '' : 'lg:hidden '
+              }${lightMode ? 'border-zinc-800 bg-white text-zinc-900' : 'border-white/60 text-white'}`}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-ar"
               aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              {menuOpen ? <X size={18} /> : <Menu size={18} />}
+              {menuOpen ? <X size={20} strokeWidth={2} /> : <Menu size={20} strokeWidth={2} />}
             </button>
+          </div>
+
+          <a href="#hero" onClick={(e) => scrollToSection(e, '#hero')} className="inline-flex items-center justify-self-center">
+            <img
+              src={LOGO}
+              alt="سوديك"
+              className={`h-5 w-auto transition-[filter] duration-300 ${lightMode ? 'brightness-0' : 'brightness-0 invert'}`}
+            />
+          </a>
+
+          <div className="flex justify-end">
+            <Link
+              to={englishHref}
+              className={`text-xs font-semibold transition-colors ${
+                lightMode ? 'text-zinc-600 hover:text-black' : 'text-white/90 hover:text-white'
+              }`}
+            >
+              English
+            </Link>
           </div>
         </div>
       </div>
 
       {menuOpen ? (
-        <div id="mobile-nav-ar" className="border-t border-gray-100 bg-white lg:hidden" dir="rtl">
+        <div
+          id="mobile-nav-ar"
+          className={`border-t border-gray-100 bg-white ${isArProjectLanding ? '' : 'lg:hidden '}`}
+          dir="rtl"
+        >
           <nav className="flex flex-col gap-1 px-6 py-4" aria-label="التنقل للموبايل">
+            <p className="pb-1 text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">الصفحات</p>
+            {sitePagesAr.map((item) => {
+              const active = pathname === item.to;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`border-b border-gray-100 py-3 text-center text-sm font-semibold transition-colors ${
+                    active ? 'text-black' : 'text-zinc-700 hover:text-black'
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                  {active ? <span className="sr-only"> الصفحة الحالية</span> : null}
+                </Link>
+              );
+            })}
             <a
               href={leadFormHash}
               onClick={(e) => scrollToSection(e, leadFormHash)}
-              className="border-b border-gray-100 py-3 text-center text-sm font-semibold text-black"
+              className="mt-2 border-b border-gray-100 py-3 text-center text-sm font-semibold text-black"
             >
               سجّل اهتمامك
             </a>

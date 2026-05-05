@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, Search, X } from 'lucide-react';
+import { sitePagesEn } from '../data/siteNavLinks';
 
 const LOGO = './sections/hero/logo.svg';
 
@@ -29,9 +30,13 @@ const Header = () => {
         ? '#east-lead-form'
         : '#lead-form';
 
+  const isProjectLanding = pathname === '/east' || pathname === '/eastvale' || pathname === '/ogami';
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+
+  const lightMode = scrolled || menuOpen || isProjectLanding;
 
   useEffect(() => {
     const updateScrollState = () => setScrolled(window.scrollY > 24);
@@ -57,8 +62,6 @@ const Header = () => {
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     setMenuOpen(false);
   }, []);
-
-  const lightMode = scrolled || menuOpen;
 
   return (
     <header
@@ -123,9 +126,9 @@ const Header = () => {
 
           <button
             type="button"
-            className={`lg:hidden grid h-10 w-10 place-items-center border rounded-none ${
-              lightMode ? 'border-zinc-300 text-black' : 'border-white/60 text-white'
-            }`}
+            className={`grid h-10 w-10 place-items-center border rounded-none ${
+              isProjectLanding ? '' : 'lg:hidden '
+            }${lightMode ? 'border-zinc-300 text-black' : 'border-white/60 text-white'}`}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -144,19 +147,45 @@ const Header = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="lg:hidden border-t border-gray-100 bg-white"
+            className={`${isProjectLanding ? '' : 'lg:hidden '}border-t border-gray-100 bg-white`}
           >
             <nav className="px-6 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => scrollToSection(e, link.href)}
-                  className="py-3 text-sm font-semibold uppercase tracking-[0.1em] text-black border-b border-gray-100"
-                >
-                  {link.label}
-                </a>
-              ))}
+              <p className="pb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">Pages</p>
+              {sitePagesEn.map((item) => {
+                const active = pathname === item.to;
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`py-3 text-sm font-semibold tracking-wide transition-colors border-b border-gray-100 ${
+                      active ? 'text-black' : 'text-zinc-700 hover:text-black'
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                    {active ? <span className="sr-only"> (current)</span> : null}
+                  </Link>
+                );
+              })}
+
+              {pathname === '/' ? (
+                <>
+                  <p className="pb-1 pt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+                    This page
+                  </p>
+                  {NAV_LINKS.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={(e) => scrollToSection(e, link.href)}
+                      className="py-3 text-sm font-semibold uppercase tracking-[0.08em] text-zinc-800 border-b border-gray-100"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </>
+              ) : null}
+
               <a
                 href={leadFormHash}
                 onClick={(e) => scrollToSection(e, leadFormHash)}
@@ -167,6 +196,7 @@ const Header = () => {
               <Link
                 to={arabicHref}
                 className="mt-2 inline-flex justify-center py-3 text-xs font-semibold text-black"
+                onClick={() => setMenuOpen(false)}
               >
                 العربية
               </Link>
