@@ -48,7 +48,6 @@ const EastLeadForm = () => {
             <LeadForm
               locale={l.leadFormLocale}
               presetProject="East"
-              lockProject
               title={l.formTitle}
               subtitle={l.formSubtitle}
               submitLabelOverride={l.submit}

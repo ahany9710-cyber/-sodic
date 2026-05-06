@@ -48,7 +48,6 @@ const OgamiLeadForm = () => {
             <LeadForm
               locale={l.leadFormLocale}
               presetProject="Ogami"
-              lockProject
               title={l.formTitle}
               subtitle={l.formSubtitle}
               submitLabelOverride={l.submit}

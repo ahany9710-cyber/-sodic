@@ -25,10 +25,8 @@ export type LeadFormLocale = 'en' | 'ar';
 
 interface LeadFormProps {
   locale?: LeadFormLocale;
-  /** Optional pre-filled project (e.g. "Ogami") */
+  /** Optional default selection in the project dropdown (user may change or leave blank) */
   presetProject?: string;
-  /** When true, hide the project picker and submit presetProject as a hidden field */
-  lockProject?: boolean;
   /** Optional override for the section heading */
   title?: string;
   /** Optional override for the supporting text under the heading */
@@ -46,7 +44,6 @@ interface LeadFormProps {
 const LeadForm = ({
   locale = 'en',
   presetProject,
-  lockProject = false,
   title: titleOverride,
   subtitle: subtitleOverride,
   whatsappMessage,
@@ -109,8 +106,7 @@ const LeadForm = ({
     if (formData.fullName.trim()) body.append('full_name', formData.fullName.trim());
     body.append('phone', formData.phoneNumber.trim());
     if (formData.confirmPhone.trim()) body.append('confirm_phone', formData.confirmPhone.trim());
-    const projectValue = lockProject && presetProject ? presetProject : formData.project;
-    if (projectValue) body.append('project', projectValue);
+    if (formData.project.trim()) body.append('project', formData.project.trim());
     if (isAr) body.append('locale', 'ar');
 
     try {
@@ -215,29 +211,25 @@ const LeadForm = ({
             />
           </div>
 
-          {lockProject ? (
-            <input type="hidden" name="project" value={presetProject ?? ''} />
-          ) : (
-            <div>
-              <label htmlFor="project" className="mb-2 block text-sm font-semibold text-black">
-                {labelProject}{' '}
-                <span className="font-normal text-gray-500">{optional}</span>
-              </label>
-              <select
-                id="project"
-                value={formData.project}
-                onChange={(e) => handleChange('project', e.target.value)}
-                className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
-              >
-                <option value="">{selectPlaceholder}</option>
-                {LEAD_FORM_PROJECT_OPTIONS.map((name) => (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+          <div>
+            <label htmlFor="project" className="mb-2 block text-sm font-semibold text-black">
+              {labelProject}{' '}
+              <span className="font-normal text-gray-500">{optional}</span>
+            </label>
+            <select
+              id="project"
+              value={formData.project}
+              onChange={(e) => handleChange('project', e.target.value)}
+              className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
+            >
+              <option value="">{selectPlaceholder}</option>
+              {LEAD_FORM_PROJECT_OPTIONS.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <button
             type="submit"
