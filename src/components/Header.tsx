@@ -126,9 +126,9 @@ const Header = () => {
 
           <button
             type="button"
-            className={`grid h-10 w-10 place-items-center border rounded-none ${
-              isProjectLanding ? '' : 'lg:hidden '
-            }${lightMode ? 'border-zinc-300 text-black' : 'border-white/60 text-white'}`}
+            className={`grid h-10 w-10 shrink-0 place-items-center border rounded-none ${
+              lightMode ? 'border-zinc-300 text-black' : 'border-white/60 text-white'
+            }`}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -147,7 +147,7 @@ const Header = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className={`${isProjectLanding ? '' : 'lg:hidden '}border-t border-gray-100 bg-white`}
+            className="border-t border-gray-100 bg-white"
           >
             <nav className="px-6 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
               <p className="pb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">Pages</p>

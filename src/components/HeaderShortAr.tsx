@@ -82,8 +82,8 @@ const HeaderShortAr = () => {
             <button
               type="button"
               className={`grid h-11 w-11 shrink-0 place-items-center rounded-none border-2 ${
-                isArProjectLanding ? '' : 'lg:hidden '
-              }${lightMode ? 'border-zinc-800 bg-white text-zinc-900' : 'border-white/60 text-white'}`}
+                lightMode ? 'border-zinc-800 bg-white text-zinc-900' : 'border-white/60 text-white'
+              }`}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-ar"
               aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
@@ -117,7 +117,7 @@ const HeaderShortAr = () => {
       {menuOpen ? (
         <div
           id="mobile-nav-ar"
-          className={`border-t border-gray-100 bg-white ${isArProjectLanding ? '' : 'lg:hidden '}`}
+          className="border-t border-gray-100 bg-white"
           dir="rtl"
         >
           <nav className="flex flex-col gap-1 px-6 py-4" aria-label="التنقل للموبايل">
