@@ -23,8 +23,6 @@ export const config: {
   phoneDisplay: string;
   /** Egyptian mobile grouping for visible labels */
   phoneDisplayLocal: string;
-  /** Google tag ID (loaded in index.html; keep in sync) */
-  gtag_id: string;
   /** Google Ads conversion id for ThankYou page (optional) */
   conversion_id?: string;
   /** Google Ads conversion label for ThankYou page (optional) */

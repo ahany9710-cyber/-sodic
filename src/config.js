@@ -53,8 +53,8 @@ export const config = {
 
   /** Local Egyptian format — use where you surface the number in UI */
   phoneDisplayLocal: '0100 080 5205',
-  gtag_id: 'AW-18066287198',
   // Optional: add conversion_id + conversion_label from Google Ads for thank-you page trackConversion()
+  // (configure Google Ads / GA4 tags inside GTM container GTM-57GBSHXC)
 
   /** Legacy: optional external media URLs (hero/map). Leave empty when using /public/assets only. */
   heroVideoUrl: '',
