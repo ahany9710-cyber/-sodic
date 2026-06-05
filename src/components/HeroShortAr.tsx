@@ -14,7 +14,7 @@ const HeroShortAr = () => {
   const waHref = getWhatsAppLink({ text: config.whatsappDefaultMessageAr });
 
   return (
-    <section id="hero" className="relative min-h-[85vh] overflow-hidden bg-black md:min-h-screen">
+    <section id="hero" className="relative min-h-[68vh] overflow-hidden bg-black md:min-h-screen">
       <img
         src={HERO_IMAGE}
         alt=""
@@ -27,7 +27,7 @@ const HeroShortAr = () => {
       />
       <div className="absolute inset-0 bg-black/35" aria-hidden />
 
-      <div className="relative z-10 flex min-h-[85vh] items-end pb-24 pt-28 md:min-h-screen md:pb-32">
+      <div className="relative z-10 flex min-h-[68vh] items-end pb-20 pt-20 md:min-h-screen md:pb-32 md:pt-28">
         <div className="w-full px-6 md:px-16 lg:px-24">
           <motion.div
             initial={{ opacity: 0, y: 24 }}

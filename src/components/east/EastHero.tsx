@@ -29,7 +29,7 @@ const EastHero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] overflow-hidden bg-black md:min-h-screen"
+      className="relative min-h-[68vh] overflow-hidden bg-black md:min-h-screen"
       dir={locale === 'ar' ? 'rtl' : 'ltr'}
       lang={locale}
     >
@@ -50,7 +50,7 @@ const EastHero = () => {
       />
       <div className={`absolute inset-0 ${sideVignette}`} aria-hidden />
 
-      <div className="relative z-10 flex min-h-[92vh] items-end pb-28 pt-24 md:min-h-screen md:pb-32">
+      <div className="relative z-10 flex min-h-[68vh] items-end pb-20 pt-20 md:min-h-screen md:pb-32 md:pt-24">
         <div className="w-full px-6 md:px-16 lg:px-24">
           <motion.div
             initial={{ opacity: 0, y: 14 }}

@@ -198,7 +198,7 @@ export const ogamiEn: OgamiCopy = {
       'Every home is fully finished and air-conditioned with a maid\'s room. G+2 buildings with cascading terraces to protect open views.',
     sideNote: 'Pricing from 2026 — subject to update.\nPayment plans up to 8 years.',
     disclaimer: '* All visuals are illustrative and may change.',
-    book: 'Reserve',
+    book: 'Get the brochure',
     inquire: 'Enquire',
     priceGridDir: 'ltr',
     items: [
@@ -325,9 +325,9 @@ export const ogamiEn: OgamiCopy = {
     ],
     offices:
       'Sales offices · Sheikh Zayed: km 38 Desert Road · New Cairo: 90 South Street.',
-    formTitle: 'Your details',
+    formTitle: 'Get the brochure',
     formSubtitle: 'We will respond within 24 hours.',
-    submit: 'Reserve your spot on the masterplan before everyone else',
+    submit: 'Click here to get the brochure from our sales team',
     leadFormLocale: 'en',
   },
   faq: {

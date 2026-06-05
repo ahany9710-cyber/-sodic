@@ -3,12 +3,36 @@ import { ShieldCheck } from 'lucide-react';
 import { useEastPage } from '../../contexts/EastLocaleContext';
 import LeadForm from '../LeadForm';
 
-const EastLeadForm = () => {
+type EastLeadFormPlacement = 'primary' | 'closing';
+
+const EastLeadForm = ({ placement = 'primary' }: { placement?: EastLeadFormPlacement }) => {
   const { copy, whatsappEast, fontClass } = useEastPage();
   const l = copy.lead;
+  const isClosing = placement === 'closing';
+  const outerId = isClosing ? 'east-lead-form-bottom' : 'east-lead-form';
+  const innerId = isClosing ? 'east-lead-form-bottom-inner' : 'east-lead-form-inner';
+
+  if (isClosing) {
+    return (
+      <section id={outerId} className="relative overflow-hidden bg-stone-50 px-6 py-16 md:px-16 md:py-20">
+        <div className="mx-auto max-w-xl bg-white p-2 shadow-xl ring-1 ring-zinc-100">
+          <LeadForm
+            locale={l.leadFormLocale}
+            presetProject="East"
+            title={l.formTitle}
+            subtitle={l.formSubtitle}
+            submitLabelOverride={l.submit}
+            whatsappMessage={whatsappEast}
+            sectionClassName="bg-white px-6 py-8 md:px-10 md:py-10"
+            sectionId={innerId}
+          />
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section id="east-lead-form" className="relative overflow-hidden bg-stone-50 px-6 py-16 md:px-16 md:py-24">
+    <section id={outerId} className="relative overflow-hidden bg-stone-50 px-6 py-16 md:px-16 md:py-24">
       <div className="mx-auto max-w-[1600px]">
         <div className="grid grid-cols-1 gap-10 md:gap-14 lg:grid-cols-2">
           <motion.div
@@ -53,7 +77,7 @@ const EastLeadForm = () => {
               submitLabelOverride={l.submit}
               whatsappMessage={whatsappEast}
               sectionClassName="bg-white px-6 py-8 md:px-10 md:py-10"
-              sectionId="east-lead-form-inner"
+              sectionId={innerId}
             />
           </motion.div>
         </div>

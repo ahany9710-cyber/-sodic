@@ -7,8 +7,7 @@ import { trackMarketingContact } from '../../utils/trackMarketing';
 import { scrollToLeadFormAfterModal } from '../../utils/scrollToLeadFormAfterModal';
 import { getWhatsAppLink } from '../../utils/whatsapp';
 
-const TIME_DELAY_MS = 15_000;
-const SCROLL_TRIGGER_RATIO = 0.4;
+const TIME_DELAY_MS = 30_000;
 
 const trackPopup = (action: 'open' | 'close' | 'cta_phone' | 'cta_whatsapp' | 'cta_form', trigger?: string) => {
   if (typeof window.gtag === 'function') {
@@ -38,25 +37,14 @@ const OgamiBookingPopup = () => {
 
     const timer = window.setTimeout(() => openPopup('time'), TIME_DELAY_MS);
 
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max <= 0) return;
-      const ratio = window.scrollY / max;
-      if (ratio >= SCROLL_TRIGGER_RATIO) {
-        openPopup('scroll');
-      }
-    };
-
     const onMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0) openPopup('exit_intent');
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
     document.documentElement.addEventListener('mouseleave', onMouseLeave);
 
     return () => {
       window.clearTimeout(timer);
-      window.removeEventListener('scroll', onScroll);
       document.documentElement.removeEventListener('mouseleave', onMouseLeave);
     };
   }, [openPopup, b.sessionKey]);

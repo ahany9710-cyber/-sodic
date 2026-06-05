@@ -140,7 +140,7 @@ export const eastvaleEn: EastvaleCopy = {
       'Values reference the apartments brochure; villa band references the villas brochure. Net pricing & stock from sales.',
     sideNote: 'Naming follows marketing nomenclature.\nPrices update with releases.',
     disclaimer: '* Indicative marketing figures — official offer defines specs & price.',
-    book: 'Enquire',
+    book: 'Get the brochure',
     inquire: 'WhatsApp',
     priceGridDir: 'ltr',
     items: [
@@ -243,9 +243,9 @@ export const eastvaleEn: EastvaleCopy = {
     ],
     offices:
       'Sales offices · Sheikh Zayed km 38 Desert Road · New Cairo 90 South Street.',
-    formTitle: 'Your details',
+    formTitle: 'Get the brochure',
     formSubtitle: 'We will respond about Eastvale shortly.',
-    submit: 'Book your exclusive masterplan slot',
+    submit: 'Click here to get the brochure from our sales team',
     leadFormLocale: 'en',
   },
   faq: {

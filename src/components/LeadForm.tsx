@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { MessageCircle, Phone } from 'lucide-react';
 import { config } from '../config';
 import { LEAD_FORM_PROJECT_OPTIONS } from '../data/leadFormProjects';
@@ -23,7 +24,7 @@ const normalizeDigits = (value: string) => value.replace(/\D/g, '');
 
 export type LeadFormLocale = 'en' | 'ar';
 
-interface LeadFormProps {
+export interface LeadFormProps {
   locale?: LeadFormLocale;
   /** Optional default selection in the project dropdown (user may change or leave blank) */
   presetProject?: string;
@@ -139,10 +140,10 @@ const LeadForm = ({
     text: whatsappMessage ?? (isAr ? config.whatsappDefaultMessageAr : undefined),
   });
 
-  const defaultTitle = isAr ? 'تواصل معنا' : 'Contact Us';
+  const defaultTitle = isAr ? 'احصل على البروشور' : 'Get the brochure';
   const defaultSubtitle = isAr
-    ? 'اترك بياناتك وسيتواصل معك فريق المبيعات في أقرب وقت.'
-    : 'Leave your details and our sales team will contact you shortly.';
+    ? 'اترك بياناتك وسيرسل لك فريق المبيعات البروشور في أقرب وقت.'
+    : 'Leave your details and our sales team will send you the brochure shortly.';
   const title = titleOverride ?? defaultTitle;
   const subtitle = subtitleOverride ?? defaultSubtitle;
   const labelName = isAr ? 'الاسم الكامل' : 'Full Name';
@@ -151,10 +152,13 @@ const LeadForm = ({
   const labelConfirm = isAr ? 'تأكيد الرقم / رقم آخر' : 'Confirm Phone / Other Number';
   const labelProject = isAr ? 'المشروع' : 'Project';
   const selectPlaceholder = isAr ? 'اختر المشروع' : 'Select a project';
-  const submitLabel = submitLabelOverride ?? (isAr ? 'حمل' : 'Contact Us');
+  const submitLabel =
+    submitLabelOverride ??
+    (isAr ? 'اضغط هنا للحصول على البروشور من فريق المبيعات' : 'Click here to get the brochure from our sales team');
   const submittingLabel = isAr ? 'جاري الإرسال...' : 'Submitting...';
   const directLabel = isAr ? 'أو تواصل مباشرة:' : 'Or contact us directly:';
   const waLabel = isAr ? 'واتساب' : 'WhatsApp';
+  const fieldId = (name: string) => `${sectionId}-${name}`;
 
   return (
     <section
@@ -171,12 +175,12 @@ const LeadForm = ({
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <div>
-            <label htmlFor="fullName" className="mb-2 block text-sm font-semibold text-black">
+            <label htmlFor={fieldId('fullName')} className="mb-2 block text-sm font-semibold text-black">
               {labelName}{' '}
               <span className="font-normal text-gray-500">{optional}</span>
             </label>
             <input
-              id="fullName"
+              id={fieldId('fullName')}
               value={formData.fullName}
               onChange={(e) => handleChange('fullName', e.target.value)}
               className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
@@ -184,11 +188,11 @@ const LeadForm = ({
           </div>
 
           <div>
-            <label htmlFor="phoneNumber" className="mb-2 block text-sm font-semibold text-black">
+            <label htmlFor={fieldId('phoneNumber')} className="mb-2 block text-sm font-semibold text-black">
               {labelPhone} <span className="text-red-600">*</span>
             </label>
             <input
-              id="phoneNumber"
+              id={fieldId('phoneNumber')}
               value={formData.phoneNumber}
               onChange={(e) => handleChange('phoneNumber', e.target.value)}
               className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
@@ -199,12 +203,12 @@ const LeadForm = ({
           </div>
 
           <div>
-            <label htmlFor="confirmPhone" className="mb-2 block text-sm font-semibold text-black">
+            <label htmlFor={fieldId('confirmPhone')} className="mb-2 block text-sm font-semibold text-black">
               {labelConfirm}{' '}
               <span className="font-normal text-gray-500">{optional}</span>
             </label>
             <input
-              id="confirmPhone"
+              id={fieldId('confirmPhone')}
               value={formData.confirmPhone}
               onChange={(e) => handleChange('confirmPhone', e.target.value)}
               className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
@@ -212,12 +216,12 @@ const LeadForm = ({
           </div>
 
           <div>
-            <label htmlFor="project" className="mb-2 block text-sm font-semibold text-black">
+            <label htmlFor={fieldId('project')} className="mb-2 block text-sm font-semibold text-black">
               {labelProject}{' '}
               <span className="font-normal text-gray-500">{optional}</span>
             </label>
             <select
-              id="project"
+              id={fieldId('project')}
               value={formData.project}
               onChange={(e) => handleChange('project', e.target.value)}
               className="h-12 w-full border border-zinc-200 px-4 outline-none transition-colors focus:border-black"
@@ -231,18 +235,40 @@ const LeadForm = ({
             </select>
           </div>
 
-          <button
+          <motion.button
             type="submit"
             disabled={isSubmitting}
-            aria-label={
-              isAr
-                ? submitLabelOverride || 'حمّل بروشور المشروعات بعد إرسال البيانات'
-                : submitLabelOverride || undefined
+            aria-label={submitLabel}
+            whileHover={
+              isSubmitting
+                ? undefined
+                : {
+                    scale: 1.02,
+                    backgroundColor: '#1aad4f',
+                    boxShadow: '0 10px 28px rgba(26,173,79,0.5)',
+                  }
             }
-            className={`inline-flex w-full items-center justify-center rounded-none bg-black px-8 py-4 text-base font-bold tracking-wide text-white transition-colors duration-200 hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-zinc-400 ${isAr ? '' : 'uppercase'}`}
+            whileTap={isSubmitting ? undefined : { scale: 0.98 }}
+            animate={
+              isSubmitting
+                ? undefined
+                : {
+                    boxShadow: [
+                      '0 4px 16px rgba(37,211,102,0.35)',
+                      '0 4px 24px rgba(37,211,102,0.55)',
+                      '0 4px 16px rgba(37,211,102,0.35)',
+                    ],
+                  }
+            }
+            transition={{
+              boxShadow: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
+              backgroundColor: { duration: 0.2 },
+              scale: { duration: 0.2 },
+            }}
+            className={`inline-flex w-full items-center justify-center rounded-none bg-[#25D366] px-8 py-4 text-base font-bold tracking-wide text-white transition-colors duration-200 hover:bg-[#20bd5a] disabled:cursor-not-allowed disabled:bg-zinc-400 disabled:shadow-none ${isAr ? '' : 'uppercase'}`}
           >
             {isSubmitting ? submittingLabel : submitLabel}
-          </button>
+          </motion.button>
         </form>
 
         <div className="mt-8 border-t border-gray-100 pt-6">

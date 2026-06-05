@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, BedDouble, Maximize2, MessageCircle, Trees } from 'lucide-react';
+import { BedDouble, Maximize2, Trees } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useEastvalePage } from '../../contexts/EastvaleLocaleContext';
-import { trackMarketingContact } from '../../utils/trackMarketing';
+import UnitCardActions from '../UnitCardActions';
 import { getWhatsAppLink } from '../../utils/whatsapp';
 
 const highlightIcons: LucideIcon[] = [Maximize2, BedDouble, Trees];
@@ -11,8 +11,6 @@ const EastUnitTypes = () => {
   const { copy, fontClass, locale } = useEastvalePage();
   const u = copy.units;
   const priceGridRtl = copy.units.priceGridDir === 'rtl';
-  const BookArrow = locale === 'ar' ? ArrowLeft : ArrowRight;
-
   const scrollToLeadForm = () => {
     document.getElementById('eastvale-lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -112,26 +110,15 @@ const EastUnitTypes = () => {
                   ))}
                 </ul>
 
-                <div className="mt-6 grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={scrollToLeadForm}
-                    className={`${fontClass} inline-flex items-center justify-center gap-1.5 bg-black px-3 py-3 text-xs font-bold text-white transition-colors hover:bg-zinc-800`}
-                  >
-                    {u.book}
-                    <BookArrow size={14} />
-                  </button>
-                  <a
-                    href={getWhatsAppLink({ text: unit.waPrefill })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackMarketingContact('whatsapp')}
-                    className={`${fontClass} inline-flex items-center justify-center gap-1.5 border border-[#25D366] bg-[#25D366] px-3 py-3 text-xs font-bold text-white transition-colors hover:bg-[#20bd5a]`}
-                  >
-                    <MessageCircle size={14} />
-                    {u.inquire}
-                  </a>
-                </div>
+                <UnitCardActions
+                  onFormClick={scrollToLeadForm}
+                  waHref={getWhatsAppLink({ text: unit.waPrefill })}
+                  formLabel={u.book}
+                  callLabel={copy.urgency.call}
+                  whatsappLabel={u.inquire}
+                  locale={locale}
+                  fontClass={fontClass}
+                />
               </div>
             </motion.article>
           ))}

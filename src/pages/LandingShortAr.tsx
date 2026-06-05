@@ -3,6 +3,7 @@ import HeroShortAr from '../components/HeroShortAr';
 import PromoOfferStripAr from '../components/PromoOfferStripAr';
 import AvailableUnits from '../components/AvailableUnits';
 import LeadForm from '../components/LeadForm';
+import LeadFormClosing from '../components/LeadFormClosing';
 
 const AR_TITLE = 'سوديك | عروض استثمارية';
 
@@ -19,12 +20,10 @@ const LandingShortAr = () => {
     <div dir="rtl" lang="ar">
       <main>
         <HeroShortAr />
-        <PromoOfferStripAr />
         <AvailableUnits locale="ar" />
-        <LeadForm
-          locale="ar"
-          submitLabelOverride="احجز مكانك على الماستر بلان قبل الجميع"
-        />
+        <LeadForm locale="ar" />
+        <PromoOfferStripAr />
+        <LeadFormClosing locale="ar" />
       </main>
     </div>
   );

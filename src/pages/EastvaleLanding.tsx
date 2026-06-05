@@ -53,15 +53,16 @@ function EastvaleLandingBody() {
     <main>
       <EastvaleMetaAndAnalytics />
       <EastHero />
+      <EastUnitTypes />
+      <EastPaymentPlan />
+      <EastLeadForm />
       <EastUrgencyStrip />
       <EastKeyStats />
       <EastLocation />
       <EastMasterplan />
       <EastAmenities />
-      <EastUnitTypes />
-      <EastPaymentPlan />
-      <EastLeadForm />
       <EastFAQ />
+      <EastLeadForm placement="closing" />
       <EastBookingPopup />
     </main>
   );

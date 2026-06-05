@@ -54,16 +54,17 @@ function OgamiLandingBody() {
     <main>
       <OgamiMetaAndAnalytics />
       <OgamiHero />
+      <OgamiUnitTypes />
+      <OgamiPaymentPlan />
+      <OgamiLeadForm />
       <OgamiUrgencyStrip />
       <OgamiKeyStats />
       <OgamiLocation />
       <OgamiMasterplan />
       <OgamiAmenities />
-      <OgamiUnitTypes />
-      <OgamiPaymentPlan />
       <OgamiGallery />
-      <OgamiLeadForm />
       <OgamiFAQ />
+      <OgamiLeadForm placement="closing" />
       <OgamiBookingPopup />
     </main>
   );

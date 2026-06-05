@@ -16,7 +16,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen overflow-hidden bg-black">
+    <section id="hero" className="relative min-h-[68vh] overflow-hidden bg-black md:min-h-screen">
       <img
         src={HERO_IMAGE}
         alt=""
@@ -29,7 +29,7 @@ const Hero = () => {
       />
       <div className="absolute inset-0 bg-black/25" aria-hidden />
 
-      <div className="relative z-10 flex min-h-screen items-end pb-28 pt-28 md:pb-32">
+      <div className="relative z-10 flex min-h-[68vh] items-end pb-20 pt-20 md:min-h-screen md:pb-32 md:pt-28">
         <div className="w-full pl-6 pr-6 md:pl-16 lg:pl-24">
           <motion.div
             initial={{ opacity: 0, y: 24 }}

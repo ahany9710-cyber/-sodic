@@ -54,16 +54,17 @@ function EastLandingBody() {
     <main>
       <EastMetaAndAnalytics />
       <EastHero />
+      <EastUnitTypes />
+      <EastPaymentPlan />
+      <EastLeadForm />
       <EastUrgencyStrip />
       <EastKeyStats />
       <EastLocation />
       <EastMasterplan />
       <EastAmenities />
-      <EastUnitTypes />
-      <EastPaymentPlan />
       <EastGallery />
-      <EastLeadForm />
       <EastFAQ />
+      <EastLeadForm placement="closing" />
       <EastBookingPopup />
     </main>
   );

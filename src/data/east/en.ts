@@ -173,7 +173,7 @@ export const eastEn: EastCopy = {
       'Pricing and promotions change with availability.\n2-bed penthouse at 165 m²: price on enquiry.',
     disclaimer:
       '* Indicative figures only — binding offers come from sales. Images are for illustration.',
-    book: 'Enquire on a unit',
+    book: 'Get the brochure',
     inquire: 'WhatsApp',
     priceGridDir: 'ltr',
     items: [
@@ -305,9 +305,9 @@ export const eastEn: EastCopy = {
     ],
     offices:
       'Sales offices · Sheikh Zayed km 38 Desert Road · New Cairo 90 South Street.',
-    formTitle: 'Your details',
+    formTitle: 'Get the brochure',
     formSubtitle: 'We’ll reply with the right track: immediate 5% move-in or Oak — your choice.',
-    submit: 'Immediate delivery with 5% down',
+    submit: 'Click here to get the brochure from our sales team',
     leadFormLocale: 'en',
   },
   faq: {

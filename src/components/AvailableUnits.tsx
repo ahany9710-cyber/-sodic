@@ -1,10 +1,9 @@
-import { MessageCircle, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { config } from '../config';
-import { getUnitDisplay, isSodicEastHotOfferUnit, units } from '../data/units';
+import { getUnitDisplay, isSodicEastHotOfferUnit, units, type Unit } from '../data/units';
 import { formatPrice } from '../utils/formatPrice';
-import { trackMarketingContact } from '../utils/trackMarketing';
 import { getWhatsAppLink } from '../utils/whatsapp';
+import UnitCardActions from './UnitCardActions';
 
 export type AvailableUnitsLocale = 'en' | 'ar';
 
@@ -53,10 +52,13 @@ const AvailableUnits = ({ locale = 'en' }: AvailableUnitsProps) => {
     document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const waHref = isAr ? getWhatsAppLink({ text: config.whatsappDefaultMessageAr }) : getWhatsAppLink();
-
-  const waHover =
-    'inline-flex items-center gap-2 border border-black px-3 py-2 text-xs font-semibold tracking-wide text-black transition-colors hover:bg-[#25D366] hover:text-white hover:border-[#25D366]';
+  const unitWaHref = (unit: Unit) => {
+    const row = getUnitDisplay(unit, locale);
+    const text = isAr
+      ? `مرحباً، مهتم بـ ${row.type} في ${row.project} (${row.area}). أرجو التفاصيل والسعر.`
+      : `Hello, I'm interested in the ${row.type} at ${row.project} (${row.area}). Please share details and pricing.`;
+    return getWhatsAppLink({ text });
+  };
 
   const title = isAr ? 'الوحدات المتاحة' : 'Available Units';
   const thUnit = isAr ? 'الوحدة' : 'Unit';
@@ -66,7 +68,9 @@ const AvailableUnits = ({ locale = 'en' }: AvailableUnitsProps) => {
   const thPrice = isAr ? 'السعر' : 'Price';
   const thDetails = isAr ? 'التفاصيل' : 'Details';
   const thAction = isAr ? 'إجراء' : 'Action';
-  const waInquiry = isAr ? 'استفسار واتساب' : 'WhatsApp Inquiry';
+  const formLabel = isAr ? 'احصل على البروشور' : 'Get the brochure';
+  const callLabel = isAr ? 'اتصل' : 'Call';
+  const whatsappLabel = isAr ? 'واتساب' : 'WhatsApp';
   const ctaLabel = isAr ? 'المزيد من الوحدات المناسبة لك' : 'Check more units only for you';
 
   const theadClass = isAr
@@ -113,17 +117,18 @@ const AvailableUnits = ({ locale = 'en' }: AvailableUnitsProps) => {
                   <td className="px-4 py-3 text-gray-700">{row.area}</td>
                   <td className="px-4 py-3 font-bold text-black">{formatPrice(unit.price)}</td>
                   <td className="px-4 py-3 text-gray-600">{row.details}</td>
-                  <td className="px-4 py-3 text-end">
-                    <a
-                      href={waHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackMarketingContact('whatsapp')}
-                      className={waHover}
-                    >
-                      <MessageCircle size={14} />
-                      {waInquiry}
-                    </a>
+                  <td className="px-4 py-3">
+                    <UnitCardActions
+                      onFormClick={scrollToLeadForm}
+                      waHref={unitWaHref(unit)}
+                      formLabel={formLabel}
+                      callLabel={callLabel}
+                      whatsappLabel={whatsappLabel}
+                      locale={locale}
+                      compact
+                      stack
+                      className="mt-0"
+                    />
                   </td>
                 </tr>
               );
@@ -148,16 +153,15 @@ const AvailableUnits = ({ locale = 'en' }: AvailableUnitsProps) => {
                 <p className="text-lg font-bold text-black">{formatPrice(unit.price)}</p>
                 <p className="text-sm text-gray-600">{row.details}</p>
               </div>
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackMarketingContact('whatsapp')}
-                className={`mt-4 inline-flex w-full items-center justify-center gap-2 border border-black px-3 py-3 text-xs font-semibold tracking-wide text-black transition-colors hover:bg-[#25D366] hover:text-white hover:border-[#25D366] ${isAr ? '' : 'uppercase'}`}
-              >
-                <MessageCircle size={14} />
-                {waInquiry}
-              </a>
+              <UnitCardActions
+                onFormClick={scrollToLeadForm}
+                waHref={unitWaHref(unit)}
+                formLabel={formLabel}
+                callLabel={callLabel}
+                whatsappLabel={whatsappLabel}
+                locale={locale}
+                className="mt-4"
+              />
             </article>
           );
           })}
