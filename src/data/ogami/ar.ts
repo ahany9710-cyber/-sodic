@@ -204,6 +204,7 @@ export const ogamiAr = {
     disclaimer: '* كل الصور والتصاميم لأغراض توضيحية — وقابلة للتحديث.',
     book: 'احصل على البروشور',
     inquire: 'استفسار',
+    paymentNote: 'مقدّم 5٪ · تقسيط حتى 8 سنوات',
     priceGridDir: 'rtl' as 'rtl' | 'ltr',
     items: [
       {

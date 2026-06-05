@@ -139,6 +139,7 @@ export const eastvaleAr = {
     disclaimer: '* أرقام إرشادية — عرض سوديك المعتمد يحدد المواصفات والسعر.',
     book: 'احصل على البروشور',
     inquire: 'واتساب',
+    paymentNote: 'مقدّم 5٪ · تقسيط حتى 9 سنوات',
     priceGridDir: 'rtl' as 'rtl' | 'ltr',
     items: [
       {

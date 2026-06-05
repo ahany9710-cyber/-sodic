@@ -19,7 +19,7 @@ const EastHero = () => {
   };
 
   const scrollToNext = () => {
-    document.getElementById('east-stats')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('east-units')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const waHref = getWhatsAppLink({ text: whatsappEast });

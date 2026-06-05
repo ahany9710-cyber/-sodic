@@ -200,6 +200,7 @@ export const ogamiEn: OgamiCopy = {
     disclaimer: '* All visuals are illustrative and may change.',
     book: 'Get the brochure',
     inquire: 'Enquire',
+    paymentNote: '5% down · up to 8-year installments',
     priceGridDir: 'ltr',
     items: [
       {

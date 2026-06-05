@@ -18,7 +18,7 @@ const OgamiHero = () => {
   };
 
   const scrollToNext = () => {
-    document.getElementById('ogami-stats')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('ogami-units')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const waHref = getWhatsAppLink({ text: whatsappOgami });

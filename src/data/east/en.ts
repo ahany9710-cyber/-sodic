@@ -175,6 +175,7 @@ export const eastEn: EastCopy = {
       '* Indicative figures only — binding offers come from sales. Images are for illustration.',
     book: 'Get the brochure',
     inquire: 'WhatsApp',
+    paymentNote: '5% or 0% down · up to 10 years',
     priceGridDir: 'ltr',
     items: [
       {

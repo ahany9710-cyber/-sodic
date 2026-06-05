@@ -142,6 +142,7 @@ export const eastvaleEn: EastvaleCopy = {
     disclaimer: '* Indicative marketing figures — official offer defines specs & price.',
     book: 'Get the brochure',
     inquire: 'WhatsApp',
+    paymentNote: '5% down · up to ~9 years',
     priceGridDir: 'ltr',
     items: [
       {

@@ -77,19 +77,24 @@ const EastUnitTypes = () => {
                 <p className="text-[10px] font-semibold tracking-wider text-zinc-600">{unit.subtitle}</p>
                 <h3 className={`${fontClass} mt-2 text-2xl font-bold leading-tight text-black md:text-3xl`}>{unit.title}</h3>
 
-                <div
-                  className={`mt-4 grid grid-cols-2 border-y border-zinc-200 bg-stone-50 ${
-                    priceGridRtl ? '[direction:rtl] divide-x divide-x-reverse divide-zinc-200' : 'divide-x divide-zinc-200'
-                  }`}
-                >
-                  <div className="px-4 py-4">
-                    <p className={`${fontClass} text-[11px] font-semibold tracking-wide text-zinc-500`}>{unit.dpLabel}</p>
-                    <p className={`${fontClass} mt-1 text-xl font-extrabold leading-tight text-black md:text-2xl`}>{unit.dpValue}</p>
+                <div className="mt-4 border border-zinc-200 bg-stone-50">
+                  <div
+                    className={`grid grid-cols-2 ${
+                      priceGridRtl ? '[direction:rtl] divide-x divide-x-reverse divide-zinc-200' : 'divide-x divide-zinc-200'
+                    }`}
+                  >
+                    <div className="px-4 py-4">
+                      <p className={`${fontClass} text-[11px] font-semibold tracking-wide text-zinc-500`}>{unit.dpLabel}</p>
+                      <p className={`${fontClass} mt-1 text-xl font-extrabold leading-tight text-black md:text-2xl`}>{unit.dpValue}</p>
+                    </div>
+                    <div className="px-4 py-4">
+                      <p className={`${fontClass} text-[11px] font-semibold tracking-wide text-zinc-500`}>{unit.priceLabel}</p>
+                      <p className={`${fontClass} mt-1 text-xl font-extrabold leading-tight text-black md:text-2xl`}>{unit.priceValue}</p>
+                    </div>
                   </div>
-                  <div className="px-4 py-4">
-                    <p className={`${fontClass} text-[11px] font-semibold tracking-wide text-zinc-500`}>{unit.priceLabel}</p>
-                    <p className={`${fontClass} mt-1 text-xl font-extrabold leading-tight text-black md:text-2xl`}>{unit.priceValue}</p>
-                  </div>
+                  <p className={`${fontClass} border-t border-zinc-200 px-4 py-2 text-center text-[11px] font-semibold text-zinc-600`}>
+                    {u.paymentNote}
+                  </p>
                 </div>
 
                 <ul className="mt-4 space-y-2">

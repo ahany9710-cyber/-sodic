@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import EastHero from '../components/eastvale/EastHero';
 import EastUnitTypes from '../components/eastvale/EastUnitTypes';
-import EastPaymentPlan from '../components/eastvale/EastPaymentPlan';
 import EastLeadForm from '../components/eastvale/EastLeadForm';
 import SectionPlaceholder from '../components/SectionPlaceholder';
 import DeferredBookingPopup from '../components/DeferredBookingPopup';
@@ -9,7 +8,6 @@ import { EastvaleLocaleProvider, useEastvalePage } from '../contexts/EastvaleLoc
 import type { EastvaleLocale } from '../data/eastvaleCopy';
 
 const EastUrgencyStrip = lazy(() => import('../components/eastvale/EastUrgencyStrip'));
-const EastKeyStats = lazy(() => import('../components/eastvale/EastKeyStats'));
 const EastLocation = lazy(() => import('../components/eastvale/EastLocation'));
 const EastMasterplan = lazy(() => import('../components/eastvale/EastMasterplan'));
 const EastAmenities = lazy(() => import('../components/eastvale/EastAmenities'));
@@ -60,13 +58,9 @@ function EastvaleLandingBody() {
       <EastvaleMetaAndAnalytics />
       <EastHero />
       <EastUnitTypes />
-      <EastPaymentPlan />
       <EastLeadForm />
       <Suspense fallback={<SectionPlaceholder minHeight="min-h-[12rem]" />}>
         <EastUrgencyStrip />
-      </Suspense>
-      <Suspense fallback={<SectionPlaceholder />}>
-        <EastKeyStats />
       </Suspense>
       <Suspense fallback={<SectionPlaceholder />}>
         <EastLocation />

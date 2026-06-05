@@ -19,7 +19,7 @@ const EastHero = () => {
   };
 
   const scrollToNext = () => {
-    document.getElementById('eastvale-stats')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('eastvale-units')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const waHref = getWhatsAppLink({ text: whatsappEastvale });

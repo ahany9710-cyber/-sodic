@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import OgamiHero from '../components/ogami/OgamiHero';
 import OgamiUnitTypes from '../components/ogami/OgamiUnitTypes';
-import OgamiPaymentPlan from '../components/ogami/OgamiPaymentPlan';
 import OgamiLeadForm from '../components/ogami/OgamiLeadForm';
 import SectionPlaceholder from '../components/SectionPlaceholder';
 import DeferredBookingPopup from '../components/DeferredBookingPopup';
@@ -9,7 +8,6 @@ import { OgamiLocaleProvider, useOgamiPage } from '../contexts/OgamiLocaleContex
 import type { OgamiLocale } from '../data/ogamiCopy';
 
 const OgamiUrgencyStrip = lazy(() => import('../components/ogami/OgamiUrgencyStrip'));
-const OgamiKeyStats = lazy(() => import('../components/ogami/OgamiKeyStats'));
 const OgamiLocation = lazy(() => import('../components/ogami/OgamiLocation'));
 const OgamiMasterplan = lazy(() => import('../components/ogami/OgamiMasterplan'));
 const OgamiAmenities = lazy(() => import('../components/ogami/OgamiAmenities'));
@@ -64,13 +62,9 @@ function OgamiLandingBody() {
       <OgamiMetaAndAnalytics />
       <OgamiHero />
       <OgamiUnitTypes />
-      <OgamiPaymentPlan />
       <OgamiLeadForm />
       <Suspense fallback={<SectionPlaceholder minHeight="min-h-[12rem]" />}>
         <OgamiUrgencyStrip />
-      </Suspense>
-      <Suspense fallback={<SectionPlaceholder />}>
-        <OgamiKeyStats />
       </Suspense>
       <Suspense fallback={<SectionPlaceholder />}>
         <OgamiLocation />
