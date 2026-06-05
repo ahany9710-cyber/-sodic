@@ -97,6 +97,9 @@ const HeaderShortAr = () => {
             <img
               src={LOGO}
               alt="سوديك"
+              width={120}
+              height={20}
+              decoding="async"
               className={`h-5 w-auto transition-[filter] duration-300 ${lightMode ? 'brightness-0' : 'brightness-0 invert'}`}
             />
           </a>

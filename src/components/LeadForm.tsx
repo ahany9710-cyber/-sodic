@@ -177,7 +177,7 @@ const LeadForm = ({
           <div>
             <label htmlFor={fieldId('fullName')} className="mb-2 block text-sm font-semibold text-black">
               {labelName}{' '}
-              <span className="font-normal text-gray-500">{optional}</span>
+              <span className="font-normal text-gray-600">{optional}</span>
             </label>
             <input
               id={fieldId('fullName')}
@@ -205,7 +205,7 @@ const LeadForm = ({
           <div>
             <label htmlFor={fieldId('confirmPhone')} className="mb-2 block text-sm font-semibold text-black">
               {labelConfirm}{' '}
-              <span className="font-normal text-gray-500">{optional}</span>
+              <span className="font-normal text-gray-600">{optional}</span>
             </label>
             <input
               id={fieldId('confirmPhone')}
@@ -218,7 +218,7 @@ const LeadForm = ({
           <div>
             <label htmlFor={fieldId('project')} className="mb-2 block text-sm font-semibold text-black">
               {labelProject}{' '}
-              <span className="font-normal text-gray-500">{optional}</span>
+              <span className="font-normal text-gray-600">{optional}</span>
             </label>
             <select
               id={fieldId('project')}

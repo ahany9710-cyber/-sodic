@@ -9,7 +9,11 @@
 
   body {
     @apply bg-white text-gray-900 antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .font-arabic {
+    font-family: 'Cairo', 'Segoe UI', Tahoma, system-ui, sans-serif;
   }
 
   * {
@@ -132,6 +136,17 @@
 
 .animate-bounce-y {
   animation: bounceY 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ── Pre-animation state (elements waiting for IntersectionObserver) ── */

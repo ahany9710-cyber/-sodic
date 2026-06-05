@@ -2,37 +2,81 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var p = location.pathname;
+        var hero =
+          p.indexOf('/ogami') !== -1
+            ? '/sections/ogami/hero.jpg'
+            : p.indexOf('/eastvale') !== -1
+              ? '/sections/eastvale/raw/apartments-page-01.png'
+              : '/sections/east/sodic-cms/hero-birdseye.webp';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = hero;
+        link.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(link);
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="SODIC premium real estate destinations crafted for modern coastal living." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap" as="style" />
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" /></noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=optional"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript
+      ><link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=optional"
+        rel="stylesheet"
+    /></noscript>
     <title>SODIC | Premium Living</title>
     <meta property="og:title" content="SODIC | Premium Living" />
     <meta property="og:description" content="Premium real estate opportunities tailored for modern living." />
     <meta property="og:image" content="https://sodicoffers.com/sections/east/sodic-cms/hero-birdseye.webp" />
     <meta property="og:type" content="website" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18066287198"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+      function loadGoogleTagDeferred() {
+        var id = 'AW-18066287198';
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+        document.head.appendChild(s);
+        s.onload = function () {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', id);
+        };
       }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', 'AW-18066287198');
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGoogleTagDeferred, { timeout: 4000 });
+      } else {
+        window.addEventListener('load', function () {
+          setTimeout(loadGoogleTagDeferred, 1);
+        });
+      }
     </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=3532545530231926&ev=PageView&noscript=1"
-      alt="" /></noscript>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=3532545530231926&ev=PageView&noscript=1"
+        alt=""
+    /></noscript>
     <script>
       function loadMetaPixelDeferred() {
         !(function (f, b, e, v, n, t, s) {
@@ -57,7 +101,7 @@
       if ('requestIdleCallback' in window) {
         requestIdleCallback(function () {
           loadMetaPixelDeferred();
-        }, { timeout: 3500 });
+        }, { timeout: 5000 });
       } else {
         window.addEventListener('load', function () {
           setTimeout(loadMetaPixelDeferred, 1);

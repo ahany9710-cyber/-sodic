@@ -58,7 +58,10 @@ const OgamiUnitTypes = () => {
                 <img
                   src={unit.image}
                   alt={unit.title}
+                  width={640}
+                  height={256}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <span
@@ -71,7 +74,7 @@ const OgamiUnitTypes = () => {
               </div>
 
               <div className="flex flex-1 flex-col p-6">
-                <p className="text-[10px] font-semibold tracking-wider text-zinc-400">{unit.subtitle}</p>
+                <p className="text-[10px] font-semibold tracking-wider text-zinc-600">{unit.subtitle}</p>
                 <h3 className={`${fontClass} mt-2 text-2xl font-bold leading-tight text-black md:text-3xl`}>{unit.title}</h3>
 
                 <div

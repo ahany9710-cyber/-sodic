@@ -1,18 +1,20 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import OgamiHero from '../components/ogami/OgamiHero';
-import OgamiUrgencyStrip from '../components/ogami/OgamiUrgencyStrip';
-import OgamiKeyStats from '../components/ogami/OgamiKeyStats';
-import OgamiLocation from '../components/ogami/OgamiLocation';
-import OgamiMasterplan from '../components/ogami/OgamiMasterplan';
-import OgamiAmenities from '../components/ogami/OgamiAmenities';
 import OgamiUnitTypes from '../components/ogami/OgamiUnitTypes';
 import OgamiPaymentPlan from '../components/ogami/OgamiPaymentPlan';
-import OgamiGallery from '../components/ogami/OgamiGallery';
 import OgamiLeadForm from '../components/ogami/OgamiLeadForm';
-import OgamiFAQ from '../components/ogami/OgamiFAQ';
-import OgamiBookingPopup from '../components/ogami/OgamiBookingPopup';
+import SectionPlaceholder from '../components/SectionPlaceholder';
+import DeferredBookingPopup from '../components/DeferredBookingPopup';
 import { OgamiLocaleProvider, useOgamiPage } from '../contexts/OgamiLocaleContext';
 import type { OgamiLocale } from '../data/ogamiCopy';
+
+const OgamiUrgencyStrip = lazy(() => import('../components/ogami/OgamiUrgencyStrip'));
+const OgamiKeyStats = lazy(() => import('../components/ogami/OgamiKeyStats'));
+const OgamiLocation = lazy(() => import('../components/ogami/OgamiLocation'));
+const OgamiMasterplan = lazy(() => import('../components/ogami/OgamiMasterplan'));
+const OgamiAmenities = lazy(() => import('../components/ogami/OgamiAmenities'));
+const OgamiGallery = lazy(() => import('../components/ogami/OgamiGallery'));
+const OgamiFAQ = lazy(() => import('../components/ogami/OgamiFAQ'));
 
 function OgamiMetaAndAnalytics() {
   const { copy } = useOgamiPage();
@@ -25,19 +27,26 @@ function OgamiMetaAndAnalytics() {
     const prevDesc = metaDesc?.getAttribute('content') ?? null;
     metaDesc?.setAttribute('content', copy.meta.description);
 
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'ViewContent', {
-        content_name: 'Ogami',
-        content_category: 'Botanica Town',
-        content_type: 'real_estate',
-      });
-    }
+    const track = () => {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'ViewContent', {
+          content_name: 'Ogami',
+          content_category: 'Botanica Town',
+          content_type: 'real_estate',
+        });
+      }
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'view_item', {
+          item_id: 'ogami',
+          item_name: 'Ogami / Botanica Town',
+          item_category: 'real_estate',
+        });
+      }
+    };
     if (typeof window.gtag === 'function') {
-      window.gtag('event', 'view_item', {
-        item_id: 'ogami',
-        item_name: 'Ogami / Botanica Town',
-        item_category: 'real_estate',
-      });
+      track();
+    } else {
+      window.setTimeout(track, 2000);
     }
 
     return () => {
@@ -57,15 +66,29 @@ function OgamiLandingBody() {
       <OgamiUnitTypes />
       <OgamiPaymentPlan />
       <OgamiLeadForm />
-      <OgamiUrgencyStrip />
-      <OgamiKeyStats />
-      <OgamiLocation />
-      <OgamiMasterplan />
-      <OgamiAmenities />
-      <OgamiGallery />
-      <OgamiFAQ />
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[12rem]" />}>
+        <OgamiUrgencyStrip />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <OgamiKeyStats />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <OgamiLocation />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <OgamiMasterplan />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <OgamiAmenities />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[50vh]" />}>
+        <OgamiGallery />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[30vh]" />}>
+        <OgamiFAQ />
+      </Suspense>
       <OgamiLeadForm placement="closing" />
-      <OgamiBookingPopup />
+      <DeferredBookingPopup loader={() => import('../components/ogami/OgamiBookingPopup')} />
     </main>
   );
 }

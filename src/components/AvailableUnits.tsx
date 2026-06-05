@@ -105,7 +105,15 @@ const AvailableUnits = ({ locale = 'en' }: AvailableUnitsProps) => {
                 return (
                 <tr key={unit.id} className="border-b border-gray-100 align-middle">
                   <td className="px-4 py-3">
-                    <img src={unit.image} alt={row.type} className="h-14 w-24 object-cover" />
+                    <img
+                      src={unit.image}
+                      alt={row.type}
+                      width={96}
+                      height={56}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-14 w-24 object-cover"
+                    />
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center">
@@ -142,7 +150,15 @@ const AvailableUnits = ({ locale = 'en' }: AvailableUnitsProps) => {
             const row = getUnitDisplay(unit, locale);
             return (
             <article key={unit.id} className="border border-gray-100 bg-white p-4 shadow-sm">
-              <img src={unit.image} alt={row.type} className="h-40 w-full object-cover" />
+              <img
+                src={unit.image}
+                alt={row.type}
+                width={640}
+                height={160}
+                loading="lazy"
+                decoding="async"
+                className="h-40 w-full object-cover"
+              />
               <div className="mt-4 space-y-2">
                 <div className="flex flex-col gap-2">
                   <p className={`text-xs tracking-wide text-gray-500 ${isAr ? '' : 'uppercase'}`}>{row.project}</p>

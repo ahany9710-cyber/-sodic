@@ -45,7 +45,10 @@ const OgamiGallery = () => {
             <img
               src={slide.src}
               alt={slide.caption}
+              width={640}
+              height={420}
               loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-6">

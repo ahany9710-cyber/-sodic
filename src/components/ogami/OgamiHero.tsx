@@ -39,6 +39,7 @@ const OgamiHero = () => {
         height={1080}
         sizes="100vw"
         decoding="async"
+        loading="eager"
         className="absolute inset-0 h-full w-full object-cover"
         fetchPriority="high"
       />

@@ -1,18 +1,20 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import EastHero from '../components/east/EastHero';
-import EastUrgencyStrip from '../components/east/EastUrgencyStrip';
-import EastKeyStats from '../components/east/EastKeyStats';
-import EastLocation from '../components/east/EastLocation';
-import EastMasterplan from '../components/east/EastMasterplan';
-import EastAmenities from '../components/east/EastAmenities';
 import EastUnitTypes from '../components/east/EastUnitTypes';
 import EastPaymentPlan from '../components/east/EastPaymentPlan';
-import EastGallery from '../components/east/EastGallery';
 import EastLeadForm from '../components/east/EastLeadForm';
-import EastFAQ from '../components/east/EastFAQ';
-import EastBookingPopup from '../components/east/EastBookingPopup';
+import SectionPlaceholder from '../components/SectionPlaceholder';
+import DeferredBookingPopup from '../components/DeferredBookingPopup';
 import { EastLocaleProvider, useEastPage } from '../contexts/EastLocaleContext';
 import type { EastLocale } from '../data/eastCopy';
+
+const EastUrgencyStrip = lazy(() => import('../components/east/EastUrgencyStrip'));
+const EastKeyStats = lazy(() => import('../components/east/EastKeyStats'));
+const EastLocation = lazy(() => import('../components/east/EastLocation'));
+const EastMasterplan = lazy(() => import('../components/east/EastMasterplan'));
+const EastAmenities = lazy(() => import('../components/east/EastAmenities'));
+const EastGallery = lazy(() => import('../components/east/EastGallery'));
+const EastFAQ = lazy(() => import('../components/east/EastFAQ'));
 
 function EastMetaAndAnalytics() {
   const { copy } = useEastPage();
@@ -25,20 +27,24 @@ function EastMetaAndAnalytics() {
     const prevDesc = metaDesc?.getAttribute('content') ?? null;
     metaDesc?.setAttribute('content', copy.meta.description);
 
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'ViewContent', {
-        content_name: 'East',
-        content_category: 'East Cairo',
-        content_type: 'real_estate',
-      });
-    }
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'view_item', {
-        item_id: 'east',
-        item_name: 'SODIC East',
-        item_category: 'real_estate',
-      });
-    }
+    const track = () => {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'ViewContent', {
+          content_name: 'East',
+          content_category: 'East Cairo',
+          content_type: 'real_estate',
+        });
+      }
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'view_item', {
+          item_id: 'east',
+          item_name: 'SODIC East',
+          item_category: 'real_estate',
+        });
+      }
+    };
+    if (typeof window.gtag === 'function') track();
+    else window.setTimeout(track, 2000);
 
     return () => {
       document.title = prevTitle;
@@ -57,15 +63,29 @@ function EastLandingBody() {
       <EastUnitTypes />
       <EastPaymentPlan />
       <EastLeadForm />
-      <EastUrgencyStrip />
-      <EastKeyStats />
-      <EastLocation />
-      <EastMasterplan />
-      <EastAmenities />
-      <EastGallery />
-      <EastFAQ />
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[12rem]" />}>
+        <EastUrgencyStrip />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastKeyStats />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastLocation />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastMasterplan />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastAmenities />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[50vh]" />}>
+        <EastGallery />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[30vh]" />}>
+        <EastFAQ />
+      </Suspense>
       <EastLeadForm placement="closing" />
-      <EastBookingPopup />
+      <DeferredBookingPopup loader={() => import('../components/east/EastBookingPopup')} />
     </main>
   );
 }

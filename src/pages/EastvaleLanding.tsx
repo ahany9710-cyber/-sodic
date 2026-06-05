@@ -1,17 +1,19 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import EastHero from '../components/eastvale/EastHero';
-import EastUrgencyStrip from '../components/eastvale/EastUrgencyStrip';
-import EastKeyStats from '../components/eastvale/EastKeyStats';
-import EastLocation from '../components/eastvale/EastLocation';
-import EastMasterplan from '../components/eastvale/EastMasterplan';
-import EastAmenities from '../components/eastvale/EastAmenities';
 import EastUnitTypes from '../components/eastvale/EastUnitTypes';
 import EastPaymentPlan from '../components/eastvale/EastPaymentPlan';
 import EastLeadForm from '../components/eastvale/EastLeadForm';
-import EastFAQ from '../components/eastvale/EastFAQ';
-import EastBookingPopup from '../components/eastvale/EastBookingPopup';
+import SectionPlaceholder from '../components/SectionPlaceholder';
+import DeferredBookingPopup from '../components/DeferredBookingPopup';
 import { EastvaleLocaleProvider, useEastvalePage } from '../contexts/EastvaleLocaleContext';
 import type { EastvaleLocale } from '../data/eastvaleCopy';
+
+const EastUrgencyStrip = lazy(() => import('../components/eastvale/EastUrgencyStrip'));
+const EastKeyStats = lazy(() => import('../components/eastvale/EastKeyStats'));
+const EastLocation = lazy(() => import('../components/eastvale/EastLocation'));
+const EastMasterplan = lazy(() => import('../components/eastvale/EastMasterplan'));
+const EastAmenities = lazy(() => import('../components/eastvale/EastAmenities'));
+const EastFAQ = lazy(() => import('../components/eastvale/EastFAQ'));
 
 function EastvaleMetaAndAnalytics() {
   const { copy } = useEastvalePage();
@@ -24,20 +26,24 @@ function EastvaleMetaAndAnalytics() {
     const prevDesc = metaDesc?.getAttribute('content') ?? null;
     metaDesc?.setAttribute('content', copy.meta.description);
 
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'ViewContent', {
-        content_name: 'Eastvale',
-        content_category: 'East Cairo',
-        content_type: 'real_estate',
-      });
-    }
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'view_item', {
-        item_id: 'eastvale',
-        item_name: 'Eastvale',
-        item_category: 'real_estate',
-      });
-    }
+    const track = () => {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'ViewContent', {
+          content_name: 'Eastvale',
+          content_category: 'East Cairo',
+          content_type: 'real_estate',
+        });
+      }
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'view_item', {
+          item_id: 'eastvale',
+          item_name: 'Eastvale',
+          item_category: 'real_estate',
+        });
+      }
+    };
+    if (typeof window.gtag === 'function') track();
+    else window.setTimeout(track, 2000);
 
     return () => {
       document.title = prevTitle;
@@ -56,14 +62,26 @@ function EastvaleLandingBody() {
       <EastUnitTypes />
       <EastPaymentPlan />
       <EastLeadForm />
-      <EastUrgencyStrip />
-      <EastKeyStats />
-      <EastLocation />
-      <EastMasterplan />
-      <EastAmenities />
-      <EastFAQ />
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[12rem]" />}>
+        <EastUrgencyStrip />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastKeyStats />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastLocation />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastMasterplan />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder />}>
+        <EastAmenities />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[30vh]" />}>
+        <EastFAQ />
+      </Suspense>
       <EastLeadForm placement="closing" />
-      <EastBookingPopup />
+      <DeferredBookingPopup loader={() => import('../components/eastvale/EastBookingPopup')} />
     </main>
   );
 }
