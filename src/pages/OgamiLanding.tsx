@@ -63,16 +63,16 @@ function OgamiLandingBody() {
       <OgamiHero />
       <OgamiUnitTypes />
       <OgamiLeadForm />
-      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[12rem]" />}>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[9rem]" />}>
         <OgamiUrgencyStrip />
       </Suspense>
-      <Suspense fallback={<SectionPlaceholder />}>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[52rem]" />}>
         <OgamiLocation />
       </Suspense>
-      <Suspense fallback={<SectionPlaceholder />}>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[48rem]" />}>
         <OgamiMasterplan />
       </Suspense>
-      <Suspense fallback={<SectionPlaceholder />}>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[56rem]" />}>
         <OgamiAmenities />
       </Suspense>
       <Suspense fallback={<SectionPlaceholder minHeight="min-h-[50vh]" />}>

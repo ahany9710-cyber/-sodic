@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { ChevronDown, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { trackMarketingContact } from '../../utils/trackMarketing';
@@ -56,17 +55,12 @@ const OgamiHero = () => {
       <div className="relative z-10 flex min-h-[68vh] items-end pb-20 pt-20 md:min-h-screen md:pb-32 md:pt-24">
         <div className="w-full px-6 md:px-16 lg:px-24">
           <div className="mb-4 flex flex-wrap items-center gap-2">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="inline-flex items-center gap-2 border border-white/40 bg-white/10 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white backdrop-blur-sm"
-            >
+            <div className="inline-flex items-center gap-2 border border-white/40 bg-white/10 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white backdrop-blur-sm">
               {h.badgePulse ? (
                 <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
               ) : null}
               <span>{h.badge}</span>
-            </motion.div>
+            </div>
             <Link
               to={h.langFlipTo}
               className="border border-white/40 bg-white/10 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white backdrop-blur-sm transition-colors hover:bg-white/20"
@@ -75,55 +69,39 @@ const OgamiHero = () => {
             </Link>
           </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
+          <h1
             className={`${fontClass} max-w-3xl text-4xl font-bold leading-[1.05] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.55)] sm:text-5xl md:text-6xl lg:text-[5.25rem]`}
           >
             {h.h1Main}
-            <span className="block text-2xl font-semibold text-white/90 sm:text-3xl md:text-4xl lg:text-5xl">
+            <span className="block text-2xl font-semibold text-white sm:text-3xl md:text-4xl lg:text-5xl">
               {h.h1Sub}
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.12 }}
+          <p
             className={`${fontClass} mt-5 max-w-xl text-base leading-relaxed text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] md:text-lg`}
           >
             {h.lead}
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.18 }}
-            className="mt-7 grid max-w-xl grid-cols-2 gap-2 text-white sm:gap-3"
-          >
+          <div className="mt-7 grid max-w-xl grid-cols-2 gap-2 text-white sm:gap-3">
             <div className="border border-white/25 bg-white/5 px-4 py-3 backdrop-blur-sm">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/60">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/85">
                 {h.card1Label}
               </p>
               <p className={`${fontClass} mt-1 text-lg font-bold sm:text-xl md:text-2xl`}>{h.card1Price}</p>
-              <p className="text-[11px] text-white/70">{h.card1Sq}</p>
+              <p className="text-[11px] text-white/85">{h.card1Sq}</p>
             </div>
             <div className="border border-white/25 bg-white/5 px-4 py-3 backdrop-blur-sm">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/60">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/85">
                 {h.card2Label}
               </p>
               <p className={`${fontClass} mt-1 text-lg font-bold sm:text-xl md:text-2xl`}>{h.card2Price}</p>
-              <p className="text-[11px] text-white/70">{h.card2Sq}</p>
+              <p className="text-[11px] text-white/85">{h.card2Sq}</p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.24 }}
-            className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
-          >
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <button
               type="button"
               onClick={scrollToLeadForm}
@@ -141,33 +119,24 @@ const OgamiHero = () => {
               <MessageCircle size={18} />
               {h.ctaWhatsapp}
             </a>
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.42 }}
-            className={`${fontClass} mt-5 text-xs text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)] md:text-sm`}
+          <p
+            className={`${fontClass} mt-5 text-xs text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)] md:text-sm`}
           >
             {h.footnote}
-          </motion.p>
+          </p>
         </div>
       </div>
 
-      <motion.button
+      <button
         type="button"
         onClick={scrollToNext}
         aria-label={h.scrollAria}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 6, 0] }}
-        transition={{
-          opacity: { duration: 0.6, delay: 0.6 },
-          y: { duration: 1.6, repeat: Infinity, ease: 'easeInOut', delay: 0.6 },
-        }}
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 text-white/80 hover:text-white md:block"
+        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 animate-bounce text-white hover:text-white md:block"
       >
         <ChevronDown size={28} strokeWidth={1.5} />
-      </motion.button>
+      </button>
     </section>
   );
 };

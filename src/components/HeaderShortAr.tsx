@@ -153,7 +153,7 @@ const HeaderShortAr = () => {
               className="py-3 text-center text-sm font-semibold text-zinc-700"
               onClick={() => setMenuOpen(false)}
             >
-              English site
+              English
             </Link>
           </nav>
         </div>

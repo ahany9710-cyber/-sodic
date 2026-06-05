@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronDown, MessageCircle } from 'lucide-react';
 import { trackMarketingContact } from '../../utils/trackMarketing';
 import { getWhatsAppLink } from '../../utils/whatsapp';
@@ -48,20 +48,14 @@ const OgamiFAQ = () => {
                     <ChevronDown size={16} strokeWidth={2} />
                   </motion.span>
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen ? (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
-                      className="overflow-hidden"
-                    >
-                      <p className={`${fontClass} pb-6 text-sm leading-relaxed text-zinc-700 md:text-base`}>{faq.a}</p>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
+                <div
+                  className="grid transition-[grid-template-rows] duration-300 ease-out"
+                  style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+                >
+                  <div className="overflow-hidden">
+                    <p className={`${fontClass} pb-6 text-sm leading-relaxed text-zinc-700 md:text-base`}>{faq.a}</p>
+                  </div>
+                </div>
               </div>
             );
           })}

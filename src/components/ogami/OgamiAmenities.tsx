@@ -72,7 +72,7 @@ const OgamiAmenities = () => {
             transition={{ duration: 0.55, ease: 'easeOut' }}
             className="max-w-3xl text-white"
           >
-            <p className="text-[11px] font-semibold tracking-[0.2em] text-white/70">{a.nobuEyebrow}</p>
+            <p className="text-[11px] font-semibold tracking-[0.2em] text-white/85">{a.nobuEyebrow}</p>
             <h2 className={`${fontClass} mt-3 text-3xl font-bold leading-tight md:text-5xl`}>{a.nobuTitle}</h2>
             <p className={`${fontClass} mt-4 text-sm leading-relaxed text-white/85 md:text-base`}>{a.nobuLead}</p>
           </motion.div>

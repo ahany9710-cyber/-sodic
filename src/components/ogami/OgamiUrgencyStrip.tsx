@@ -46,7 +46,7 @@ const OgamiUrgencyStrip = () => {
           transition={{ duration: 0.45, ease: 'easeOut' }}
           className="max-w-2xl"
         >
-          <p className="text-[11px] font-semibold tracking-wide text-white/60">{u.eyebrow}</p>
+          <p className="text-[11px] font-semibold tracking-wide text-white/85">{u.eyebrow}</p>
           <motion.h2
             className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-lg font-bold leading-snug text-white md:text-2xl"
             dir={u.dir}
@@ -65,7 +65,7 @@ const OgamiUrgencyStrip = () => {
               }
               if (seg.k === 'dot') {
                 return (
-                  <motion.span key={i} variants={wordFadeUp} className="text-white/40">
+                  <motion.span key={i} variants={wordFadeUp} className="text-white/70">
                     {seg.t}
                   </motion.span>
                 );
@@ -76,7 +76,6 @@ const OgamiUrgencyStrip = () => {
                     <motion.span
                       className="inline-block rounded-sm bg-white px-2 py-0.5 text-base font-extrabold tabular-nums text-black shadow-[0_0_20px_rgba(255,255,255,0.35)] md:text-xl"
                       animate={{
-                        scale: [1, 1.08, 1],
                         boxShadow: [
                           '0 0 0 0 rgba(255,255,255,0)',
                           '0 0 24px 2px rgba(255,255,255,0.45)',
@@ -109,7 +108,7 @@ const OgamiUrgencyStrip = () => {
               );
             })}
           </motion.h2>
-          <p className="mt-2 text-sm leading-relaxed text-white/75">{u.sub}</p>
+          <p className="mt-2 text-sm leading-relaxed text-white/90">{u.sub}</p>
         </motion.div>
 
         <motion.div

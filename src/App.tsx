@@ -6,12 +6,12 @@ import FloatingActionBar from './components/FloatingActionBar';
 import MobileBottomBar from './components/MobileBottomBar';
 import HeaderShortAr from './components/HeaderShortAr';
 import FooterShortAr from './components/FooterShortAr';
+import OgamiLanding from './pages/OgamiLanding';
 import { config } from './config';
 
 const Landing = lazy(() => import('./pages/Landing'));
 const LandingShortAr = lazy(() => import('./pages/LandingShortAr'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
-const OgamiLanding = lazy(() => import('./pages/OgamiLanding'));
 const EastLanding = lazy(() => import('./pages/EastLanding'));
 const EastvaleLanding = lazy(() => import('./pages/EastvaleLanding'));
 
@@ -61,9 +61,7 @@ function App() {
           element={
             <div className="min-h-screen bg-white pb-24 font-arabic md:pb-0" dir="rtl" lang="ar">
               <HeaderShortAr />
-              <Suspense fallback={null}>
-                <OgamiLanding locale="ar" />
-              </Suspense>
+              <OgamiLanding locale="ar" />
               <FooterShortAr />
               <FloatingActionBar rtl whatsappMessage={config.whatsappOgamiMessageAr} />
               <MobileBottomBar
@@ -78,9 +76,7 @@ function App() {
           element={
             <div className="min-h-screen bg-white pb-24 md:pb-0" dir="ltr" lang="en">
               <Header />
-              <Suspense fallback={null}>
-                <OgamiLanding locale="en" />
-              </Suspense>
+              <OgamiLanding locale="en" />
               <Footer />
               <FloatingActionBar whatsappMessage={config.whatsappOgamiMessageEn} />
               <MobileBottomBar
