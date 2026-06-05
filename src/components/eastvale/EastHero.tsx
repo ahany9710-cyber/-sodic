@@ -6,7 +6,9 @@ import { getWhatsAppLink } from '../../utils/whatsapp';
 import { useEastvalePage } from '../../contexts/EastvaleLocaleContext';
 
 /** Hero art from brochures (PDF render) */
-const HERO_IMAGE = '/sections/eastvale/raw/apartments-page-01.png';
+const HERO_IMAGE = '/sections/eastvale/raw/apartments-page-01-1600.webp';
+const HERO_SRCSET =
+  '/sections/eastvale/raw/apartments-page-01-640.webp 640w, /sections/eastvale/raw/apartments-page-01-1024.webp 1024w, /sections/eastvale/raw/apartments-page-01-1600.webp 1600w';
 
 const EastHero = () => {
   const { copy, whatsappEastvale, fontClass, locale } = useEastvalePage();
@@ -35,11 +37,13 @@ const EastHero = () => {
     >
       <img
         src={HERO_IMAGE}
+        srcSet={HERO_SRCSET}
         alt={h.imgAlt}
         width={1200}
         height={800}
         sizes="100vw"
         decoding="async"
+        loading="eager"
         className="absolute inset-0 h-full w-full object-cover"
         fetchPriority="high"
       />

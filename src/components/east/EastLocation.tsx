@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEastPage } from '../../contexts/EastLocaleContext';
 import { eastLocationIcon } from './eastIconMap';
 
-const MAP = '/sections/east/sodic-cms/community-aerial.jpg';
+const MAP = '/sections/east/sodic-cms/community-aerial.webp';
 
 const EastLocation = () => {
   const { copy, fontClass } = useEastPage();

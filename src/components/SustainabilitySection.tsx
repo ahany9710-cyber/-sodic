@@ -14,7 +14,7 @@ const cards = [
   {
     title: 'Energy Efficiency',
     description: 'Building smarter communities with sustainable infrastructure and reduced energy demand.',
-    image: './sections/sustainability/ednc.jpg',
+    image: './sections/sustainability/ednc.webp',
   },
 ];
 

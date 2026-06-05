@@ -5,16 +5,19 @@
     <script>
       (function () {
         var p = location.pathname;
-        var hero =
+        var base =
           p.indexOf('/ogami') !== -1
-            ? '/sections/ogami/hero.jpg'
+            ? '/sections/ogami/hero'
             : p.indexOf('/eastvale') !== -1
-              ? '/sections/eastvale/raw/apartments-page-01.png'
-              : '/sections/east/sodic-cms/hero-birdseye.webp';
+              ? '/sections/eastvale/raw/apartments-page-01'
+              : '/sections/east/sodic-cms/hero-birdseye';
         var link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'image';
-        link.href = hero;
+        link.type = 'image/webp';
+        link.href = base + '-1600.webp';
+        link.setAttribute('imagesrcset', base + '-640.webp 640w, ' + base + '-1024.webp 1024w, ' + base + '-1600.webp 1600w');
+        link.setAttribute('imagesizes', '100vw');
         link.setAttribute('fetchpriority', 'high');
         document.head.appendChild(link);
       })();

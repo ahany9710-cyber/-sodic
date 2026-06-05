@@ -5,7 +5,9 @@ import { trackMarketingContact } from '../../utils/trackMarketing';
 import { getWhatsAppLink } from '../../utils/whatsapp';
 import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 
-const HERO_IMAGE = '/sections/ogami/hero.jpg';
+const HERO_IMAGE = '/sections/ogami/hero-1600.webp';
+const HERO_SRCSET =
+  '/sections/ogami/hero-640.webp 640w, /sections/ogami/hero-1024.webp 1024w, /sections/ogami/hero-1600.webp 1600w';
 
 const OgamiHero = () => {
   const { copy, whatsappOgami, fontClass, locale } = useOgamiPage();
@@ -34,6 +36,7 @@ const OgamiHero = () => {
     >
       <img
         src={HERO_IMAGE}
+        srcSet={HERO_SRCSET}
         alt={h.imgAlt}
         width={1920}
         height={1080}

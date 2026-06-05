@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 import { ogamiLocationIcon } from './ogamiIconMap';
 
-const MAP = '/sections/ogami/location-map.jpg';
+const MAP = '/sections/ogami/location-map.webp';
 
 const OgamiLocation = () => {
   const { copy, fontClass } = useOgamiPage();
@@ -34,7 +34,10 @@ const OgamiLocation = () => {
             <img
               src={MAP}
               alt={l.mapAlt}
+              width={1200}
+              height={800}
               loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover"
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 md:p-6">

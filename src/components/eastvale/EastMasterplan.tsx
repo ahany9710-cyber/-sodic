@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { useEastvalePage } from '../../contexts/EastvaleLocaleContext';
 import { eastMasterplanIcon } from './eastIconMap';
 
-const OVERVIEW = '/sections/eastvale/raw/apartments-page-06.png';
-const LAUNCH = '/sections/eastvale/raw/villas-page-03.png';
+const OVERVIEW = '/sections/eastvale/raw/apartments-page-06.webp';
+const LAUNCH = '/sections/eastvale/raw/villas-page-03.webp';
 
 const EastMasterplan = () => {
   const { copy, fontClass } = useEastvalePage();

@@ -18,7 +18,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { useEastvalePage } from '../../contexts/EastvaleLocaleContext';
 
-const OAK_IMAGE = '/sections/eastvale/raw/apartments-page-10.png';
+const OAK_IMAGE = '/sections/eastvale/raw/apartments-page-10.webp';
 
 const AMENITY_ICONS: LucideIcon[] = [
   Waves,

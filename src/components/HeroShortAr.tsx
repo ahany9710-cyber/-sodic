@@ -4,7 +4,9 @@ import { config } from '../config';
 import { trackMarketingContact } from '../utils/trackMarketing';
 import { getWhatsAppLink } from '../utils/whatsapp';
 
-const HERO_IMAGE = '/sections/east/sodic-cms/hero-birdseye.webp';
+const HERO_IMAGE = '/sections/east/sodic-cms/hero-birdseye-1600.webp';
+const HERO_SRCSET =
+  '/sections/east/sodic-cms/hero-birdseye-640.webp 640w, /sections/east/sodic-cms/hero-birdseye-1024.webp 1024w, /sections/east/sodic-cms/hero-birdseye-1600.webp 1600w';
 
 const HeroShortAr = () => {
   const scrollToLeadForm = () => {
@@ -17,11 +19,13 @@ const HeroShortAr = () => {
     <section id="hero" className="relative min-h-[68vh] overflow-hidden bg-black md:min-h-screen">
       <img
         src={HERO_IMAGE}
+        srcSet={HERO_SRCSET}
         alt=""
         width={1920}
         height={1080}
         sizes="100vw"
         decoding="async"
+        loading="eager"
         fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover"
       />

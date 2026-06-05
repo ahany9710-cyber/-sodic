@@ -12,7 +12,7 @@ interface Project {
 const REGION_BG: Record<Region, string> = {
   'North Coast': './sections/regions/north-coast.webp',
   'East Cairo': './sections/regions/east-cairo.webp',
-  'West Cairo': './sections/regions/west-cairo.jpg',
+  'West Cairo': './sections/regions/west-cairo.webp',
 };
 
 const PROJECTS: Record<Region, Project[]> = {

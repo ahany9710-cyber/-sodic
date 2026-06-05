@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { useEastPage } from '../../contexts/EastLocaleContext';
 import { eastMasterplanIcon } from './eastIconMap';
 
-const OVERVIEW = '/sections/east/sodic-cms/oak-masterplan.jpg';
-const LAUNCH = '/sections/east/sodic-cms/park-lifestyle.jpg';
+const OVERVIEW = '/sections/east/sodic-cms/oak-masterplan.webp';
+const LAUNCH = '/sections/east/sodic-cms/park-lifestyle.webp';
 
 const EastMasterplan = () => {
   const { copy, fontClass } = useEastPage();

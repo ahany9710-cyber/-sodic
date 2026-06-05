@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 import { ogamiMasterplanIcon } from './ogamiIconMap';
 
-const OVERVIEW = '/sections/ogami/ogami-overview.jpg';
-const BOTANICA = '/sections/ogami/botanica-launch.jpg';
+const OVERVIEW = '/sections/ogami/ogami-overview.webp';
+const BOTANICA = '/sections/ogami/botanica-launch.webp';
 
 const OgamiMasterplan = () => {
   const { copy, fontClass } = useOgamiPage();
@@ -38,7 +38,10 @@ const OgamiMasterplan = () => {
           <img
             src={OVERVIEW}
             alt={m.overviewAlt}
+            width={1600}
+            height={900}
             loading="lazy"
+            decoding="async"
             className="h-auto w-full object-cover"
           />
         </motion.div>
@@ -81,7 +84,10 @@ const OgamiMasterplan = () => {
             <img
               src={BOTANICA}
               alt={m.launchImgAlt}
+              width={800}
+              height={600}
               loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover"
             />
           </div>

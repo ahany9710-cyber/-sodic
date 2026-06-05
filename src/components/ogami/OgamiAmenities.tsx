@@ -18,7 +18,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 
-const NOBU_IMAGE = '/sections/ogami/nobu.jpg';
+const NOBU_IMAGE = '/sections/ogami/nobu.webp';
 
 const AMENITY_ICONS: LucideIcon[] = [
   Waves,
@@ -57,7 +57,10 @@ const OgamiAmenities = () => {
         <img
           src={NOBU_IMAGE}
           alt={a.nobuImgAlt}
+          width={1600}
+          height={900}
           loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" aria-hidden />

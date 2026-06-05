@@ -20,7 +20,7 @@ const PropertyFinder = () => {
 
   return (
     <section id="property-finder" className="relative overflow-hidden px-6 py-12 md:px-16 md:py-16">
-      <img src="./images/listings/listing-1.png" alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden />
+      <img src="./images/listings/listing-1.webp" alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden />
       <div className="absolute inset-0 bg-black/70" aria-hidden />
 
       <div className="relative z-10 mx-auto max-w-[1600px]">

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEastvalePage } from '../../contexts/EastvaleLocaleContext';
 import { eastLocationIcon } from './eastIconMap';
 
-const MAP = '/sections/eastvale/raw/apartments-page-04.png';
+const MAP = '/sections/eastvale/raw/apartments-page-04.webp';
 
 const EastLocation = () => {
   const { copy, fontClass } = useEastvalePage();
