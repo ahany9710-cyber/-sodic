@@ -28,17 +28,25 @@
     <meta name="description" content="SODIC premium real estate destinations crafted for modern coastal living." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=optional"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript
-      ><link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=optional"
-        rel="stylesheet"
-    /></noscript>
+    <script>
+      (function () {
+        var isArabicRoute = location.pathname.indexOf('/ar') === 0;
+        var href = isArabicRoute
+          ? 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap'
+          : 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=optional';
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.media = 'print';
+        link.onload = function () {
+          this.media = 'all';
+        };
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+    </noscript>
     <title>SODIC | Premium Living</title>
     <meta property="og:title" content="SODIC | Premium Living" />
     <meta property="og:description" content="Premium real estate opportunities tailored for modern living." />

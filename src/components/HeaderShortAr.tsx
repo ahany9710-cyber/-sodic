@@ -59,7 +59,7 @@ const HeaderShortAr = () => {
     <header
       ref={headerRef}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        lightMode ? 'border-b border-gray-100 bg-white/95 backdrop-blur-md' : 'bg-transparent'
+        lightMode ? 'border-b border-gray-100 bg-white/95' : 'bg-transparent'
       }`}
       dir="rtl"
     >
