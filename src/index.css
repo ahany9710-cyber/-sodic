@@ -9,11 +9,11 @@
 
   body {
     @apply bg-white text-gray-900 antialiased;
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
   .font-arabic {
-    font-family: 'Cairo', 'Segoe UI', Tahoma, system-ui, sans-serif;
+    font-family: Tahoma, 'Segoe UI', Arial, system-ui, sans-serif;
   }
 
   * {

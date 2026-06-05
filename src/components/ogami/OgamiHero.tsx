@@ -29,7 +29,7 @@ const OgamiHero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-[68vh] overflow-hidden bg-black md:min-h-screen"
+      className="relative min-h-screen overflow-hidden bg-black"
       dir={locale === 'ar' ? 'rtl' : 'ltr'}
       lang={locale}
     >
@@ -52,7 +52,7 @@ const OgamiHero = () => {
       />
       <div className={`absolute inset-0 ${sideVignette}`} aria-hidden />
 
-      <div className="relative z-10 flex min-h-[68vh] items-end pb-20 pt-20 md:min-h-screen md:pb-32 md:pt-24">
+      <div className="relative z-10 flex min-h-screen items-end pb-20 pt-20 md:pb-32 md:pt-24">
         <div className="w-full px-6 md:px-16 lg:px-24">
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <div className="inline-flex items-center gap-2 border border-white/40 bg-white/10 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white backdrop-blur-sm">

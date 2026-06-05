@@ -2,13 +2,32 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/sections/ogami/hero-640.webp"
+      imagesrcset="/sections/ogami/hero-640.webp 640w, /sections/ogami/hero-1024.webp 1024w, /sections/ogami/hero-1600.webp 1600w"
+      imagesizes="100vw"
+      media="(max-width: 768px)"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/sections/ogami/hero-1600.webp"
+      imagesrcset="/sections/ogami/hero-640.webp 640w, /sections/ogami/hero-1024.webp 1024w, /sections/ogami/hero-1600.webp 1600w"
+      imagesizes="100vw"
+      media="(min-width: 769px)"
+      fetchpriority="high"
+    />
     <script>
       (function () {
         var p = location.pathname;
+        if (p.indexOf('/ogami') !== -1) return;
         var base =
-          p.indexOf('/ogami') !== -1
-            ? '/sections/ogami/hero'
-            : p.indexOf('/eastvale') !== -1
+          p.indexOf('/eastvale') !== -1
               ? '/sections/eastvale/raw/apartments-page-01'
               : '/sections/east/sodic-cms/hero-birdseye';
         var link = document.createElement('link');
@@ -28,7 +47,6 @@
     <meta name="description" content="SODIC premium real estate destinations crafted for modern coastal living." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <script>
       (function () {
         var isArabicRoute = location.pathname.indexOf('/ar') === 0;
