@@ -1,5 +1,4 @@
 import { Phone } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { config } from '../config';
 import { trackMarketingContact } from '../utils/trackMarketing';
 import { getWhatsAppLink } from '../utils/whatsapp';
@@ -30,10 +29,7 @@ const FloatingActionBar = ({ whatsappMessage, rtl = false }: FloatingActionBarPr
   const waHref = whatsappMessage ? getWhatsAppLink({ text: whatsappMessage }) : getWhatsAppLink();
 
   return (
-    <motion.div
-      initial={{ x: rtl ? -80 : 80, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.45, ease: 'easeOut', delay: 0.2 }}
+    <div
       className={`fixed top-1/2 z-50 hidden -translate-y-1/2 flex-col gap-3 md:flex ${rtl ? 'left-4' : 'right-4'}`}
     >
       <a
@@ -55,7 +51,7 @@ const FloatingActionBar = ({ whatsappMessage, rtl = false }: FloatingActionBarPr
       >
         <WhatsAppIcon size={22} />
       </a>
-    </motion.div>
+    </div>
   );
 };
 

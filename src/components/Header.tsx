@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, Search, X } from 'lucide-react';
 import { sitePagesEn } from '../data/siteNavLinks';
 
@@ -142,14 +141,9 @@ const Header = () => {
         </div>
       </div>
 
-      <AnimatePresence>
-        {menuOpen ? (
-          <motion.div
+      {menuOpen ? (
+          <div
             id="mobile-nav"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="border-t border-gray-100 bg-white"
           >
             <nav className="px-6 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
@@ -204,9 +198,8 @@ const Header = () => {
                 العربية
               </Link>
             </nav>
-          </motion.div>
+          </div>
         ) : null}
-      </AnimatePresence>
     </header>
   );
 };

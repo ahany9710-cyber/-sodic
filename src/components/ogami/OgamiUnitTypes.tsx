@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { BedDouble, Maximize2, Trees } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
@@ -20,13 +19,7 @@ const OgamiUnitTypes = () => {
   return (
     <section id="ogami-units" className="bg-white px-6 py-16 md:px-16 md:py-24">
       <div className="mx-auto max-w-[1600px]">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between"
-        >
+        <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="text-[11px] font-semibold tracking-wider text-zinc-500">{u.eyebrow}</p>
             <h2 className={`${fontClass} mt-3 text-3xl font-bold leading-tight text-black md:text-5xl`}>{u.title}</h2>
@@ -42,16 +35,12 @@ const OgamiUnitTypes = () => {
               </span>
             ))}
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {u.items.map((unit, index) => (
-            <motion.article
+          {u.items.map((unit) => (
+            <article
               key={unit.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.06 * index }}
               className="group flex flex-col overflow-hidden border border-zinc-200 bg-white transition-all hover:border-black hover:shadow-lg"
             >
               <div className="relative h-56 overflow-hidden bg-stone-100 md:h-64">
@@ -128,7 +117,7 @@ const OgamiUnitTypes = () => {
                   fontClass={fontClass}
                 />
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
 

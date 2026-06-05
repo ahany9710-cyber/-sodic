@@ -15,20 +15,10 @@
         link.rel = 'preload';
         link.as = 'image';
         link.type = 'image/webp';
-        link.href = base + '-640.webp';
+        var mobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+        link.href = mobile ? base + '-640.webp' : base + '-1600.webp';
         link.setAttribute('imagesrcset', base + '-640.webp 640w, ' + base + '-1024.webp 1024w, ' + base + '-1600.webp 1600w');
         link.setAttribute('imagesizes', '100vw');
-        link.setAttribute('media', '(max-width: 768px)');
-        link.setAttribute('fetchpriority', 'high');
-        document.head.appendChild(link);
-        link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.type = 'image/webp';
-        link.href = base + '-1600.webp';
-        link.setAttribute('imagesrcset', base + '-640.webp 640w, ' + base + '-1024.webp 1024w, ' + base + '-1600.webp 1600w');
-        link.setAttribute('imagesizes', '100vw');
-        link.setAttribute('media', '(min-width: 769px)');
         link.setAttribute('fetchpriority', 'high');
         document.head.appendChild(link);
       })();
@@ -55,6 +45,32 @@
     <meta property="og:image" content="https://sodicoffers.com/sections/east/sodic-cms/hero-birdseye.webp" />
     <meta property="og:type" content="website" />
     <script>
+      function loadWhenUserEngages(task, timeout) {
+        var done = false;
+        var cleanup = function () {};
+        var run = function () {
+          if (done) return;
+          done = true;
+          cleanup();
+          task();
+        };
+
+        var events = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+        var onEvent = function () {
+          run();
+        };
+        cleanup = function () {
+          events.forEach(function (e) {
+            window.removeEventListener(e, onEvent, { passive: true });
+          });
+        };
+        events.forEach(function (e) {
+          window.addEventListener(e, onEvent, { passive: true, once: true });
+        });
+
+        window.setTimeout(run, timeout);
+      }
+
       function loadGoogleTagDeferred() {
         var id = 'AW-18066287198';
         var s = document.createElement('script');
@@ -71,13 +87,7 @@
           gtag('config', id);
         };
       }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadGoogleTagDeferred, { timeout: 4000 });
-      } else {
-        window.addEventListener('load', function () {
-          setTimeout(loadGoogleTagDeferred, 1);
-        });
-      }
+      loadWhenUserEngages(loadGoogleTagDeferred, 12000);
     </script>
   </head>
   <body>
@@ -112,15 +122,7 @@
         fbq('init', '3532545530231926');
         fbq('track', 'PageView');
       }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(function () {
-          loadMetaPixelDeferred();
-        }, { timeout: 5000 });
-      } else {
-        window.addEventListener('load', function () {
-          setTimeout(loadMetaPixelDeferred, 1);
-        });
-      }
+      loadWhenUserEngages(loadMetaPixelDeferred, 15000);
     </script>
   </body>
 </html>

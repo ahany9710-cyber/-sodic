@@ -1,12 +1,12 @@
 import { lazy, Suspense, useEffect } from 'react';
 import OgamiHero from '../components/ogami/OgamiHero';
-import OgamiUnitTypes from '../components/ogami/OgamiUnitTypes';
-import OgamiLeadForm from '../components/ogami/OgamiLeadForm';
 import SectionPlaceholder from '../components/SectionPlaceholder';
 import DeferredBookingPopup from '../components/DeferredBookingPopup';
 import { OgamiLocaleProvider, useOgamiPage } from '../contexts/OgamiLocaleContext';
 import type { OgamiLocale } from '../data/ogamiCopy';
 
+const OgamiUnitTypes = lazy(() => import('../components/ogami/OgamiUnitTypes'));
+const OgamiLeadForm = lazy(() => import('../components/ogami/OgamiLeadForm'));
 const OgamiUrgencyStrip = lazy(() => import('../components/ogami/OgamiUrgencyStrip'));
 const OgamiLocation = lazy(() => import('../components/ogami/OgamiLocation'));
 const OgamiMasterplan = lazy(() => import('../components/ogami/OgamiMasterplan'));
@@ -41,10 +41,10 @@ function OgamiMetaAndAnalytics() {
         });
       }
     };
-    if (typeof window.gtag === 'function') {
-      track();
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(track, { timeout: 10_000 });
     } else {
-      window.setTimeout(track, 2000);
+      globalThis.setTimeout(track, 8_000);
     }
 
     return () => {
@@ -61,8 +61,12 @@ function OgamiLandingBody() {
     <main>
       <OgamiMetaAndAnalytics />
       <OgamiHero />
-      <OgamiUnitTypes />
-      <OgamiLeadForm />
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[74rem]" />}>
+        <OgamiUnitTypes />
+      </Suspense>
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[54rem]" />}>
+        <OgamiLeadForm />
+      </Suspense>
       <Suspense fallback={<SectionPlaceholder minHeight="min-h-[9rem]" />}>
         <OgamiUrgencyStrip />
       </Suspense>
@@ -81,7 +85,9 @@ function OgamiLandingBody() {
       <Suspense fallback={<SectionPlaceholder minHeight="min-h-[30vh]" />}>
         <OgamiFAQ />
       </Suspense>
-      <OgamiLeadForm placement="closing" />
+      <Suspense fallback={<SectionPlaceholder minHeight="min-h-[40rem]" />}>
+        <OgamiLeadForm placement="closing" />
+      </Suspense>
       <DeferredBookingPopup loader={() => import('../components/ogami/OgamiBookingPopup')} />
     </main>
   );
