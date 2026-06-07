@@ -54,7 +54,7 @@ export const config = {
   /** Local Egyptian format — use where you surface the number in UI */
   phoneDisplayLocal: '0106 291 1110',
   // Optional: add conversion_id + conversion_label from Google Ads for thank-you page trackConversion()
-  // Google tag AW-18066287198 is loaded in index.html (gtag.js).
+  // Google tag AW-17012763903 is loaded in index.html (gtag.js).
 
   /** Legacy: optional external media URLs (hero/map). Leave empty when using /public/assets only. */
   heroVideoUrl: '',

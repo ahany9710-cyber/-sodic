@@ -73,6 +73,28 @@
     <meta property="og:description" content="Premium real estate opportunities tailored for modern living." />
     <meta property="og:image" content="https://sodicoffers.com/sections/east/sodic-cms/hero-birdseye.webp" />
     <meta property="og:type" content="website" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17012763903"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+
+      gtag('config', 'AW-17012763903');
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=3532545530231926&ev=PageView&noscript=1"
+        alt=""
+    /></noscript>
     <script>
       function loadWhenUserEngages(task, timeout) {
         var done = false;
@@ -100,37 +122,6 @@
         window.setTimeout(run, timeout);
       }
 
-      function loadGoogleTagDeferred() {
-        var id = 'AW-18066287198';
-        var s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
-        document.head.appendChild(s);
-        s.onload = function () {
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-          window.gtag = gtag;
-          gtag('js', new Date());
-          gtag('config', id);
-        };
-      }
-      loadWhenUserEngages(loadGoogleTagDeferred, 12000);
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=3532545530231926&ev=PageView&noscript=1"
-        alt=""
-    /></noscript>
-    <script>
       function loadMetaPixelDeferred() {
         !(function (f, b, e, v, n, t, s) {
           if (f.fbq) return;
