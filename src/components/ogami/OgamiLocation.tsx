@@ -2,11 +2,12 @@ import { motion } from 'framer-motion';
 import { useOgamiPage } from '../../contexts/OgamiLocaleContext';
 import { ogamiLocationIcon } from './ogamiIconMap';
 
-const MAP = '/sections/ogami/location-map.webp';
+const DEFAULT_MAP = '/sections/ogami/location-map.webp';
 
 const OgamiLocation = () => {
   const { copy, fontClass } = useOgamiPage();
   const l = copy.location;
+  const mapSrc = l.mapSrc ?? DEFAULT_MAP;
 
   return (
     <section id="ogami-location" className="bg-stone-50 px-6 py-16 md:px-16 md:py-24">
@@ -32,7 +33,7 @@ const OgamiLocation = () => {
             className="relative overflow-hidden bg-white shadow-sm lg:col-span-3"
           >
             <img
-              src={MAP}
+              src={mapSrc}
               alt={l.mapAlt}
               width={1200}
               height={800}

@@ -3,9 +3,9 @@
  * Edit values here only.
  */
 
-/** Arabic sales funnel — same Ogami/Botanica line everywhere (/ar + /ar/ogami + forms). */
+/** Arabic sales funnel — جون وأوجامي on /ar + /ar/ogami + forms. */
 const WHATSAPP_AR_OGAMI =
-  'مرحباً، مهتم بمشروع أوجامي / بوتانيكا تاون في الساحل الشمالي.';
+  'مرحباً، مهتم بمشاريع جون وأوجامي من سوديك في الساحل الشمالي. ممكن تفاصيل الأسعار والتوفر؟';
 
 export const config = {
   // Formspree form ID — submissions go to the email registered at formspree.io

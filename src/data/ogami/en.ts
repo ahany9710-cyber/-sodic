@@ -72,6 +72,7 @@ export const ogamiEn: OgamiCopy = {
     title: 'On the waterfront — core of New North Coast',
     lead:
       'Ogami sits on the international coastal road between Ras El Hekma and Fouka — quick beach access with key destinations reachable in under an hour.',
+    mapSrc: '/sections/ogami/location-map.webp',
     mapCaption: 'Ogami directly on the international coastal motorway',
     mapAlt: 'Ogami master location between Ras El Hekma and Fouka',
     distances: [
