@@ -9,7 +9,7 @@ const WHATSAPP_AR_OGAMI =
 
 export const config = {
   // Formspree form ID — submissions go to the email registered at formspree.io
-  formspreeFormId: 'mqegddew',
+  formspreeFormId: 'xdavjaya',
 
   // WhatsApp number (without + or spaces for wa.me) — same tel: + whatsapp.site-wide
   whatsappNumber: '201062911110',
